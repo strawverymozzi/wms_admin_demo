@@ -1,0 +1,41 @@
+<dx-data-grid #dataGridRef id="gridContainer" [dataSource]="dataSource" [showBorders]="true"
+  [allowColumnReordering]="true" [allowColumnResizing]="true" [columnAutoWidth]="false"
+  (onFocusedCellChanging)="onFocusedCellChanging($event)" (onSelectionChanged)="onSelectionChanged($event)">
+  <dxo-selection mode="single"></dxo-selection>
+
+  <!-- <dxo-header-filter [visible]="true"></dxo-header-filter>
+    <dxo-filter-panel [visible]="true"></dxo-filter-panel>
+      
+      <dxo-selection 
+      [selectAllMode]="gridFunctionConfig ? gridFunctionConfig.selection.selectAllMode : null" 
+      [showCheckBoxesMode]="gridFunctionConfig? gridFunctionConfig.selection.showCheckBoxesMode : null" 
+      [mode]="gridFunctionConfig? gridFunctionConfig.selection.mode :null">
+    </dxo-selection>
+  
+      <dxo-editing 
+      mode="batch" 
+      [allowUpdating]="true"
+      [selectTextOnEditStart]="selectTextOnEditStart"
+      [startEditAction]="startEditAction">
+    </dxo-editing>
+   
+  <dxo-column-fixing [enabled]="true"></dxo-column-fixing>
+    <dxo-sorting mode="multiple"></dxo-sorting>
+    <dxo-filter-builder [customOperations]="customOperations">
+    </dxo-filter-builder>
+    <dxo-filter-builder-popup [position]="popupPosition">
+    </dxo-filter-builder-popup>
+    <dxo-filter-row [visible]="true"></dxo-filter-row> -->
+
+  <dxo-keyboard-navigation [editOnKeyPress]="editOnkeyPress" [enterKeyAction]="enterKeyAction"
+    [enterKeyDirection]="enterKeyDirection">
+  </dxo-keyboard-navigation>
+
+  <dxo-paging [pageSize]="10"></dxo-paging>
+  <dxo-pager [showPageSizeSelector]="true" [allowedPageSizes]="[5, 10, 20]" [showInfo]="true">
+  </dxo-pager>
+
+  <ng-container *ngFor="let col of gridColumnConfig; i as index">
+    <dxi-column [dataField]="col.dataField" [width]="col.width" [fixed]="col.fixed"></dxi-column>
+  </ng-container>
+</dx-data-grid>

@@ -1,0 +1,7 @@
+.grid_cell_text{
+    text-overflow: ellipsis;
+    display:inline-block;
+    width:90%;
+    overflow: hidden;
+}
+

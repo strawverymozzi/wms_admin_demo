@@ -1,0 +1,45 @@
+<div class="wrapper">
+    <div class="col_1">
+        <div class="field">
+            <div class="label">사업장 코드</div>
+            <div class="value">
+                <dx-text-box placeholder="Enter full name here..." [(value)]="dataObject.RCVNUM"> </dx-text-box>
+            </div>
+        </div>
+        <div class="field">
+            <div class="label">거래처 유형</div>
+            <div class="value">
+                <dx-select-box [items]="[]" [showClearButton]="true" [(value)]="dataObject.RCVSTA"></dx-select-box>
+            </div>
+        </div>
+    </div>
+    <div class="col_2">
+        <div class="field">
+            <div class="label">거래처 코드</div>
+            <div class="value">
+                <dx-text-box placeholder="Enter full name here..." [(value)]="dataObject.RCODNM"> </dx-text-box>
+            </div>
+        </div>
+        <div class="field">
+            <div class="label">정식명칭</div>
+            <div class="value">
+                <dx-text-box placeholder="Enter full name here..." [(value)]="dataObject.BOLNUM"> </dx-text-box>
+            </div>
+        </div>
+
+    </div>
+    <div class="col_3">
+        <div class="field">
+            <div class="label">사용여부</div>
+            <div class="value">
+                <dx-select-box [items]="[]" [showClearButton]="true" [(value)]="dataObject.VALUE2"></dx-select-box>
+            </div>
+        </div>
+        <div class="field">
+            <div class="label">유통채널</div>
+            <div class="value">
+                <dx-select-box [items]="[]" [showClearButton]="true" [(value)]="dataObject.VALUE3"></dx-select-box>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,31 @@
+.wrapper {
+}
+
+.col_1, .col_2, .col_3 {
+    display: block;
+    float: left;
+    padding: 0 5px;
+}
+
+.col_1 {
+    width: 32%
+}
+
+.col_2, .col_3 {
+    width: 34%;
+}
+
+.half {
+    float: left;
+    width: 50%;
+}
+
+.value {
+    padding: 3px 0;
+}
+
+.inline>.value {
+    display: inline-block;
+    width: 33.3%;
+    height: 32px;
+}

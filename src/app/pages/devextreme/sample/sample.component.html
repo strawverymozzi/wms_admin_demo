@@ -1,0 +1,127 @@
+<div class="wrapper">
+
+  <!-- page toolbar -->
+  <ng-container>
+    <dx-toolbar>
+      <dxi-item location="after" widget="dxButton" locateInMenu="auto"
+        [options]="btnConfig.SEARCHMASTERBTN">
+      </dxi-item>
+      <dxi-item location="after" widget="dxButton" locateInMenu="auto"
+        [options]="btnConfig.EXCELUPLOADBTN">
+      </dxi-item>
+    </dx-toolbar>
+  </ng-container>
+  <!-- page toolbar end -->
+
+  <!-- accordian  -->
+  <ng-container>
+    <dx-accordion [collapsible]="true" [animationDuration]="300" [selectedIndex]="0" [multiple]="true">
+      <dxi-item title="검색옵션">
+        <ngx-master-search-form (clickEvent)="openSearchHelp($event,'FORM')"></ngx-master-search-form>
+      </dxi-item>
+      <dxi-item title="서브 검색옵션">
+        <ngx-master-search-sub-form></ngx-master-search-sub-form>
+      </dxi-item>
+    </dx-accordion>
+  </ng-container>
+  <!-- accordian end -->
+
+  <!-- tab panel -->
+  <dx-tab-panel #tabPanel height="auto" [selectedIndex]="0" [loop]="true" [animationEnabled]="true"
+    [swipeEnabled]="true">
+    <dxi-item title="입고예정 리스트">
+      <dx-data-grid #masterGrid id="masterGrid" style="min-height:400px" [dataSource]="masterGridDataSource"
+        [showBorders]="true" [focusedRowEnabled]="true" keyExpr="CODEA"
+        (onRowDblClick)="masterGridSelectionChange($event)">
+        <dxo-selection mode="single"></dxo-selection>
+        <ng-container *ngFor="let col of masterGridConfig; i as index">
+          <dxi-column [caption]="col.caption" [dataField]="col.dataField" [width]="col.width" [fixed]="col.fixed">
+          </dxi-column>
+        </ng-container>
+      </dx-data-grid>
+    </dxi-item>
+  </dx-tab-panel>
+  <!-- tab panel end-->
+</div>
+<!-- popup -->
+<dx-popup [title]="popupTitle" width="80%" height="80%" [showTitle]="true" [dragEnabled]="false"
+  [closeOnOutsideClick]="true" [(visible)]="popupVisible">
+  <dx-scroll-view [scrollByContent]="true" [scrollByThumb]="true">
+    <dx-toolbar>
+      <dxi-item location="before" widget="dxButton" locateInMenu="auto" [options]="btnConfig.POPSEARCHBTN">
+      </dxi-item>
+      <dxi-item location="after" widget="dxButton" locateInMenu="auto" [options]="btnConfig.POPDONE">
+      </dxi-item>
+      <dxi-item location="after" widget="dxButton" locateInMenu="auto" [options]="btnConfig.POPCANCEL">
+      </dxi-item>
+    </dx-toolbar>
+    <ng-container [ngSwitch]="popupId">
+      <ng-container *ngSwitchCase="'SEARCHPTN'">
+        <ngx-partner-search-form></ngx-partner-search-form>
+        <div style="clear:both">
+          <dx-data-grid #ptnSearchGrid id="ptnSearchGrid" [dataSource]="ptnSearchGridDataSource" [showBorders]="true"
+            [focusedRowEnabled]="true" keyExpr="ID" (onRowDblClick)="ptnGridSelectionChange($event,true)"
+            (onSelectionChanged)="ptnGridSelectionChange($event,false)">
+            <dxo-selection mode="single"></dxo-selection>
+            <ng-container *ngFor="let col of ptnSearchGridConfig; i as index">
+              <dxi-column [caption]="col.caption" [dataField]="col.dataField" [width]="col.width" [fixed]="col.fixed">
+              </dxi-column>
+            </ng-container>
+          </dx-data-grid>
+        </div>
+      </ng-container>
+      <ng-container *ngSwitchCase="'SEARCHSKU'">
+        <ngx-skukey-search-form></ngx-skukey-search-form>
+        <div style="clear:both">
+          <dx-data-grid #skuSearchGrid id="skuSearchGrid" keyExpr="ID" [dataSource]="skuSearchGridDataSource"
+            [showBorders]="true" [focusedRowEnabled]="true">
+            <dxo-selection mode="single"></dxo-selection>
+            <ng-container *ngFor="let col of skuSearchGridConfig; i as index">
+              <dxi-column [caption]="col.caption" [dataField]="col.dataField" [width]="col.width" [fixed]="col.fixed">
+              </dxi-column>
+            </ng-container>
+          </dx-data-grid>
+        </div>
+      </ng-container>
+    </ng-container>
+  </dx-scroll-view>
+</dx-popup>
+<!-- popup end-->
+
+<!-- action -->
+<dx-action-sheet id="actionSheet" [items]="actionSheetCommand" title="actionSheetTitle" [(visible)]="actionVisible"
+  height="80%" [showTitle]="true" [showCancelButton]="true" (onItemClick)="saveDetail($event.itemData.text)">
+  <ng-container *dxTemplate="let data of 'content'">
+    <dx-scroll-view [scrollByContent]="true" [scrollByThumb]="true" height="80%" style="padding-bottom:10px">
+      <div class="dx-field" style="padding:10px 0">
+        <div class="dx-field-label" style="width:10%">마스터 파라메터</div>
+        <div class="dx-field-value" style="width:90%">
+          <dx-tag-box [value]="actionSheetTagBox"></dx-tag-box>
+        </div>
+      </div>
+      <dx-data-grid #detailGrid id="detailGrid" keyExpr="CODEA" [dataSource]="detailGridDataSource" [showBorders]="true"
+        [focusedRowEnabled]="true" (onEditorPrepared)="setSelectedCellObject($event)">
+        <dxo-editing mode="batch" [allowUpdating]="true" [selectTextOnEditStart]="selectTextOnEditStart"
+          [startEditAction]="startEditAction">
+        </dxo-editing>
+        <!-- <dxo-editing mode="cell" [allowUpdating]="true">
+        </dxo-editing>
+        <dxo-selection mode="single"></dxo-selection> -->
+        <ng-container *ngFor="let col of detailGridConfig; i as index">
+          <dxi-column [caption]="col.caption" [cellTemplate]="col.cellTemplate" [dataField]="col.dataField"
+            [width]="col.width" [fixed]="col.fixed">
+          </dxi-column>
+        </ng-container>
+        <div *dxTemplate="let d of 'cellSearchHelpPTNKEY'">
+          <div style="width:100%;">
+            <span class="grid_cell_text">{{d.data.CODEB}}</span>
+            <dx-button class="grid_cell_btn" style="display:inline-block;width:10%;" icon="fa fa-search"
+              (onClick)="openSearchHelp({id:'SEARCHPTN',value:d.data.CODEB},'DEATILCELL')">
+            </dx-button>
+          </div>
+        </div>
+      </dx-data-grid>
+    </dx-scroll-view>
+  </ng-container>
+</dx-action-sheet>
+<!-- action end-->

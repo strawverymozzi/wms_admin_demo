@@ -1,0 +1,69 @@
+<div class="wrapper">
+    <div class="col_1">
+        <div class="field">
+            <div class="label">입고상태</div>
+            <div class="value">
+                <dx-select-box [(value)]="dataObject.RCVSTA" [items]="rcvStatusComboDataSource" placeholder=""
+                    [showClearButton]="true">
+                </dx-select-box>
+            </div>
+        </div>
+        <div class="field">
+            <div class="label">입고타입</div>
+            <div class="value">
+                <dx-select-box [(value)]="dataObject.RCVTYP" [items]="rcvTypeComboDataSource" placeholder=""
+                    [showClearButton]="true">
+                </dx-select-box>
+            </div>
+        </div>
+    </div>
+    <div class="col_2">
+        <div class="field">
+            <div class="label">출고예정일</div>
+            <div class="value half">
+                <dx-date-box id="FDATE1" placeholder="~부터" [(value)]="dataObject.FDATE1" type="date">
+                </dx-date-box>
+            </div>
+            <div class="value half">
+                <dx-date-box id="TODAT1" placeholder="~까지" [(value)]="dataObject.TODAT1" type="date">
+                </dx-date-box>
+            </div>
+        </div>
+        <div class="field">
+            <div class="label">거래처 코드</div>
+            <div class="value half">
+                <dx-text-box (onValueChanged)="ptnCodeChanged($event)" placeholder="코드" [(value)]="dataObject.PTNRKY"></dx-text-box>
+            </div>
+            <div class="value half">
+                <dx-text-box id="loadPanel" placeholder="거래처명" [(value)]="dataObject.PTNRNM">
+                    <dxi-button name="ptnBtn" [options]="searchPtnBtn">
+                    </dxi-button>
+                </dx-text-box>
+            </div>
+        </div>
+    </div>
+    <div class="col_3">
+        <div class="field">
+            <div class="label">출고실적일</div>
+            <div class="value half">
+                <dx-date-box id="" placeholder="~부터" type="date" [(value)]="dataObject.FDATE2"></dx-date-box>
+            </div>
+            <div class="value half">
+                <dx-date-box id="" placeholder="~까지" type="date" [(value)]="dataObject.TDATE2"></dx-date-box>
+            </div>
+        </div>
+        <div class="field">
+            <div class="label">상품 코드</div>
+            <div class="value half">
+                <dx-text-box placeholder="코드" [(value)]="dataObject.SKUKEY"></dx-text-box>
+            </div>
+
+            <div class="value half">
+                <dx-text-box placeholder="상품명" [(value)]="dataObject.SKUNAM">
+                    <dxi-button name="skuBtn" [options]="searchSkuBtn">
+                    </dxi-button>
+                </dx-text-box>
+            </div>
+        </div>
+    </div>
+</div>

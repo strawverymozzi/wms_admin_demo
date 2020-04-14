@@ -1,0 +1,350 @@
+{
+  "RCVSTATUS": [
+    "FPA",
+    "FPC",
+    "FIN"
+  ],
+  "RCVTYPE": [
+    "101",
+    "102",
+    "103"
+  ],
+  "MALLID": [
+    "ID1",
+    "ID2",
+    "ID3"
+  ],
+  "POPGRID": [
+    {
+      "ID": 1,
+      "CODEA": "A123938",
+      "CODEB": "7601 Penn Avenue South",
+      "CODEC": "Richfield",
+      "CODED": "Minnesota",
+      "CODEE": 55423,
+      "CODEF": "(612) 291-1000",
+      "CODEG": "(612) 291-2001"
+    },
+    {
+      "ID": 2,
+      "CODEA": "A123938",
+      "CODEB": "7601 Penn Avenue South",
+      "CODEC": "Richfield",
+      "CODED": "Minnesota",
+      "CODEE": 55423,
+      "CODEF": "(612) 291-1000",
+      "CODEG": "(612) 291-2001"
+    },
+    {
+      "ID": 3,
+      "CODEA": "A123938",
+      "CODEB": "7601 Penn Avenue South",
+      "CODEC": "Richfield",
+      "CODED": "Minnesota",
+      "CODEE": 55423,
+      "CODEF": "(612) 291-1000",
+      "CODEG": "(612) 291-2001"
+    },
+    {
+      "ID": 4,
+      "CODEA": "A123938",
+      "CODEB": "7601 Penn Avenue South",
+      "CODEC": "Richfield",
+      "CODED": "Minnesota",
+      "CODEE": 55423,
+      "CODEF": "(612) 291-1000",
+      "CODEG": "(612) 291-2001"
+    },
+    {
+      "ID": 5,
+      "CODEA": "A123938",
+      "CODEB": "7601 Penn Avenue South",
+      "CODEC": "Richfield",
+      "CODED": "Minnesota",
+      "CODEE": 55423,
+      "CODEF": "(612) 291-1000",
+      "CODEG": "(612) 291-2001"
+    },
+    {
+      "ID": 6,
+      "CODEA": "A123938",
+      "CODEB": "7601 Penn Avenue South",
+      "CODEC": "Richfield",
+      "CODED": "Minnesota",
+      "CODEE": 55423,
+      "CODEF": "(612) 291-1000",
+      "CODEG": "(612) 291-2001"
+    },
+    {
+      "ID": 7,
+      "CODEA": "A123938",
+      "CODEB": "7601 Penn Avenue South",
+      "CODEC": "Richfield",
+      "CODED": "Minnesota",
+      "CODEE": 55423,
+      "CODEF": "(612) 291-1000",
+      "CODEG": "(612) 291-2001"
+    },
+    {
+      "ID": 8,
+      "CODEA": "A123938",
+      "CODEB": "7601 Penn Avenue South",
+      "CODEC": "Richfield",
+      "CODED": "Minnesota",
+      "CODEE": 55423,
+      "CODEF": "(612) 291-1000",
+      "CODEG": "(612) 291-2001"
+    },
+    {
+      "ID": 9,
+      "CODEA": "A123938",
+      "CODEB": "7601 Penn Avenue South",
+      "CODEC": "Richfield",
+      "CODED": "Minnesota",
+      "CODEE": 55423,
+      "CODEF": "(612) 291-1000",
+      "CODEG": "(612) 291-2001"
+    },
+    {
+      "ID": 10,
+      "CODEA": "A123938",
+      "CODEB": "7601 Penn Avenue South",
+      "CODEC": "Richfield",
+      "CODED": "Minnesota",
+      "CODEE": 55423,
+      "CODEF": "(612) 291-1000",
+      "CODEG": "(612) 291-2001"
+    },
+    {
+      "ID": 11,
+      "CODEA": "A123938",
+      "CODEB": "7601 Penn Avenue South",
+      "CODEC": "Richfield",
+      "CODED": "Minnesota",
+      "CODEE": 55423,
+      "CODEF": "(612) 291-1000",
+      "CODEG": "(612) 291-2001"
+    },
+    {
+      "ID": 12,
+      "CODEA": "A123938",
+      "CODEB": "7601 Penn Avenue South",
+      "CODEC": "Richfield",
+      "CODED": "Minnesota",
+      "CODEE": 55423,
+      "CODEF": "(612) 291-1000",
+      "CODEG": "(612) 291-2001"
+    },
+    {
+      "ID": 13,
+      "CODEA": "A123938",
+      "CODEB": "7601 Penn Avenue South",
+      "CODEC": "Richfield",
+      "CODED": "Minnesota",
+      "CODEE": 55423,
+      "CODEF": "(612) 291-1000",
+      "CODEG": "(612) 291-2001"
+    },
+    {
+      "ID": 14,
+      "CODEA": "A123938",
+      "CODEB": "7601 Penn Avenue South",
+      "CODEC": "Richfield",
+      "CODED": "Minnesota",
+      "CODEE": 55423,
+      "CODEF": "(612) 291-1000",
+      "CODEG": "(612) 291-2001"
+    },
+    {
+      "ID": 15,
+      "CODEA": "A123938",
+      "CODEB": "7601 Penn Avenue South",
+      "CODEC": "Richfield",
+      "CODED": "Minnesota",
+      "CODEE": 55423,
+      "CODEF": "(612) 291-1000",
+      "CODEG": "(612) 291-2001"
+    }
+  ],
+  "HEADGRID": [
+    {
+      "CODEA": 1,
+      "CODEB": "G617TEST",
+      "CODEC": "7601 Penn Avenue South",
+      "CODED": "Richfield",
+      "CODEE": "Minnesota",
+      "CODEF": 55423,
+      "CODEG": "(612) 291-1000",
+      "CODEH": "(612) 291-2001",
+      "CODEI": "(612) 291-1000"
+    },
+    {
+      "CODEA": 2,
+      "CODEB": "G617280",
+      "CODEC": "7601 Penn Avenue South",
+      "CODED": "Richfield",
+      "CODEE": "Minnesota",
+      "CODEF": 55423,
+      "CODEG": "(612) 291-1000",
+      "CODEH": "(612) 291-2001",
+      "CODEI": "(612) 291-1000"
+    },
+    {
+      "CODEA": 3,
+      "CODEB": "G617280",
+      "CODEC": "7601 Penn Avenue South",
+      "CODED": "Richfield",
+      "CODEE": "Minnesota",
+      "CODEF": 55423,
+      "CODEG": "(612) 291-1000",
+      "CODEH": "(612) 291-2001",
+      "CODEI": "(612) 291-1000"
+    },
+    {
+      "CODEA": 4,
+      "CODEB": "G617280",
+      "CODEC": "7601 Penn Avenue South",
+      "CODED": "Richfield",
+      "CODEE": "Minnesota",
+      "CODEF": 55423,
+      "CODEG": "(612) 291-1000",
+      "CODEH": "(612) 291-2001",
+      "CODEI": "(612) 291-1000"
+    },
+    {
+      "CODEA": 5,
+      "CODEB": "G617280",
+      "CODEC": "7601 Penn Avenue South",
+      "CODED": "Richfield",
+      "CODEE": "Minnesota",
+      "CODEF": 55423,
+      "CODEG": "(612) 291-1000",
+      "CODEH": "(612) 291-2001",
+      "CODEI": "(612) 291-1000"
+    }
+  ],
+  "ITEMGRID": [
+    {
+      "CODEA": 1,
+      "CODEB": "TESttttttssssssssssssssssssssssssssssssssssttttttttttttttttttttttttdddddddddddT",
+      "CODEC": "7601 Penn Avenue South",
+      "CODED": "Richfield",
+      "CODEE": "Minnesota"
+    },
+    {
+      "CODEA": 2,
+      "CODEB": "TEST",
+      "CODEC": "7601 Penn Avenue South",
+      "CODED": "Richfield",
+      "CODEE": "Minnesota"
+    },
+    {
+      "CODEA": 3,
+      "CODEB": "TEST",
+      "CODEC": "7601 Penn Avenue South",
+      "CODED": "Richfield",
+      "CODEE": "Minnesota"
+    },
+    {
+      "CODEA": 4,
+      "CODEB": "TEST",
+      "CODEC": "7601 Penn Avenue South",
+      "CODED": "Richfield",
+      "CODEE": "Minnesota"
+    },
+    {
+      "CODEA": 5,
+      "CODEB": "TEST",
+      "CODEC": "7601 Penn Avenue South",
+      "CODED": "Richfield",
+      "CODEE": "Minnesota"
+    },
+    {
+      "CODEA": 6,
+      "CODEB": "TEST",
+      "CODEC": "7601 Penn Avenue South",
+      "CODED": "Richfield",
+      "CODEE": "Minnesota"
+    },
+    {
+      "CODEA": 7,
+      "CODEB": "TEST",
+      "CODEC": "7601 Penn Avenue South",
+      "CODED": "Richfield",
+      "CODEE": "Minnesota"
+    },
+    {
+      "CODEA": 8,
+      "CODEB": "TEST",
+      "CODEC": "7601 Penn Avenue South",
+      "CODED": "Richfield",
+      "CODEE": "Minnesota"
+    },
+    {
+      "CODEA": 9,
+      "CODEB": "TEST",
+      "CODEC": "7601 Penn Avenue South",
+      "CODED": "Richfield",
+      "CODEE": "Minnesota"
+    },
+    {
+      "CODEA": 10,
+      "CODEB": "TEST",
+      "CODEC": "7601 Penn Avenue South",
+      "CODED": "Richfield",
+      "CODEE": "Minnesota"
+    },
+    {
+      "CODEA": 11,
+      "CODEB": "TEST",
+      "CODEC": "7601 Penn Avenue South",
+      "CODED": "Richfield",
+      "CODEE": "Minnesota"
+    },
+    {
+      "CODEA": 12,
+      "CODEB": "TEST",
+      "CODEC": "7601 Penn Avenue South",
+      "CODED": "Richfield",
+      "CODEE": "Minnesota"
+    },
+    {
+      "CODEA": 13,
+      "CODEB": "TEST",
+      "CODEC": "7601 Penn Avenue South",
+      "CODED": "Richfield",
+      "CODEE": "Minnesota"
+    },
+    {
+      "CODEA": 14,
+      "CODEB": "TEST",
+      "CODEC": "7601 Penn Avenue South",
+      "CODED": "Richfield",
+      "CODEE": "Minnesota"
+    },
+    {
+      "CODEA": 15,
+      "CODEB": "TEST",
+      "CODEC": "7601 Penn Avenue South",
+      "CODED": "Richfield",
+      "CODEE": "Minnesota"
+    },
+    {
+      "CODEA": 16,
+      "CODEB": "TEST",
+      "CODEC": "7601 Penn Avenue South",
+      "CODED": "Richfield",
+      "CODEE": "Minnesota"
+    },
+    {
+      "CODEA": 17,
+      "CODEB": "TEST",
+      "CODEC": "7601 Penn Avenue South",
+      "CODED": "Richfield",
+      "CODEE": "Minnesota"
+    }
+  ],
+  "PTNRNM": {
+    "name": ""
+  }
+}
