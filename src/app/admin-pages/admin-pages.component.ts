@@ -7,13 +7,12 @@
 import { Component, OnDestroy } from '@angular/core';
 import { takeWhile } from 'rxjs/operators';
 import { NbTokenService } from '@nebular/auth';
-import { NbMenuItem } from '@nebular/theme';
-import { PagesMenu } from './pages-menu';
 import { InitUserService } from '../@theme/services/init-user.service';
+import { AdminPagesMenu } from './admin-pages-menu';
 
 @Component({
-  selector: 'ngx-pages',
-  styleUrls: ['pages.component.scss'],
+  selector: 'ngx-admin-pages',
+  styleUrls: ['admin-pages.component.scss'],
   template: `
     <ngx-one-column-layout>
       <nb-menu [items]="menu"></nb-menu>
@@ -21,13 +20,13 @@ import { InitUserService } from '../@theme/services/init-user.service';
     </ngx-one-column-layout>
   `,
 })
-export class PagesComponent implements OnDestroy {
+export class AdminPagesComponent implements OnDestroy {
 
-  menu: NbMenuItem[];
+  menu: any[];
   alive: boolean = true;
 
   constructor(
-    private pagesMenu: PagesMenu,
+    private adminPagesMenu: AdminPagesMenu,
     private tokenService: NbTokenService,
     protected initUserService: InitUserService,
   ) {
@@ -41,10 +40,10 @@ export class PagesComponent implements OnDestroy {
   }
 
   initMenu() {
-    this.pagesMenu.getMenu()
+    this.adminPagesMenu.getMenu()
       .pipe(takeWhile(() => this.alive))
       .subscribe(menu => {
-        this.menu = menu;
+        this.menu = [...menu];
       });
   }
 

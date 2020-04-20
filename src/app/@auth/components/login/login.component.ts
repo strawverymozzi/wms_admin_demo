@@ -79,7 +79,6 @@ export class NgxLoginComponent implements OnInit {
     this.submitted = true;
     this.service.authenticate(this.strategy, this.user).subscribe((result: NbAuthResult) => {
       this.submitted = false;
-
       if (result.isSuccess()) {
         this.messages = result.getMessages();
         this.initUserService.initCurrentUser().subscribe();

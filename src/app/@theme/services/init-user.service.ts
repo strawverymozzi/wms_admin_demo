@@ -13,23 +13,23 @@ import { NbJSThemesRegistry, NbThemeService } from '@nebular/theme';
 
 @Injectable()
 export class InitUserService {
-    constructor(protected userStore: UserStore,
-        protected usersService: UserData,
-        protected jsThemes: NbJSThemesRegistry,
-        protected themeService: NbThemeService) { }
+  constructor(protected userStore: UserStore,
+    protected usersService: UserData,
+    protected jsThemes: NbJSThemesRegistry,
+    protected themeService: NbThemeService) { }
 
-    initCurrentUser(): Observable<User> {
-      return this.usersService.getCurrentUser()
-            .pipe(tap((user: User) => {
-                if (user) {
-                  this.userStore.setUser(user);
+  initCurrentUser(): Observable<User> {
+    return this.usersService.getCurrentUser()
+      .pipe(tap((user: User) => {
+        if (user) {
+          this.userStore.setUser(user);
 
-                  if (user.settings && user.settings.themeName) {
-                    if (this.jsThemes.has(user.settings.themeName)) {
-                      this.themeService.changeTheme(user.settings.themeName);
-                    }
-                  }
-                }
-            }));
-    }
+          if (user.settings && user.settings.themeName) {
+            if (this.jsThemes.has(user.settings.themeName)) {
+              this.themeService.changeTheme(user.settings.themeName);
+            }
+          }
+        }
+      }));
+  }
 }

@@ -2,10 +2,10 @@ import { Component, OnInit, ViewChild, } from '@angular/core';
 import notify from 'devextreme/ui/notify';
 import { MasterSearchFormService } from './component/master-search-form/master-search-form.service';
 import { MasterSearchSubFormService } from './component/master-search-sub-form/master-search-sub-form.service';
-import { PartnerSearchFormService } from './component/partner-search-form/partner-search-form.service';
-import { SkukeySearchFormService } from './component/skukey-search-form/skukey-search-form.service';
 import { GridService } from './service/grid/grid.service';
 import { DxDataGridComponent } from 'devextreme-angular';
+import { PartnerSearchFormService } from '../../../@dx_module/dx-common-form/partner-search-form/partner-search-form.service';
+import { SkukeySearchFormService } from '../../../@dx_module/dx-common-form/skukey-search-form/skukey-search-form.service';
 
 @Component({
   selector: 'ngx-sample',

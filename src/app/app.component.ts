@@ -3,39 +3,38 @@
  * Licensed under the Single Application / Multi Application License.
  * See LICENSE_SINGLE_APP / LICENSE_MULTI_APP in the 'docs' folder for license information on type of purchased license.
  */
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { AnalyticsService } from './@core/utils';
-import { InitUserService } from './@theme/services/init-user.service';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { Component, OnInit } from '@angular/core';
+import { NbTokenLocalStorage, NbAuthToken, NbPasswordAuthStrategy } from '@nebular/auth';
+import { AnalyticsService } from './@core/utils/analytics.service';
+import { environment } from '../environments/environment';
 
 @Component({
   selector: 'ngx-app',
   template: '<router-outlet></router-outlet>',
 })
-export class AppComponent implements OnInit, OnDestroy {
-
-  private destroy$: Subject<void> = new Subject<void>();
+export class AppComponent implements OnInit {
 
   constructor(private analytics: AnalyticsService,
-              private initUserService: InitUserService) {
-              this.initUser();
+              private authStrategy: NbPasswordAuthStrategy,
+              private tokenStorage: NbTokenLocalStorage) {
+
+              // TODO: REMOVE BEFORE PROD
+              // for demo only: init localstorage with token for demo user when login for the first time
+              this.initTestUserToken();
   }
 
   ngOnInit(): void {
     this.analytics.trackPageViews();
   }
 
-  initUser() {
-    this.initUserService.initCurrentUser()
-      .pipe(
-        takeUntil(this.destroy$),
-      )
-      .subscribe();
-  }
-
-  ngOnDestroy() {
-    this.destroy$.next();
-    this.destroy$.complete();
+  initTestUserToken() {
+    const demoTokenInitKey = 'demo_token_initialized';
+    const demoTokenWasInitialized = localStorage.getItem(demoTokenInitKey);
+    const currentToken = this.tokenStorage.get();
+    if (!demoTokenWasInitialized && !currentToken.isValid()) {
+      // local storage is clear, let's setup demo user token for better demo experience
+      this.tokenStorage.set(this.authStrategy.createToken<NbAuthToken>(environment.testUser.token));
+      localStorage.setItem(demoTokenInitKey, 'true');
+    }
   }
 }

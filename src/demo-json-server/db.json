@@ -1,4 +1,9 @@
 {
+  "login": {
+    "email": "dsf@gmailc.om",
+    "password": "sdfsdfsdf",
+    "rememberMe": false
+  },
   "RCVSTATUS": [
     "FPA",
     "FPC",

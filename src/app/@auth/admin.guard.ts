@@ -20,8 +20,11 @@ export class AdminGuard implements CanActivate {
   ): Observable<boolean> | Promise<boolean> | boolean {
     return this.roleProvider.getRole()
       .pipe(map(role => {
-        const roles = role instanceof Array ? role : [role];
-        return roles.some(x => x && x.toLowerCase() === ROLES.ADMIN);
+        let roles = role instanceof Array ? role : [role];
+        
+        return roles.some(x => {
+          true;
+        });
       }));
   }
 }
