@@ -6,6 +6,7 @@ import { GridService } from './service/grid/grid.service';
 import { DxDataGridComponent } from 'devextreme-angular';
 import { PartnerSearchFormService } from '../../../@dx_module/dx-common-form/partner-search-form/partner-search-form.service';
 import { SkukeySearchFormService } from '../../../@dx_module/dx-common-form/skukey-search-form/skukey-search-form.service';
+import { NbAccessChecker } from '@nebular/security';
 
 @Component({
   selector: 'ngx-sample',
@@ -36,7 +37,7 @@ export class SampleComponent implements OnInit {
   public pageToolBarConfig: any;
   public popToolBarConfig: any;
   //grid config
-  public selectedCellObject:any;
+  public selectedCellObject: any;
   public masterGridConfig: any[];
   public detailGridConfig: any[];
   public ptnSearchGridConfig: any[];
@@ -65,7 +66,8 @@ export class SampleComponent implements OnInit {
     private formSubService: MasterSearchSubFormService,
     private formPartnerService: PartnerSearchFormService,
     private formSkukeyService: SkukeySearchFormService,
-    private gridService: GridService
+    private gridService: GridService,
+    public accessChecker: NbAccessChecker
   ) {
     this.formMasterDTO = this.formService.getDataObj();
     this.formDetailDTO = this.formSubService.getDataObj();
@@ -97,6 +99,13 @@ export class SampleComponent implements OnInit {
         icon: 'upload',
         onClick: (e) => {
           this.excelUpload(e, 'EXCELUPLOADBTN');
+        }
+      },
+      SAVEBTN: {
+        text: '저장(TEST)',
+        icon: 'save',
+        onClick: (e) => {
+          this.saveAPITest(e, 'SAVEBTN');
         }
       },
       POPSEARCHBTN: {
@@ -146,6 +155,14 @@ export class SampleComponent implements OnInit {
 
   saveDetail(val) {
     notify('업데이트 성공')
+  }
+
+  saveAPITest(e, subject) {
+    const data: any[] = this.masterGridRef.instance.getDataSource().items();
+    this.gridService.saveAPITEST(data).subscribe(res=>{
+      console.log(res)
+    });
+
   }
 
   searchPopup(event) {

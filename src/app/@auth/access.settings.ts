@@ -6,15 +6,35 @@
 
 export const authSettings = {
   guest: {
+    view: [],
   },
   user: {
     parent: 'guest',
-      view: ['current-user'],
-      edit: ['current-user'],
+    read: 'search',
   },
   admin: {
     parent: 'user',
-      view: ['current-user', 'users'],
-      edit: ['current-user', 'users'],
+    create: 'save',
+    remove: '*',
   },
 };
+
+
+// const _ACCESS_CONTROL = {
+
+//   accessControl: {
+//     guest: {
+//       view: ['pages'],
+//     },
+//     user: {
+//       parent: 'guest',
+//       create: 'comments',
+//     },
+//     admin: {
+//       parent: 'user',
+//       view: ['adminPages'],
+//       create: 'news',
+//       remove: '*',
+//     },
+//   },
+// }

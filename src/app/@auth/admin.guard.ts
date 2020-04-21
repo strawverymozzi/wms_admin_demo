@@ -4,7 +4,7 @@
  * See LICENSE_SINGLE_APP / LICENSE_MULTI_APP in the 'docs' folder for license information on type of purchased license.
  */
 import { Injectable } from '@angular/core';
-import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { NbRoleProvider } from '@nebular/security';
@@ -12,7 +12,7 @@ import { ROLES } from './roles';
 
 @Injectable()
 export class AdminGuard implements CanActivate {
-  constructor(private roleProvider: NbRoleProvider) {}
+  constructor(private roleProvider: NbRoleProvider, private router: Router) { }
 
   canActivate(
     route: ActivatedRouteSnapshot,
@@ -20,10 +20,14 @@ export class AdminGuard implements CanActivate {
   ): Observable<boolean> | Promise<boolean> | boolean {
     return this.roleProvider.getRole()
       .pipe(map(role => {
-        let roles = role instanceof Array ? role : [role];
-        
+        const roles = role instanceof Array ? role : [role];
+
         return roles.some(x => {
-          true;
+          if (!(x && x.toLowerCase() === ROLES.ADMIN)) {
+            this.router.navigate(['auth/login']);
+            return false;
+          }
+          return true;
         });
       }));
   }

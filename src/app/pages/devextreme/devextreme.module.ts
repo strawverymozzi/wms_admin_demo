@@ -18,6 +18,8 @@ import { CommonModule } from '@angular/common';
 import { MasterSearchFormComponent } from './sample/component/master-search-form/master-search-form.component';
 import { MasterSearchSubFormComponent } from './sample/component/master-search-sub-form/master-search-sub-form.component';
 import { DxCommonFormModule } from '../../@dx_module/dx-common-form/dx-common-form.module';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { DevextremeInterceptor } from './devextreme.interceptor';
 
 const components = [
   SampleComponent,
@@ -44,6 +46,7 @@ const components = [
     ...components,
 
   ],
-
+  providers: [{ provide: HTTP_INTERCEPTORS, useClass: DevextremeInterceptor, multi: true },
+  ]
 })
 export class DevextremeModule { }

@@ -20,7 +20,7 @@ export class AppComponent implements OnInit {
 
               // TODO: REMOVE BEFORE PROD
               // for demo only: init localstorage with token for demo user when login for the first time
-              this.initTestUserToken();
+              //this.initTestUserToken();
   }
 
   ngOnInit(): void {
@@ -28,13 +28,13 @@ export class AppComponent implements OnInit {
   }
 
   initTestUserToken() {
-    const demoTokenInitKey = 'demo_token_initialized';
-    const demoTokenWasInitialized = localStorage.getItem(demoTokenInitKey);
-    const currentToken = this.tokenStorage.get();
-    if (!demoTokenWasInitialized && !currentToken.isValid()) {
-      // local storage is clear, let's setup demo user token for better demo experience
-      this.tokenStorage.set(this.authStrategy.createToken<NbAuthToken>(environment.testUser.token));
-      localStorage.setItem(demoTokenInitKey, 'true');
-    }
+  //   const demoTokenInitKey = 'demo_token_initialized';
+  //   const demoTokenWasInitialized = localStorage.getItem(demoTokenInitKey);
+  //   const currentToken = this.tokenStorage.get();
+  //   if (!demoTokenWasInitialized && !currentToken.isValid()) {
+  //     // local storage is clear, let's setup demo user token for better demo experience
+  //     this.tokenStorage.set(this.authStrategy.createToken<NbAuthToken>(environment.testUser.token));
+  //     localStorage.setItem(demoTokenInitKey, 'true');
+  //   }
   }
 }

@@ -2,9 +2,11 @@
   <!-- page toolbar -->
   <ng-container>
     <dx-toolbar>
-      <dxi-item location="after" widget="dxButton" locateInMenu="auto" [options]="btnConfig.SEARCHMASTERBTN">
+      <dxi-item *ngIf="accessChecker.isGranted('read', 'search') | async" location="after" widget="dxButton" locateInMenu="auto" [options]="btnConfig.SEARCHMASTERBTN">
       </dxi-item>
-      <dxi-item location="after" widget="dxButton" locateInMenu="auto" [options]="btnConfig.EXCELUPLOADBTN">
+      <dxi-item *ngIf="accessChecker.isGranted('create', 'save') | async" location="after" widget="dxButton" locateInMenu="auto" [options]="btnConfig.EXCELUPLOADBTN">
+      </dxi-item>
+      <dxi-item *ngIf="accessChecker.isGranted('create', 'save') | async" location="after" widget="dxButton" locateInMenu="auto" [options]="btnConfig.SAVEBTN">
       </dxi-item>
     </dx-toolbar>
   </ng-container>
@@ -28,7 +30,7 @@
     [swipeEnabled]="true">
     <dxi-item title="입고예정 리스트">
       <dx-data-grid #masterGrid id="masterGrid" style="min-height:400px" [dataSource]="masterGridDataSource"
-        [showBorders]="true" [focusedRowEnabled]="true" keyExpr="CODEA"
+        [showBorders]="true" [focusedRowEnabled]="true" keyExpr="url"
         (onRowDblClick)="masterGridSelectionChange($event)">
         <dxo-selection mode="single"></dxo-selection>
         <ng-container *ngFor="let col of masterGridConfig; i as index">

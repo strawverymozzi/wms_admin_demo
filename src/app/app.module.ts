@@ -33,7 +33,6 @@ import {
     AppRoutingModule,
 
     AuthModule.forRoot(),
-
     NbSidebarModule.forRoot(),
     NbMenuModule.forRoot(),
     NbDatepickerModule.forRoot(),

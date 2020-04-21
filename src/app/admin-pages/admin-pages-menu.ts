@@ -4,7 +4,21 @@
  * See LICENSE_SINGLE_APP / LICENSE_MULTI_APP in the 'docs' folder for license information on type of purchased license.
  */
 
-
+const _DASHBOARDMENU: any[] = [
+  {
+    title: 'E-commerce',
+    icon: 'shopping-cart-outline',
+    link: '/adminPages/dashboard',
+    home: true,
+    children: undefined,
+  },
+  {
+    title: 'IoT Dashboard',
+    icon: 'home-outline',
+    link: '/adminPages/iot-dashboard',
+    children: undefined,
+  },
+];
 const _MENU: any[] = [
   {
     title: "Admin_module1",
@@ -65,7 +79,7 @@ export class AdminPagesMenu extends CommonHttpService {
   }
 
   getMenu(): Observable<any> {
-    return of([..._MENU]);
+    return of([..._DASHBOARDMENU,..._MENU]);
   }
-  
+
 }

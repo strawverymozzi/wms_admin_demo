@@ -17,6 +17,14 @@ const routes: Routes = [{
   component: AdminPagesComponent,
   children: [
     {
+      path: 'dashboard',
+      component: ECommerceComponent,
+    },
+    {
+      path: 'iot-dashboard',
+      component: DashboardComponent,
+    },
+    {
       path: 'adminModule1',
       loadChildren: () => import('./admin-module1/admin-module1.module')
         .then(m => m.AdminModule1Module),
@@ -28,7 +36,7 @@ const routes: Routes = [{
     },
     {
       path: '',
-      redirectTo: 'adminModule1',
+      redirectTo: 'dashboard',
       pathMatch: 'full',
     },
     {

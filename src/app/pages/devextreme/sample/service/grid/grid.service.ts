@@ -2,18 +2,71 @@ import { Injectable } from '@angular/core';
 import { CommonHttpService } from '../../../../../@common/common-http.service';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { tap, map } from 'rxjs/operators';
 
 const _MASTERGRIDURL: string = '/grid/HEADGRID';
+const _MASTERGRIDSAVEURL: string = '/grid/SAVEHEADGRID';
+
 const _MASTERGRIDCOLCONFIG = [
-  { caption: 'mastername1', dataField: "CODEA", width: 300, fixed: true, visible: true },
-  { caption: 'mastername2', dataField: "CODEB", width: 300, fixed: true, visible: true },
-  { caption: 'mastername3', dataField: "CODEC", width: 300, fixed: true, visible: true },
-  { caption: 'mastername4', dataField: "CODED", width: 300, fixed: true, visible: true },
-  { caption: 'mastername5', dataField: "CODEE", width: 300, fixed: true, visible: true },
-  { caption: 'mastername6', dataField: "CODEF", width: 300, fixed: true, visible: true },
-  { caption: 'mastername7', dataField: "CODEG", width: 300, fixed: true, visible: true },
-  { caption: 'mastername8', dataField: "CODEH", width: 300, fixed: true, visible: true },
-  { caption: 'mastername9', dataField: "CODEI", width: 300, fixed: true, visible: true },
+  { caption: 'url', dataField: "url", width: 300, fixed: true, visible: true },
+  { caption: 'uid', dataField: "uid", width: 300, fixed: true, visible: true },
+  { caption: 'name', dataField: "name", width: 300, fixed: true, visible: true },
+  { caption: 'tenant', dataField: "tenant", width: 300, fixed: true, visible: true },
+  { caption: 'ownoranotherflg', dataField: "ownoranotherflg", width: 300, fixed: true, visible: true },
+  { caption: 'transportpriority', dataField: "transportpriority", width: 300, fixed: true, visible: true },
+  { caption: 'ownercustomercd', dataField: "ownercustomercd", width: 300, fixed: true, visible: true },
+  { caption: 'ownersuppliercd', dataField: "ownersuppliercd", width: 300, fixed: true, visible: true },
+  { caption: 'itemadmin', dataField: "itemadmin", width: 300, fixed: true, visible: true },
+  { caption: 'actflg', dataField: "actflg", width: 300, fixed: true, visible: true },
+  { caption: 'companycd', dataField: "companycd", width: 300, fixed: true, visible: true },
+  { caption: 'countrycd', dataField: "countrycd", width: 300, fixed: true, visible: true },
+  { caption: 'postno', dataField: "postno", width: 300, fixed: true, visible: true },
+  { caption: 'districtcd', dataField: "districtcd", width: 300, fixed: true, visible: true },
+  { caption: 'portcd', dataField: "portcd", width: 300, fixed: true, visible: true },
+  { caption: 'refname', dataField: "refname", width: 300, fixed: true, visible: true },
+  { caption: 'address1', dataField: "address1", width: 300, fixed: true, visible: true },
+  { caption: 'address2', dataField: "address2", width: 300, fixed: true, visible: true },
+  { caption: 'address3', dataField: "address3", width: 300, fixed: true, visible: true },
+  { caption: 'f_USER3', dataField: "f_USER3", width: 300, fixed: true, visible: true },
+  { caption: 'f_USER5', dataField: "f_USER5", width: 300, fixed: true, visible: true },
+  { caption: 'companygroup', dataField: "companygroup", width: 300, fixed: true, visible: true },
+  { caption: 'typecustomer', dataField: "typecustomer", width: 300, fixed: true, visible: true },
+  { caption: 'f_USER4', dataField: "f_USER4", width: 300, fixed: true, visible: true },
+  { caption: 'phone1', dataField: "phone1", width: 300, fixed: true, visible: true },
+  { caption: 'phone2', dataField: "phone2", width: 300, fixed: true, visible: true },
+  { caption: 'typesupplier', dataField: "typesupplier", width: 300, fixed: true, visible: true },
+  { caption: 'typeshipto', dataField: "typeshipto", width: 300, fixed: true, visible: true },
+  { caption: 'typecarrier', dataField: "typecarrier", width: 300, fixed: true, visible: true },
+  { caption: 'typeetc', dataField: "typeetc", width: 300, fixed: true, visible: true },
+  { caption: 'typewarehouse', dataField: "typewarehouse", width: 300, fixed: true, visible: true },
+  { caption: 'f_USER1', dataField: "f_USER1", width: 300, fixed: true, visible: true },
+  { caption: 'typeowner', dataField: "typeowner", width: 300, fixed: true, visible: true },
+  { caption: 'f_USER2', dataField: "f_USER2", width: 300, fixed: true, visible: true },
+  { caption: 'f_USER10', dataField: "f_USER10", width: 300, fixed: true, visible: true },
+  { caption: 'purchasetype', dataField: "purchasetype", width: 300, fixed: true, visible: true },
+  { caption: 'ownerrefflg', dataField: "ownerrefflg", width: 300, fixed: true, visible: true },
+  { caption: 'f_USER8', dataField: "f_USER8", width: 300, fixed: true, visible: true },
+  { caption: 'f_USER6', dataField: "f_USER6", width: 300, fixed: true, visible: true },
+  { caption: 'f_USER9', dataField: "f_USER9", width: 300, fixed: true, visible: true },
+  { caption: 'f_USER7', dataField: "f_USER7", width: 300, fixed: true, visible: true },
+  { caption: 'calendarcd', dataField: "calendarcd", width: 300, fixed: true, visible: true },
+  { caption: 'bsnumber', dataField: "bsnumber", width: 300, fixed: true, visible: true },
+  { caption: 'fax1', dataField: "fax1", width: 300, fixed: true, visible: true },
+  { caption: 'email', dataField: "email", width: 300, fixed: true, visible: true },
+  { caption: 'aname', dataField: "aname", width: 300, fixed: true, visible: true },
+  { caption: 'sname', dataField: "sname", width: 300, fixed: true, visible: true },
+  { caption: 'fax2', dataField: "fax2", width: 300, fixed: true, visible: true },
+  { caption: 'CREATEDBY', dataField: "CREATEDBY", width: 300, fixed: true, visible: true },
+  { caption: 'CREATEDDATE', dataField: "CREATEDDATE", width: 300, fixed: true, visible: true },
+  { caption: 'CREATEIP', dataField: "CREATEIP", width: 300, fixed: true, visible: true },
+  { caption: 'LASTMODIFIEDBY', dataField: "LASTMODIFIEDBY", width: 300, fixed: true, visible: true },
+  { caption: 'LASTMODIFIEDDATE', dataField: "LASTMODIFIEDDATE", width: 300, fixed: true, visible: true },
+  { caption: 'LASTMODIFIEDIP', dataField: "LASTMODIFIEDIP", width: 300, fixed: true, visible: true },
+  { caption: 'UTC', dataField: "UTC", width: 300, fixed: true, visible: true },
+  { caption: 'REMARKS', dataField: "REMARKS", width: 300, fixed: true, visible: true },
+  { caption: 'ROW_VERSION', dataField: "ROW_VERSION", width: 300, fixed: true, visible: true },
+  { caption: 'TENANT', dataField: "TENANT", width: 300, fixed: true, visible: true },
+
 ]
 const _DETAILGRIDURL: string = '/grid/ITEMGRID';
 const _DETAILGRIDCOLCONFIG = [
@@ -60,7 +113,18 @@ export class GridService extends CommonHttpService {
     return _MASTERGRIDCOLCONFIG;
   }
   public getMasterGridData(data: any): Observable<any> {
-    return super.getJson(_MASTERGRIDURL);
+
+    return super.getJson(_MASTERGRIDURL).pipe(map(res => {
+      const rsList = [];
+      if (res && res.success && res.list.length) {
+        return [res.list[0].logisticscd];
+      }
+      return rsList;
+    }))
+  }
+
+  public saveAPITEST(data: any[]): Observable<any> {
+    return super.postJson(_MASTERGRIDSAVEURL, data);
   }
   public getDetailGridColumnConfig(): any {
     return _DETAILGRIDCOLCONFIG;
