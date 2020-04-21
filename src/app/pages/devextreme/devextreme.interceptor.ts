@@ -18,10 +18,13 @@ export class DevextremeInterceptor implements HttpInterceptor {
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    console.log(req.body)
-    const clonedReq = req.clone({
-      headers: req.headers.append('Authorization', 'Bearer ' + this.tokenStorage.get())
-    });
+    let clonedReq = req;
+    if (req.method == 'POST') {
+      clonedReq = req.clone({
+        headers: req.headers.append('Authorization', 'Bearer ' + this.tokenStorage.get()),
+        body: { version: 'v1', user: "jbh5310", data: req.body }
+      });
+    }
     return next.handle(clonedReq).pipe(
       tap(
         (event: HttpEvent<any>) => {

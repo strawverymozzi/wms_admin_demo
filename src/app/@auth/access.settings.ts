@@ -18,23 +18,3 @@ export const authSettings = {
     remove: '*',
   },
 };
-
-
-// const _ACCESS_CONTROL = {
-
-//   accessControl: {
-//     guest: {
-//       view: ['pages'],
-//     },
-//     user: {
-//       parent: 'guest',
-//       create: 'comments',
-//     },
-//     admin: {
-//       parent: 'user',
-//       view: ['adminPages'],
-//       create: 'news',
-//       remove: '*',
-//     },
-//   },
-// }

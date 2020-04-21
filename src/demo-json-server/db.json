@@ -1,7 +1,7 @@
 {
   "login": {
     "email": "admin@admin.com",
-    "password": "qweqwe",
+    "password": "weqwqwe",
     "rememberMe": false
   },
   "sign-up": {
@@ -619,5 +619,5 @@
   "PTNRNM": {
     "name": ""
   },
-  "SAVEHEADGRID":[]
+  "SAVEHEADGRID": []
 }

@@ -1,0 +1,99 @@
+{
+    "uid": null,
+    "createdBy": "jbh5310",
+    "createDate": "2020-03-28 19:38:03.465000",
+    "createIp": null,
+    "lastModifiedBy": "jbh5310",
+    "lastModifiedDate": "2020-03-28 19:38:03.465000",
+    "lastModifiedIp": null,
+    "remarks": null,
+    "UTC": null,
+    "acceptKey": null,
+    "acceptUsercd": null,
+    "actFlg": 1,
+    "address1": null,
+    "address2": null,
+    "address3": null,
+    "allocGroup": null,
+    "assyKey": null,
+    "carriercd": "0",
+    "carrierName": null,
+    "carrierNo": null,
+    "carrierSeq": null,
+    "carriersName": null,
+    "carrierWbNo": null,
+    "companyUid": "9999",
+    "companycd": "Company_11",
+    "companyName": "거래처이름",
+    "countrycd": null,
+    "deliverycd": null,
+    "districtcd": null,
+    "eMail": "jbh5310",
+    "expectedTime": null,
+    "fax1": null,
+    "fromAddress1": null,
+    "fromAddress2": null,
+    "fromAddress3": null,
+    "fromcd": null,
+    "fromCountrycd": null,
+    "fromDistrictcd": null,
+    "fromEmail": null,
+    "fromFax": null,
+    "fromName": null,
+    "fromPhone": null,
+    "fromPortcd": null,
+    "fromPostNo": null,
+    "fromRefName": null,
+    "fromSub": null,
+    "inspectedUsercd": null,
+    "logisticsUid": "10000",
+    "logisticscd": "LOGICS_CD",
+    "logisticsName": "운송사거래처명",
+    "moveKey": null,
+    "otherRefNo1": null,
+    "otherRefNo2": null,
+    "otherRefNo3": null,
+    "partFlg": 0,
+    "portcd": null,
+    "postNo": null,
+    "preKey": null,
+    "priorities": 0,
+    "produceKey": null,
+    "rcvInspectFlg": 1,
+    "rcvKey": 100000,
+    "rcvSchDate": "2020-04-15",
+    "rcvType": "STD",
+    "receiveDate": "2020-04-20",
+    "receivedUsercd": null,
+    "refName": null,
+    "rmaNo": null,
+    "sts": 100,
+    "suppliercd": null,
+    "supplierName": null,
+    "supplierPhone": null,
+    "supplierRcvNo": null,
+    "templateFlg": 0,
+    "warehouseUid": "1000001",
+    "warehousecd": "2000",
+    "warehouseName": "창고명",
+    "tenant": "1000"
+}
+]
+  DB SEQ   거래처코드(사용자) 거래처명(사용자명) tenant    
+A  1000    C1000             서울상공회의소    9999
+B  1001    C1000             서울상공회의소    9998
+
+trrcv
+select a.logistcscd, b.name logisticsname
+  from trrcv a join company b on a.logistcscd = b.comapnycd
+  1000001     rcvkey
+multi tenancy
+
+한 DB 안에 여러 회사내용을 합칠것.
+trrcv - 여러회사 데이터, Tenant    :"tenant": "1001"
+
+
+
+    1was      2was      3was    
+    1-100     100-200   200 -300
+    1000001
