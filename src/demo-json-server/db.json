@@ -1,7 +1,7 @@
 {
   "login": {
     "email": "admin@admin.com",
-    "password": "weqwqwe",
+    "password": "admin@admin.com",
     "rememberMe": false
   },
   "sign-up": {
@@ -619,5 +619,64 @@
   "PTNRNM": {
     "name": ""
   },
-  "SAVEHEADGRID": []
+  "SAVEHEADGRID": [],
+  "ADMINMENU": [
+    {
+      "title": "Admin_module1",
+      "icon": "layout-outline",
+      "children": [
+        {
+          "title": "AdminTestComp",
+          "link": "/adminPages/AdminModule1Module/test1"
+        }
+      ]
+    },
+    {
+      "title": "Admin_module2",
+      "icon": "edit-2-outline",
+      "children": [
+        {
+          "title": "AdminTestComp2",
+          "link": "/adminPages/AdminModule2Module/test2"
+        }
+      ]
+    },
+    {
+      "title": "Admin_module3",
+      "icon": "edit-2-outline",
+      "children": [
+        {
+          "title": "AdminTestComp3",
+          "link": "/adminPages/AdminModule3Module/test3"
+        }
+      ]
+    },
+    {
+      "title": "Admin_module4",
+      "icon": "edit-2-outline",
+      "children": [
+        {
+          "title": "AdminTestComp4",
+          "link": "/adminPages/AdminModule4Module/test4"
+        }
+      ]
+    }
+  ],
+  "ADMINMODULE": {
+    "pathConfig": {
+      "emptyPath": "",
+      "redirectOnEmpty": "dashboard",
+      "pathMatch": "full"
+    },
+    "modules": [
+      {
+        "module": "AdminModule1Module",
+        "importPath": "./admin-module1/admin-module1.module"
+      },
+      {
+        "module": "AdminModule2Module",
+        "importPath": "./admin-module2/admin-module2.module"
+      }
+    ]
+  }
 }

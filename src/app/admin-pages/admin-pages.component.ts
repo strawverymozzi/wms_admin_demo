@@ -22,7 +22,7 @@ import { AdminPagesMenu } from './admin-pages-menu';
 })
 export class AdminPagesComponent implements OnDestroy {
 
-  menu: any[];
+  menu: any[] = [];
   alive: boolean = true;
 
   constructor(
@@ -31,7 +31,7 @@ export class AdminPagesComponent implements OnDestroy {
     protected initUserService: InitUserService,
   ) {
     this.initMenu();
-
+    console.log("AdminPagesComponent");
     this.tokenService.tokenChange()
       .pipe(takeWhile(() => this.alive))
       .subscribe(() => {

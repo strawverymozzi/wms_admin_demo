@@ -19,51 +19,8 @@ const _DASHBOARDMENU: any[] = [
     children: undefined,
   },
 ];
-const _MENU: any[] = [
-  {
-    title: "Admin_module1",
-    icon: "layout-outline",
-    children: [
-      {
-        title: "AdminTestComp",
-        link: "/adminPages/adminModule1/test1"
-      }
-    ]
-  },
-  {
-    title: "Admin_module2",
-    icon: "edit-2-outline",
-    children: [
-      {
-        title: "AdminTestComp2",
-        link: "/adminPages/adminModule2/test2"
-      }
-    ]
-  }
-];
-// "ADMINMENUPAGES": [
-//   {
-//     "title": "Admin_module1",
-//     "icon": "layout-outline",
-//     "children": [
-//       {
-//         "title": "AdminTestComp",
-//         "link": "/adminPages/adminModule1/test1"
-//       }
-//     ]
-//   },
-//   {
-//     "title": "Admin_module2",
-//     "icon": "edit-2-outline",
-//     "children": [
-//       {
-//         "title": "AdminTestComp2",
-//         "link": "/adminPages/adminModule1/test2"
-//       }
-//     ]
-//   }
-// ],
-const _ADMINMENUPAGESURL: string = '/ADMINMENUPAGES';
+
+const _ADMINMENUPAGESURL: string = '/auth/ADMINMENU';
 
 import { Observable, of } from 'rxjs';
 import { Injectable } from '@angular/core';
@@ -79,7 +36,7 @@ export class AdminPagesMenu extends CommonHttpService {
   }
 
   getMenu(): Observable<any> {
-    return of([..._DASHBOARDMENU,..._MENU]);
+    return this.getJson(_ADMINMENUPAGESURL);
   }
 
 }
