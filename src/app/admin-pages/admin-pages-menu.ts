@@ -33,10 +33,21 @@ export class AdminPagesMenu extends CommonHttpService {
   private adminMenu: any[];
   constructor(private http: HttpClient) {
     super(http);
+    this.adminMenu = [];
   }
 
-  getMenu(): Observable<any> {
+  callMenu(): Observable<any> {
     return this.getJson(_ADMINMENUPAGESURL);
+  }
+
+  setMenu() {
+    this.callMenu().subscribe(res => {
+      this.adminMenu.push(...res);
+    })
+  }
+
+  getMenu(): any[] {
+    return this.adminMenu;
   }
 
 }

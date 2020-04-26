@@ -19,6 +19,7 @@ import { AdminPagesMenu } from './admin-pages-menu';
       <router-outlet></router-outlet>
     </ngx-one-column-layout>
   `,
+  providers: [AdminPagesMenu]
 })
 export class AdminPagesComponent implements OnDestroy {
 
@@ -26,26 +27,26 @@ export class AdminPagesComponent implements OnDestroy {
   alive: boolean = true;
 
   constructor(
-    private adminPagesMenu: AdminPagesMenu,
     private tokenService: NbTokenService,
     protected initUserService: InitUserService,
+    private menuService: AdminPagesMenu
+
   ) {
-    this.initMenu();
-    console.log("AdminPagesComponent");
+    this.menu = this.menuService.getMenu();
     this.tokenService.tokenChange()
       .pipe(takeWhile(() => this.alive))
       .subscribe(() => {
-        this.initMenu();
+        this.menuService.setMenu();
       });
   }
 
-  initMenu() {
-    this.adminPagesMenu.getMenu()
-      .pipe(takeWhile(() => this.alive))
-      .subscribe(menu => {
-        this.menu = [...menu];
-      });
-  }
+  // initMenu() {
+  //   this.adminPagesMenu.getMenu()
+  //     .pipe(takeWhile(() => this.alive))
+  //     .subscribe(menu => {
+  //       this.menu = [...menu];
+  //     });
+  // }
 
   ngOnDestroy(): void {
     this.alive = false;

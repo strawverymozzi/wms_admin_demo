@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { tap, map } from 'rxjs/operators';
 
-const _MASTERGRIDURL: string = '/grid/HEADGRID';
+const _MASTERGRIDURL: string = "http://www.jflab.co.kr:18000/api/v1/receive/rcv?criteria=tenant=='1000';rcvKey=='99999';fdds=bt=(2020-04-21,2020-08-01)";
 const _MASTERGRIDSAVEURL: string = '/grid/SAVEHEADGRID';
 
 const _MASTERGRIDCOLCONFIG = [
@@ -114,13 +114,20 @@ export class GridService extends CommonHttpService {
   }
   public getMasterGridData(data: any): Observable<any> {
 
-    return super.getJson(_MASTERGRIDURL).pipe(map(res => {
+    return this.http.get(_MASTERGRIDURL).pipe(map(res => {
       const rsList = [];
-      if (res && res.success && res.list.length) {
-        return [res.list[0].logisticscd];
+      if (res && res["success"] && res["list"].length) {
+        return res["list"];
       }
       return rsList;
     }))
+    // return super.getJson(_MASTERGRIDURL).pipe(map(res => {
+    //   const rsList = [];
+    //   if (res && res.success && res.list.length) {
+    //     return res.list;
+    //   }
+    //   return rsList;
+    // }))
   }
 
   public saveAPITEST(data: any[]): Observable<any> {

@@ -30,7 +30,7 @@
     [swipeEnabled]="true">
     <dxi-item title="입고예정 리스트">
       <dx-data-grid #masterGrid id="masterGrid" style="min-height:400px" [dataSource]="masterGridDataSource"
-        [showBorders]="true" [focusedRowEnabled]="true" keyExpr="url"
+        [showBorders]="true" [focusedRowEnabled]="true" keyExpr="uid"
         (onRowDblClick)="masterGridSelectionChange($event)">
         <dxo-selection mode="single"></dxo-selection>
         <ng-container *ngFor="let col of masterGridConfig; i as index">

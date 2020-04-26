@@ -31,4 +31,8 @@ const ADMIN_PAGES_COMPONENTS = [
     AdminPagesMenu,
   ],
 })
-export class AdminPagesModule { }
+export class AdminPagesModule {
+  constructor() {
+
+  }
+}

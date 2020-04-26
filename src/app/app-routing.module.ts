@@ -40,4 +40,5 @@ const config: ExtraOptions = {
   exports: [RouterModule],
 })
 export class AppRoutingModule {
+  
 }
