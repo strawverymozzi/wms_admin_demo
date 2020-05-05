@@ -2,11 +2,14 @@
   <!-- page toolbar -->
   <ng-container>
     <dx-toolbar>
-      <dxi-item *ngIf="accessChecker.isGranted('read', 'search') | async" location="after" widget="dxButton" locateInMenu="auto" [options]="btnConfig.SEARCHMASTERBTN">
+      <dxi-item *ngIf="accessChecker.isGranted('read', 'search') | async" location="after" widget="dxButton"
+        locateInMenu="auto" [options]="btnConfig.SEARCHMASTERBTN">
       </dxi-item>
-      <dxi-item *ngIf="accessChecker.isGranted('create', 'save') | async" location="after" widget="dxButton" locateInMenu="auto" [options]="btnConfig.EXCELUPLOADBTN">
+      <dxi-item *ngIf="accessChecker.isGranted('create', 'save') | async" location="after" widget="dxButton"
+        locateInMenu="auto" [options]="btnConfig.EXCELUPLOADBTN">
       </dxi-item>
-      <dxi-item *ngIf="accessChecker.isGranted('create', 'save') | async" location="after" widget="dxButton" locateInMenu="auto" [options]="btnConfig.SAVEBTN">
+      <dxi-item *ngIf="accessChecker.isGranted('create', 'save') | async" location="after" widget="dxButton"
+        locateInMenu="auto" [options]="btnConfig.SAVEBTN">
       </dxi-item>
     </dx-toolbar>
   </ng-container>
@@ -31,8 +34,10 @@
     <dxi-item title="입고예정 리스트">
       <dx-data-grid #masterGrid id="masterGrid" style="min-height:400px" [dataSource]="masterGridDataSource"
         [showBorders]="true" [focusedRowEnabled]="true" keyExpr="uid"
-        (onRowDblClick)="masterGridSelectionChange($event)">
+        (onRowDblClick)="masterGridSelectionChange($event)" (onExporting)="onExporting($event)">
         <dxo-selection mode="single"></dxo-selection>
+        <dxo-export [enabled]="true" [allowExportSelectedData]="true"></dxo-export>
+
         <ng-container *ngFor="let col of masterGridConfig; i as index">
           <dxi-column [caption]="col.caption" [dataField]="col.dataField" [width]="col.width" [fixed]="col.fixed">
           </dxi-column>
@@ -96,7 +101,7 @@
       <!-- header update form -->
       <div class="dx-field" style="padding:10px 0">
         <div class="dx-field-label" style="width:10%">마스터 파라메터</div>
-        <div class="dx-field-value" style="width:90%">          
+        <div class="dx-field-value" style="width:90%">
           <dx-tab-panel #detailFormTabPanel height="auto" [selectedIndex]="0" [loop]="true" [animationEnabled]="true"
             [swipeEnabled]="true">
             <dxi-item title="Header Editor">
@@ -111,25 +116,45 @@
       <!-- header update form end -->
       <dx-data-grid #detailGrid id="detailGrid" keyExpr="CODEA" [dataSource]="detailGridDataSource" [showBorders]="true"
         [focusedRowEnabled]="true" (onEditorPrepared)="setSelectedCellObject($event)">
+        <!-- (onKeyDown)="onDetailDropKeyDown($event)" -->
         <dxo-editing mode="batch" [allowUpdating]="true" [selectTextOnEditStart]="selectTextOnEditStart"
           [startEditAction]="startEditAction">
         </dxo-editing>
-        <!-- <dxo-editing mode="cell" [allowUpdating]="true">
-        </dxo-editing>
-        <dxo-selection mode="single"></dxo-selection> -->
+        <dxo-selection mode="single"></dxo-selection>
+
+        <dxo-keyboard-navigation editOnKeyPress="true" enterKeyAction="moveFocus" enterKeyDirection="column">
+        </dxo-keyboard-navigation>
+
         <ng-container *ngFor="let col of detailGridConfig; i as index">
-          <dxi-column [caption]="col.caption" [cellTemplate]="col.cellTemplate" [dataField]="col.dataField"
+          <dxi-column [caption]="col.caption" [editCellTemplate]="col.editCellTemplate" [dataField]="col.dataField"
             [width]="col.width" [fixed]="col.fixed">
           </dxi-column>
         </ng-container>
-        <div *dxTemplate="let d of 'cellSearchHelpPTNKEY'">
-          <div style="width:100%;">
-            <span class="grid_cell_text">{{d.data.CODEB}}</span>
-            <dx-button class="grid_cell_btn" style="display:inline-block;width:10%;" icon="fa fa-search"
-              (onClick)="openSearchHelp({id:'SEARCHPTN',value:d.data.CODEB},'DEATILCELL')">
-            </dx-button>
-          </div>
+
+        <div *dxTemplate="let cellInfo of 'cellSearchHelpPTNKEY'">
+          <dx-drop-down-box (onOpened)="onDetailDropGridOpen($event)" [dropDownOptions]="{width:300}"
+            [dataSource]="detailDropGridDataSource" [(value)]="cellInfo.value" displayExpr="FullName" valueExpr="PTNRKY"
+            contentTemplate="contentTemplate">
+            <div *dxTemplate="let data of 'dropDownButton'">
+              <i class="fa fa-search"></i>
+            </div>
+            <div *dxTemplate="let e of 'contentTemplate'">
+              <dx-data-grid [dataSource]="detailDropGridDataSource" [height]="250" [selectedRowKeys]="[cellInfo.value]"
+                [focusedRowEnabled]="true" [focusedRowKey]="cellInfo.value" [hoverStateEnabled]="true" keyExpr="PTNRKY"
+                (onSelectionChanged)="onSelectionChanged($event.selectedRowsData, cellInfo, e.component)">
+                <ng-container *ngFor="let col of detailDropGridConfig; i as index">
+                  <dxi-column [caption]="col.caption" [dataField]="col.dataField" [width]="col.width"
+                    [fixed]="col.fixed">
+                  </dxi-column>
+                </ng-container>
+                <dxo-paging [enabled]="true" [pageSize]="10"></dxo-paging>
+                <dxo-scrolling mode="virtual"></dxo-scrolling>
+                <dxo-selection mode="single"></dxo-selection>
+              </dx-data-grid>
+            </div>
+          </dx-drop-down-box>
         </div>
+
       </dx-data-grid>
     </dx-scroll-view>
   </ng-container>

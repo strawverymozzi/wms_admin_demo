@@ -4,22 +4,6 @@
  * See LICENSE_SINGLE_APP / LICENSE_MULTI_APP in the 'docs' folder for license information on type of purchased license.
  */
 
-const _DASHBOARDMENU: any[] = [
-  {
-    title: 'E-commerce',
-    icon: 'shopping-cart-outline',
-    link: '/adminPages/dashboard',
-    home: true,
-    children: undefined,
-  },
-  {
-    title: 'IoT Dashboard',
-    icon: 'home-outline',
-    link: '/adminPages/iot-dashboard',
-    children: undefined,
-  },
-];
-
 const _ADMINMENUPAGESURL: string = '/auth/ADMINMENU';
 
 import { Observable, of } from 'rxjs';

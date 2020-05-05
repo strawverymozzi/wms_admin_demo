@@ -11,6 +11,9 @@ import {
   DxActionSheetModule,
   DxPopupModule,
   DxScrollViewModule,
+  DxDropDownBoxModule,
+  DxListModule,
+  DxDateBoxModule,
 } from 'devextreme-angular';
 import { SampleComponent } from './sample/sample.component';
 import { DemoGridComponent } from './demo-grid/demo-grid.component';
@@ -41,7 +44,10 @@ const components = [
     DxActionSheetModule,
     DxPopupModule,
     DxScrollViewModule,
-    HttpClientModule
+    HttpClientModule,
+    DxDropDownBoxModule,
+    DxListModule,
+    DxDateBoxModule
   ],
   declarations: [
     ...components,

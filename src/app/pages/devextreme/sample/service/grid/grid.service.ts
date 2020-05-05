@@ -4,7 +4,8 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { tap, map } from 'rxjs/operators';
 
-const _MASTERGRIDURL: string = "http://www.jflab.co.kr:18000/api/v1/receive/rcv?criteria=tenant=='1000';rcvKey=='99999';fdds=bt=(2020-04-21,2020-08-01)";
+//const _MASTERGRIDURL: string = "http://www.jflab.co.kr:18000/api/v1/receive/rcv?criteria=tenant=='1000';rcvKey=='99999';fdds=bt=(2020-04-21,2020-08-01)";
+const _MASTERGRIDURL: string = "/grid/HEADGRID";
 const _MASTERGRIDSAVEURL: string = '/grid/SAVEHEADGRID';
 
 const _MASTERGRIDCOLCONFIG = [
@@ -71,7 +72,7 @@ const _MASTERGRIDCOLCONFIG = [
 const _DETAILGRIDURL: string = '/grid/ITEMGRID';
 const _DETAILGRIDCOLCONFIG = [
   { caption: 'detailname1', dataField: "CODEA", width: 300, fixed: true, visible: true },
-  { caption: 'detailname2', cellTemplate: "cellSearchHelpPTNKEY", dataField: "CODEB", width: 300, fixed: true, visible: true },
+  { caption: 'detailname2', dataField: "CODEB", width: 300, fixed: true, visible: true },
   { caption: 'detailname3', dataField: "CODEC", width: 300, fixed: true, visible: true },
   { caption: 'detailname4', dataField: "CODED", width: 300, fixed: true, visible: true },
   { caption: 'detailname5', dataField: "CODEE", width: 300, fixed: true, visible: true },
@@ -104,6 +105,14 @@ const _SKUSEARCHGRIDCOLCONFIG = [
   { caption: 'skuname8', dataField: "CODEH", width: 300, fixed: true, visible: true },
   { caption: 'skuname9', dataField: "CODEI", width: 300, fixed: true, visible: true }
 ]
+const _DETAILGRIDDROPSEARCH: string = '/grid/PTNSEARCHDROPGRID';
+const _DETAILDROPGRIDCONFIG = [
+  { caption: 'PTNRKY', dataField: "PTNRKY", width: 50, fixed: true, visible: true },
+  { caption: 'PTNRNM', dataField: "PTNRNM", width: 50, fixed: true, visible: true },
+  { caption: 'tenant', dataField: "tenant", width: 50, fixed: true, visible: true },
+]
+
+
 @Injectable()
 export class GridService extends CommonHttpService {
   constructor(private http: HttpClient) {
@@ -114,20 +123,20 @@ export class GridService extends CommonHttpService {
   }
   public getMasterGridData(data: any): Observable<any> {
 
-    return this.http.get(_MASTERGRIDURL).pipe(map(res => {
-      const rsList = [];
-      if (res && res["success"] && res["list"].length) {
-        return res["list"];
-      }
-      return rsList;
-    }))
-    // return super.getJson(_MASTERGRIDURL).pipe(map(res => {
+    // return this.http.get(_MASTERGRIDURL).pipe(map(res => {
     //   const rsList = [];
-    //   if (res && res.success && res.list.length) {
-    //     return res.list;
+    //   if (res && res["success"] && res["list"].length) {
+    //     return res["list"];
     //   }
     //   return rsList;
     // }))
+    return super.getJson(_MASTERGRIDURL).pipe(map(res => {
+      const rsList = [];
+      if (res && res.success && res.list.length) {
+        return res.list;
+      }
+      return rsList;
+    }))
   }
 
   public saveAPITEST(data: any[]): Observable<any> {
@@ -150,6 +159,18 @@ export class GridService extends CommonHttpService {
   }
   public getSkuUpGridData(): Observable<any> {
     return super.getJson(_SKUSEARCHGRIDURL);
+  }
+  public getDetailDropGridColumnConfig(): any {
+    return _DETAILDROPGRIDCONFIG;
+  }
+  public getDetailDropGridData(): Observable<any> {
+    return super.getJson(_DETAILGRIDDROPSEARCH).pipe(map(res => {
+      const rsList = [];
+      if (res && res.success && res.list.length) {
+        return res.list;
+      }
+      return rsList;
+    }))
   }
 }
 

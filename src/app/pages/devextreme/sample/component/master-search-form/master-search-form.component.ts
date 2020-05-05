@@ -1,5 +1,6 @@
-import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, AfterViewInit, ElementRef } from '@angular/core';
 import { MasterSearchFormService } from './master-search-form.service';
+import { GlobalAdministrator } from '../../../../../@common/GlobalAdministrator';
 
 @Component({
   selector: 'ngx-master-search-form',
@@ -7,7 +8,7 @@ import { MasterSearchFormService } from './master-search-form.service';
   styleUrls: ['./master-search-form.component.css'],
   providers: [MasterSearchFormService]
 })
-export class MasterSearchFormComponent implements OnInit {
+export class MasterSearchFormComponent extends GlobalAdministrator implements OnInit {
 
   @Output() clickEvent = new EventEmitter();
   public dataObject: any;
@@ -17,7 +18,10 @@ export class MasterSearchFormComponent implements OnInit {
   public rcvTypeComboDataSource: any[];
   public mallIdComboDataSource: any[];
 
-  constructor(private service: MasterSearchFormService) {
+
+
+  constructor(private service: MasterSearchFormService, protected elRef: ElementRef) {
+    super(elRef);
     this.dataObject = service.getDataObj();
     this.searchPtnBtn = {
       icon: 'search',
@@ -52,8 +56,6 @@ export class MasterSearchFormComponent implements OnInit {
     this.service.getRcvTypeCombo().subscribe(res => {
       this.rcvTypeComboDataSource = res;
     });
-
-   
   }
-
+ 
 }

@@ -1,7 +1,7 @@
 {
   "login": {
     "email": "admin@admin.com",
-    "password": "1234567",
+    "password": "qweqwe",
     "rememberMe": false
   },
   "sign-up": {
@@ -426,14 +426,28 @@
       "CODEE": "Minnesota"
     }
   ],
-  "PTNRNM": {
-    "name": ""
+  "PTNSEARCHDROPGRID": {
+    "success": true,
+    "code": 0,
+    "msg": "성공하였습니다.",
+    "list": [
+      {
+        "PTNRKY": 10000,
+        "PTNRNM": "PARTNER A",
+        "tenant": "1000"
+      },
+      {
+        "PTNRKY": 20000,
+        "PTNRNM": "PARTNER B",
+        "tenant": "2000"
+      }
+    ]
   },
   "SAVEHEADGRID": [
     {
       "version": "v1",
       "user": "jbh5310",
-      "companycd":{},
+      "companycd": {},
       "data": [
         {
           "url": null,
@@ -497,6 +511,133 @@
         }
       ],
       "id": 1
+    },
+    {
+      "version": "v1",
+      "user": "jbh5310",
+      "data": [
+        {
+          "url": null,
+          "uid": 10000,
+          "name": "테스트 COMPANNY",
+          "tenant": "1000",
+          "ownoranotherflg": 0,
+          "transportpriority": 0,
+          "ownercustomercd": null,
+          "ownersuppliercd": null,
+          "itemadmin": null,
+          "actflg": 1,
+          "companycd": "INIT_COMP02",
+          "countrycd": null,
+          "postno": null,
+          "districtcd": null,
+          "portcd": null,
+          "refname": null,
+          "address1": "ADDRESS01",
+          "address2": null,
+          "address3": null,
+          "f_USER3": null,
+          "f_USER5": null,
+          "companygroup": null,
+          "typecustomer": 0,
+          "f_USER4": null,
+          "phone1": null,
+          "phone2": null,
+          "typesupplier": 0,
+          "typeshipto": 0,
+          "typecarrier": 0,
+          "typeetc": 0,
+          "typewarehouse": 0,
+          "f_USER1": null,
+          "typeowner": 0,
+          "f_USER2": null,
+          "f_USER10": null,
+          "purchasetype": null,
+          "ownerrefflg": 0,
+          "f_USER8": null,
+          "f_USER6": null,
+          "f_USER9": null,
+          "f_USER7": null,
+          "calendarcd": null,
+          "bsnumber": "1001010",
+          "fax1": null,
+          "email": null,
+          "aname": "테스트 COMPANY_B",
+          "sname": "테스트 COMPANY_S",
+          "fax2": null,
+          "CREATEDBY": "jbh5310",
+          "CREATEDDATE": "2020-03-28 19:38:03.465000",
+          "CREATEIP": null,
+          "LASTMODIFIEDBY": "jbh5310",
+          "LASTMODIFIEDDATE": "2020-03-28 19:38:03.465000",
+          "LASTMODIFIEDIP": null,
+          "UTC": null,
+          "REMARKS": null,
+          "ROW_VERSION": 1,
+          "TENANT": "1000"
+        },
+        {
+          "url": null,
+          "uid": 20000,
+          "name": "테스트2 COMPANNY",
+          "tenant": "2000",
+          "ownoranotherflg": 0,
+          "transportpriority": 0,
+          "ownercustomercd": null,
+          "ownersuppliercd": null,
+          "itemadmin": null,
+          "actflg": 1,
+          "companycd": "INIT_COMP02",
+          "countrycd": null,
+          "postno": null,
+          "districtcd": null,
+          "portcd": null,
+          "refname": null,
+          "address1": "ADDRESS01",
+          "address2": null,
+          "address3": null,
+          "f_USER3": null,
+          "f_USER5": null,
+          "companygroup": null,
+          "typecustomer": 0,
+          "f_USER4": null,
+          "phone1": null,
+          "phone2": null,
+          "typesupplier": 0,
+          "typeshipto": 0,
+          "typecarrier": 0,
+          "typeetc": 0,
+          "typewarehouse": 0,
+          "f_USER1": null,
+          "typeowner": 0,
+          "f_USER2": null,
+          "f_USER10": null,
+          "purchasetype": null,
+          "ownerrefflg": 0,
+          "f_USER8": null,
+          "f_USER6": null,
+          "f_USER9": null,
+          "f_USER7": null,
+          "calendarcd": null,
+          "bsnumber": "1001010",
+          "fax1": null,
+          "email": null,
+          "aname": "테스트 COMPANY_B",
+          "sname": "테스트 COMPANY_S",
+          "fax2": null,
+          "CREATEDBY": "jbh5310",
+          "CREATEDDATE": "2020-03-28 19:38:03.465000",
+          "CREATEIP": null,
+          "LASTMODIFIEDBY": "jbh5310",
+          "LASTMODIFIEDDATE": "2020-03-28 19:38:03.465000",
+          "LASTMODIFIEDIP": null,
+          "UTC": null,
+          "REMARKS": null,
+          "ROW_VERSION": 1,
+          "TENANT": "2000"
+        }
+      ],
+      "id": 2
     }
   ],
   "ADMINMENU": [

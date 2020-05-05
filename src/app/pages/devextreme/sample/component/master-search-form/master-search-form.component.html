@@ -1,7 +1,7 @@
 <div class="wrapper">
     <div class="col_1">
         <div class="field">
-            <div class="label">입고상태</div>
+            <div class="label" global="RCVSTA">입고테스트</div>
             <div class="value">
                 <dx-select-box [(value)]="dataObject.RCVSTA" [items]="rcvStatusComboDataSource" placeholder=""
                     [showClearButton]="true">
@@ -32,7 +32,8 @@
         <div class="field">
             <div class="label">거래처 코드</div>
             <div class="value half">
-                <dx-text-box (onValueChanged)="ptnCodeChanged($event)" placeholder="코드" [(value)]="dataObject.PTNRKY"></dx-text-box>
+                <dx-text-box (onValueChanged)="ptnCodeChanged($event)" placeholder="코드" [(value)]="dataObject.PTNRKY">
+                </dx-text-box>
             </div>
             <div class="value half">
                 <dx-text-box id="loadPanel" placeholder="거래처명" [(value)]="dataObject.PTNRNM">

@@ -72,4 +72,21 @@ export class CommonHttpService {
     this.options.responseType = 'text';
     return this._http.post(url, paramObj, this.options);
   }
+  //const _MASTERGRIDURL: string = "rcv?criteria=tenant=='1000';rcvKey=='99999';fdds=bt=(2020-04-21,2020-08-01)";
+
+  protected setQueryString(method, data: any) {
+
+    const queryStringGET = () => {
+      let str = '';
+      for (let key of Object.keys(data)) {
+        str += (key + '==' + data[key] + ';');
+      }
+    }
+    switch (method) {
+      case 'GET':
+        break;
+    }
+
+
+  }
 }

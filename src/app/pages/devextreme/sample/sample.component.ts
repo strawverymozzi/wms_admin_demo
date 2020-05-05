@@ -7,6 +7,9 @@ import { DxDataGridComponent } from 'devextreme-angular';
 import { PartnerSearchFormService } from '../../../@dx_module/dx-common-form/partner-search-form/partner-search-form.service';
 import { SkukeySearchFormService } from '../../../@dx_module/dx-common-form/skukey-search-form/skukey-search-form.service';
 import { NbAccessChecker } from '@nebular/security';
+import { exportDataGrid } from 'devextreme/excel_exporter';
+import * as ExcelJS from 'exceljs';
+import * as FileSaver from "file-saver";
 
 @Component({
   selector: 'ngx-sample',
@@ -42,11 +45,13 @@ export class SampleComponent implements OnInit {
   public detailGridConfig: any[];
   public ptnSearchGridConfig: any[];
   public skuSearchGridConfig: any[];
+  public detailDropGridConfig: any[];
   //grid dataSource
   public masterGridDataSource: any;
   public detailGridDataSource: any;
   public ptnSearchGridDataSource: any;
   public skuSearchGridDataSource: any;
+  public detailDropGridDataSource: any;
   //combo dataSource
   public rcvStatusComboDataSource: any[];
   public rcvTypeComboDataSource: any[];
@@ -69,6 +74,7 @@ export class SampleComponent implements OnInit {
     private gridService: GridService,
     public accessChecker: NbAccessChecker
   ) {
+
     this.formMasterDTO = this.formService.getDataObj();
     this.formDetailDTO = this.formSubService.getDataObj();
     this.formPtnSearchDTO = this.formPartnerService.getDataObj();
@@ -77,6 +83,8 @@ export class SampleComponent implements OnInit {
     this.detailGridConfig = gridService.getDetailGridColumnConfig();
     this.ptnSearchGridConfig = gridService.getPtnGridColumnConfig();
     this.skuSearchGridConfig = gridService.getSkuGridColumnConfig();
+    this.detailDropGridConfig = gridService.getDetailDropGridColumnConfig();
+
     this.actionVisible = false;
     this.actionSheetTagBox = [];
     this.popupVisible = false;
@@ -159,7 +167,7 @@ export class SampleComponent implements OnInit {
 
   saveAPITest(e, subject) {
     const data: any[] = this.masterGridRef.instance.getDataSource().items();
-    this.gridService.saveAPITEST(data).subscribe(res=>{
+    this.gridService.saveAPITEST(data).subscribe(res => {
       console.log(res)
     });
 
@@ -189,6 +197,16 @@ export class SampleComponent implements OnInit {
         });
         break;
     }
+  }
+
+  onDetailDropGridOpen(event) {
+    this.gridService.getDetailDropGridData().subscribe(res => {
+      if (!(res && res.length)) {
+        notify("데이터 없음");
+        return;
+      }
+      this.detailDropGridDataSource = res;
+    });
   }
 
   excelUpload(e, subject) {
@@ -241,6 +259,9 @@ export class SampleComponent implements OnInit {
       this.actionVisible = true;
     }
   }
+
+
+
   ptnGridSelectionChange(event, closeOnSelection) {
     const data = this.partnerGridRef.instance.getSelectedRowsData();
     if (data.length) {
@@ -259,10 +280,57 @@ export class SampleComponent implements OnInit {
     }
   }
 
-  setSelectedCellObject(e) {
-    this.selectedCellObject = e;
+  onSelectionChanged(selectedRowsData, cellInfo, dropDownBoxComponent) {
+    if (selectedRowsData.length > 0) {
+      this.detailGridRef.instance.cellValue(cellInfo.rowIndex, 'CODEB', selectedRowsData[0]["PTNRKY"]);
+      this.detailGridRef.instance.cellValue(cellInfo.rowIndex, 'CODEC', selectedRowsData[0]["PTNRNM"]);
+
+      //cellInfo.setValue(selectedRowsData[0].);
+      dropDownBoxComponent.close();
+    }
   }
 
+
+
+  onExporting(e) {
+    const workbook = new ExcelJS.Workbook();
+    const worksheet = workbook.addWorksheet('testSheet');
+
+    exportDataGrid({
+      component: e.component,
+      worksheet: worksheet,
+      autoFilterEnabled: true
+    }).then(function () {
+      workbook.xlsx.writeBuffer().then(function (buffer) {
+        FileSaver.saveAs(new Blob([buffer], { type: 'application/octet-stream' }), 'DataGrid.xlsx');
+      });
+    });
+    e.cancel = true;
+  }
+
+  setSelectedCellObject(e) {
+    this.selectedCellObject = e;
+    console.log(e)
+    if (this.selectedCellObject.dataField == 'CODEB') {
+      e.editorElement.dxSelectBox('instance').option('onValueChanged', args => {
+        //e.setValue(args.value);
+        console.log(args);
+      });
+      // this.detailGridConfig[1]['editCellTemplate'] = 'cellSearchHelpPTNKEY'
+    }
+
+  }
+
+
+  editorPreparedtest(e) {
+
+  }
+  onDetailDropKeyDown(e) {
+    console.log(e)
+    if (e.element.id == 'detailname2') {
+      console.log(e)
+    }
+  }
   ngOnInit() {
   }
 

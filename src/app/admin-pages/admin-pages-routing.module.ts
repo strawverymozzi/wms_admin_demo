@@ -16,11 +16,10 @@ import { AdminPagesMenu } from './admin-pages-menu';
 
 const _ADMINMODULEURL: string = '/auth/ADMINMODULE';
 
-const _ADMINPAGEMAPPER = {
-  components: {
-    "entryComponent": AdminPagesComponent
-  },
-  staticModuleRoute: [
+const routes: Routes = [{
+  path: '',
+  component: AdminPagesComponent,
+  children: [
     {
       path: 'dashboard',
       component: ECommerceComponent,
@@ -28,6 +27,16 @@ const _ADMINPAGEMAPPER = {
     {
       path: 'iot-dashboard',
       component: DashboardComponent,
+    },
+    {
+      path: 'AdminModule1Module',
+      loadChildren: () => import('./admin-module1/admin-module1.module')
+        .then(m => m.AdminModule1Module),
+    },
+    {
+      path: 'AdminModule2Module',
+      loadChildren: () => import('./admin-module2/admin-module2.module')
+        .then(m => m.AdminModule2Module),
     },
     {
       path: '',
@@ -38,29 +47,13 @@ const _ADMINPAGEMAPPER = {
       path: '**',
       component: NotFoundComponent,
     },
-  ]
-}
+  ],
+}];
 
-export function setModulePath(data: any): Routes[] {
-
-  const children = [];
-  for (let config of data.modules) {
-    const importPath = config.importPath;
-    children.push(
-      {
-        path: config.module,
-        loadChildren: () => {
-          return import('' + importPath).then(m => m[config.module]);
-        }
-      }
-    )
-  }
-  return children;
-}
 
 @NgModule({
+  imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
-  providers: [AdminPagesMenu]
 })
 export class AdminPagesRoutingModule extends CommonHttpService {
 
@@ -70,23 +63,6 @@ export class AdminPagesRoutingModule extends CommonHttpService {
     private menuService: AdminPagesMenu
   ) {
     super(http);
-    this.getJson(_ADMINMODULEURL).subscribe(res => {
-      const modulePathConfig = {
-        path: '',
-        component: _ADMINPAGEMAPPER.components.entryComponent,
-        children: [...setModulePath(res), ..._ADMINPAGEMAPPER.staticModuleRoute]
-      };
-      this.router.config.forEach((v, i, a) => {
-        let loadedConfig: any = v;
-        if (loadedConfig.path == 'adminPages') {
-          loadedConfig._loadedConfig.routes.push(
-            modulePathConfig
-          );
-          return;
-        }
-      });
-      menuService.setMenu();
-      router.navigateByUrl("/adminPages/dashboard");
-    })
+
   }
 }
