@@ -640,48 +640,49 @@
       "id": 2
     }
   ],
-  "ADMINMENU": [
-    {
-      "title": "Admin_module1",
-      "icon": "layout-outline",
-      "children": [
-        {
-          "title": "AdminTestComp",
-          "link": "/adminPages/AdminModule1Module/test1"
-        }
-      ]
-    },
-    {
-      "title": "Admin_module2",
-      "icon": "edit-2-outline",
-      "children": [
-        {
-          "title": "AdminTestComp2",
-          "link": "/adminPages/AdminModule2Module/test2"
-        }
-      ]
-    },
-    {
-      "title": "Admin_module3",
-      "icon": "edit-2-outline",
-      "children": [
-        {
-          "title": "AdminTestComp3",
-          "link": "/adminPages/AdminModule3Module/test3"
-        }
-      ]
-    },
-    {
-      "title": "Admin_module4",
-      "icon": "edit-2-outline",
-      "children": [
-        {
-          "title": "AdminTestComp4",
-          "link": "/adminPages/AdminModule4Module/test4"
-        }
-      ]
-    }
-  ],
+  "ADMINMENU": {
+    "success": true,
+    "code": 0,
+    "msg": "성공하였습니다.",
+    "transationTime": "2020-05-07T03:04:02.8541311",
+    "list": [
+      {
+        "uid": 10000,
+        "tenant": "1000",
+        "title": "MENU1",
+        "icon": "layout-outline",
+        "url": null,
+        "link": null,
+        "menuPath": "10000",
+        "children": [
+          {
+            "uid": 10000,
+            "tenant": "1000",
+            "icon": "layout-outline",
+            "url": null,
+            "menuPath": "10000|10002",
+            "title": "MENU3",
+            "link": "/adminPages/AdminModule1Module/test1"
+          }
+        ]
+      },
+      {
+        "uid": 10001,
+        "tenant": "1000",
+        "url": null,
+        "link": null,
+        "menuPath": "10000",
+        "title": "MENU2",
+        "icon": "edit-2-outline",
+        "children": [
+          {
+            "title": "MENU4",
+            "link": "/adminPages/AdminModule3Module/test3"
+          }
+        ]
+      }
+    ]
+  },
   "ADMINMODULE": {
     "modules": [
       {
