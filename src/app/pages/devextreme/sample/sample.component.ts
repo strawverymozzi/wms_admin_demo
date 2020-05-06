@@ -310,21 +310,12 @@ export class SampleComponent implements OnInit {
 
   setSelectedCellObject(e) {
     this.selectedCellObject = e;
-    console.log(e)
     if (this.selectedCellObject.dataField == 'CODEB') {
-      e.editorElement.dxSelectBox('instance').option('onValueChanged', args => {
-        //e.setValue(args.value);
-        console.log(args);
-      });
+      console.log(e)
       // this.detailGridConfig[1]['editCellTemplate'] = 'cellSearchHelpPTNKEY'
     }
-
   }
 
-
-  editorPreparedtest(e) {
-
-  }
   onDetailDropKeyDown(e) {
     console.log(e)
     if (e.element.id == 'detailname2') {

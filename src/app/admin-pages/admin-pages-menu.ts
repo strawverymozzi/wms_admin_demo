@@ -4,7 +4,8 @@
  * See LICENSE_SINGLE_APP / LICENSE_MULTI_APP in the 'docs' folder for license information on type of purchased license.
  */
 
-const _ADMINMENUPAGESURL: string = '/auth/ADMINMENU';
+//const _ADMINMENUPAGESURL: string = 'http://localhost:3001/api/auth/ADMINMENU';
+const _ADMINMENUPAGESURL: string = "https://www.jflab.co.kr:18000/api/v1/mdm/menu";
 
 import { Observable, of } from 'rxjs';
 import { Injectable } from '@angular/core';
@@ -25,9 +26,14 @@ export class AdminPagesMenu extends CommonHttpService {
   }
 
   setMenu() {
-    this.callMenu().subscribe(res => {
-      this.adminMenu.push(...res);
-    })
+    return this.http.get(_ADMINMENUPAGESURL).subscribe(
+      res => {
+        this.adminMenu.push(...res["list"]);
+      }
+    )
+    // this.callMenu().subscribe(res => {
+    //   this.adminMenu.push(...res["list"]);
+    // })
   }
 
   getMenu(): any[] {
