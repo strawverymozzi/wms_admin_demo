@@ -8,6 +8,8 @@ import { AuthModule } from '../@auth/auth.module';
 import { AdminPagesMenu } from './admin-pages-menu';
 import { AdminPagesComponent } from './admin-pages.component';
 import { AdminPagesRoutingModule } from './admin-pages-routing.module';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AdminPagesInterceptor } from './admin-pages.interceptor';
 
 
 const ADMIN_PAGES_COMPONENTS = [
@@ -28,6 +30,7 @@ const ADMIN_PAGES_COMPONENTS = [
     ...ADMIN_PAGES_COMPONENTS,
   ],
   providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AdminPagesInterceptor, multi: true },
     AdminPagesMenu,
   ],
 })

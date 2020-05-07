@@ -23,7 +23,7 @@ export class AdminGuard implements CanActivate {
         const roles = role instanceof Array ? role : [role];
 
         return roles.some(x => {
-          if (!(x && x.toLowerCase() === ROLES.ADMIN)) {
+          if (!(x && x.toLowerCase() !== ROLES.ADMIN)) {
             this.router.navigate(['auth/login']);
             return false;
           }

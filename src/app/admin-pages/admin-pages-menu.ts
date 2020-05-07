@@ -5,29 +5,40 @@
  */
 
 //const _ADMINMENUPAGESURL: string = 'http://localhost:3001/api/auth/ADMINMENU';
-const _ADMINMENUPAGESURL: string = "https://www.jflab.co.kr:18000/api/v1/mdm/menu";
+const _ADMINMENUPAGESURL: string = "http://www.jflab.co.kr:18000/api/v1/mdm/menu";
 
 import { Observable, of } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { CommonHttpService } from '../@common/common-http.service';
 
 @Injectable()
-export class AdminPagesMenu extends CommonHttpService {
+export class AdminPagesMenu {
 
   private adminMenu: any[];
+  private options: any;
+
   constructor(private http: HttpClient) {
-    super(http);
+    //super(http);
     this.adminMenu = [];
+    this.headers = this.headers.append('Accept', '*; charset=utf-8');
+    this.headers = this.headers.append('Access-Control-Allow-Origin', '*');
+    this.headers = this.headers.append('Content-Type', 'application/json');
+    this.headers = this.headers.append('authorization', 'Bearer ' + localStorage.getItem('access'))
+    this.headers = this.headers.append('refreshtoken', localStorage.getItem('refresh')),
+    
+    this.options = { headers: this.headers,  responseType: 'json' };
   }
 
-  callMenu(): Observable<any> {
-    return this.getJson(_ADMINMENUPAGESURL);
-  }
+  // callMenu(): Observable<any> {
+  //   return this.getJson(_ADMINMENUPAGESURL);
+  // }
+  private headers: HttpHeaders = new HttpHeaders();
 
   setMenu() {
-    return this.http.get(_ADMINMENUPAGESURL).subscribe(
+    return this.http.get(_ADMINMENUPAGESURL,this.options).subscribe(
       res => {
+        console.log("menuAPI",res);
         this.adminMenu.push(...res["list"]);
       }
     )

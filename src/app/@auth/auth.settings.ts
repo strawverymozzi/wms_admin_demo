@@ -70,7 +70,7 @@ export const authOptions = {
     validation: {
       fullName: {
         required: true,
-        minLength: 6,
+        minLength: 4,
         maxLength: 20,
       },
     },

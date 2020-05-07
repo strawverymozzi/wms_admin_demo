@@ -20,6 +20,7 @@ import { NbThemeService } from '@nebular/theme';
 import { EMAIL_PATTERN } from '../constants';
 import { InitUserService } from '../../../@theme/services/init-user.service';
 import { environment } from '../../../../environments/environment';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'ngx-login',
@@ -57,7 +58,9 @@ export class NgxLoginComponent implements OnInit {
     protected router: Router,
     protected initUserService: InitUserService,
     private tokenStorage: NbTokenLocalStorage,
-    private authStrategy: NbPasswordAuthStrategy) { }
+    private authStrategy: NbPasswordAuthStrategy,
+    private http: HttpClient) {
+  }
 
   ngOnInit(): void {
     const emailValidators = [
@@ -83,45 +86,60 @@ export class NgxLoginComponent implements OnInit {
     this.errors = [];
     this.messages = [];
     this.submitted = true;
-    this.service.authenticate(this.strategy, this.user).subscribe((result: NbAuthResult) => {
 
-      const demoTokenInitKey = 'demo_token_initialized';
-      const demoTokenWasInitialized = localStorage.getItem(demoTokenInitKey);
-      const currentToken = this.tokenStorage.get();
-      if (!demoTokenWasInitialized && !currentToken.isValid()) {
-        // local storage is clear, let's setup demo user token for better demo experience
-        let token;
-        if (this.user.email == 'user@user.com') {
-          token = environment.testUser.token;
-          setTimeout(() => {
-            return this.router.navigateByUrl('/pages');
-          }, this.redirectDelay);
-        } else if (this.user.email == 'admin@admin.com') {
-          token = environment.testAdminUser.token;
-          setTimeout(() => {
-            return this.router.navigateByUrl('/adminPages');
-          }, this.redirectDelay);
-        }
+    this.http.post('http://www.jflab.co.kr:18000/auth/login', { 'tenant': '1000', 'usercd': 'TEST_USER', 'password': '1234' }).subscribe(
+      res => {
+        const demoTokenInitKey = 'demo_token_initialized'
+        const token = res['token'];
+        setTimeout(() => {
+          return this.router.navigateByUrl('/adminPages');
+        }, this.redirectDelay);
         this.tokenStorage.set(this.authStrategy.createToken<NbAuthToken>(token));
         localStorage.setItem(demoTokenInitKey, 'true');
+        localStorage.setItem('access', token["access_token"]);
+        localStorage.setItem('refresh', token["refresh_token"]);
       }
-      // if (result.isSuccess()) {
-      //   this.messages = result.getMessages();
-      //   this.initUserService.initCurrentUser().subscribe();
-      // } else {
-      //   this.errors = result.getErrors();
-      // }
 
-      // const redirect = result.getRedirect();
-      // if (redirect) {
-      //   setTimeout(() => {
-      //     return this.router.navigateByUrl(redirect);
-      //   }, this.redirectDelay);
-      // }
+    )
+    // this.service.authenticate(this.strategy, this.user).subscribe((result: NbAuthResult) => {
 
-      this.submitted = false;
-      this.cd.detectChanges();
-    });
+    //   const demoTokenInitKey = 'demo_token_initialized';
+    //   const demoTokenWasInitialized = localStorage.getItem(demoTokenInitKey);
+    //   const currentToken = this.tokenStorage.get();
+    //   if (!demoTokenWasInitialized && !currentToken.isValid()) {
+    //     // local storage is clear, let's setup demo user token for better demo experience
+    //     let token;
+    //     if (this.user.email == 'user@user.com') {
+    //       token = environment.testUser.token;
+    //       setTimeout(() => {
+    //         return this.router.navigateByUrl('/pages');
+    //       }, this.redirectDelay);
+    //     } else if (this.user.email == 'admin@admin.com') {
+    //       token = environment.testAdminUser.token;
+    //       setTimeout(() => {
+    //         return this.router.navigateByUrl('/adminPages');
+    //       }, this.redirectDelay);
+    //     }
+    //     this.tokenStorage.set(this.authStrategy.createToken<NbAuthToken>(token));
+    //     localStorage.setItem(demoTokenInitKey, 'true');
+    //   }
+    //   // if (result.isSuccess()) {
+    //   //   this.messages = result.getMessages();
+    //   //   this.initUserService.initCurrentUser().subscribe();
+    //   // } else {
+    //   //   this.errors = result.getErrors();
+    //   // }
+
+    //   // const redirect = result.getRedirect();
+    //   // if (redirect) {
+    //   //   setTimeout(() => {
+    //   //     return this.router.navigateByUrl(redirect);
+    //   //   }, this.redirectDelay);
+    //   // }
+
+    //   this.submitted = false;
+    //   this.cd.detectChanges();
+    // });
   }
 
   getConfigValue(key: string): any {
