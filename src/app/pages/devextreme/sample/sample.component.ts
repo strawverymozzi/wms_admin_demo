@@ -311,9 +311,11 @@ export class SampleComponent implements OnInit {
   setSelectedCellObject(e) {
     this.selectedCellObject = e;
     if (this.selectedCellObject.dataField == 'CODEB') {
-      console.log(e)
-      // this.detailGridConfig[1]['editCellTemplate'] = 'cellSearchHelpPTNKEY'
+      this.detailGridConfig[1]['editCellTemplate'] = 'cellSearchHelpPTNKEY'
     }
+  }
+  ptnCodeChanged(e){
+    
   }
 
   onDetailDropKeyDown(e) {

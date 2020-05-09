@@ -120,9 +120,10 @@
         <dxo-editing mode="batch" [allowUpdating]="true" [selectTextOnEditStart]="selectTextOnEditStart"
           [startEditAction]="startEditAction">
         </dxo-editing>
+
         <dxo-selection mode="single"></dxo-selection>
 
-        <dxo-keyboard-navigation editOnKeyPress="true" enterKeyAction="moveFocus" enterKeyDirection="column">
+        <dxo-keyboard-navigation>
         </dxo-keyboard-navigation>
 
         <ng-container *ngFor="let col of detailGridConfig; i as index">
@@ -139,9 +140,15 @@
               <i class="fa fa-search"></i>
             </div>
             <div *dxTemplate="let e of 'contentTemplate'">
+
+              <!-- <dx-text-box (onValueChanged)="ptnCodeChanged($event)" placeholder="코드">
+              </dx-text-box> -->
               <dx-data-grid [dataSource]="detailDropGridDataSource" [height]="250" [selectedRowKeys]="[cellInfo.value]"
                 [focusedRowEnabled]="true" [focusedRowKey]="cellInfo.value" [hoverStateEnabled]="true" keyExpr="PTNRKY"
                 (onSelectionChanged)="onSelectionChanged($event.selectedRowsData, cellInfo, e.component)">
+
+                <dxo-search-panel [visible]="true" [highlightCaseSensitive]="true"></dxo-search-panel>
+
                 <ng-container *ngFor="let col of detailDropGridConfig; i as index">
                   <dxi-column [caption]="col.caption" [dataField]="col.dataField" [width]="col.width"
                     [fixed]="col.fixed">
