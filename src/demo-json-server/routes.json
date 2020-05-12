@@ -2,6 +2,7 @@
   "/api/selectBox/*": "/$1",
   "/api/grid/*": "/$1",
   "/api/auth/*": "/$1",
+  "/api/dictionary/*": "/$1",
   "/posts/:category": "/posts?category=:category",
   "/articles\\?id=:id": "/posts/:id",
   "/cmd": "json-server -p 3001 --watch db.json --routes routes.json"

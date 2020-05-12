@@ -37,6 +37,7 @@ export class AdminPagesComponent implements OnDestroy {
       .pipe(takeWhile(() => this.alive))
       .subscribe(() => {
         this.menuService.setMenu();
+        console.log(this.menu)
       });
   }
 

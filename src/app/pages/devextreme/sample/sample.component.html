@@ -2,7 +2,7 @@
   <!-- page toolbar -->
   <ng-container>
     <dx-toolbar>
-      <dxi-item *ngIf="accessChecker.isGranted('read', 'search') | async" location="after" widget="dxButton"
+      <dxi-item  location="after" widget="dxButton"
         locateInMenu="auto" [options]="btnConfig.SEARCHMASTERBTN">
       </dxi-item>
       <dxi-item *ngIf="accessChecker.isGranted('create', 'save') | async" location="after" widget="dxButton"

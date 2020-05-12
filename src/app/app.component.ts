@@ -12,12 +12,11 @@ import { GlobalAdministrator } from './@common/GlobalAdministrator';
   selector: 'ngx-app',
   template: '<router-outlet></router-outlet>',
 })
-export class AppComponent extends GlobalAdministrator implements OnInit {
+export class AppComponent implements OnInit {
 
   constructor(private analytics: AnalyticsService,
     private authStrategy: NbPasswordAuthStrategy,
     private tokenStorage: NbTokenLocalStorage) {
-    super();
     // TODO: REMOVE BEFORE PROD
     // for demo only: init localstorage with token for demo user when login for the first time
     //this.initTestUserToken();

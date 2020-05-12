@@ -13,14 +13,13 @@ import { Subject } from 'rxjs';
 import { UserStore } from '../../../@core/stores/user.store';
 import { SettingsData } from '../../../@core/interfaces/common/settings';
 import { User } from '../../../@core/interfaces/common/users';
-import { GlobalAdministrator } from '../../../@common/GlobalAdministrator';
 
 @Component({
   selector: 'ngx-header',
   styleUrls: ['./header.component.scss'],
   templateUrl: './header.component.html',
 })
-export class HeaderComponent extends GlobalAdministrator implements OnInit, OnDestroy {
+export class HeaderComponent implements OnInit, OnDestroy {
 
   private destroy$: Subject<void> = new Subject<void>();
   userPictureOnly: boolean = false;
@@ -45,22 +44,11 @@ export class HeaderComponent extends GlobalAdministrator implements OnInit, OnDe
     },
   ];
 
-  languages = [
-    {
-      value: 'ko-KR',
-      name: '한국어',
-    },
-    {
-      value: 'en-EN',
-      name: 'English',
-    },
 
-  ];
 
 
   currentTheme = 'default';
 
-  currentLanguage = this.getLocale();
 
   userMenu = this.getMenuItems();
 
@@ -71,7 +59,6 @@ export class HeaderComponent extends GlobalAdministrator implements OnInit, OnDe
     private settingsService: SettingsData,
     private layoutService: LayoutService,
     private breakpointService: NbMediaBreakpointsService) {
-    super();
   }
 
   getMenuItems() {
@@ -124,10 +111,6 @@ export class HeaderComponent extends GlobalAdministrator implements OnInit, OnDe
     this.themeService.changeTheme(themeName);
   }
 
-  changeLanguage(langName: string) {
-    this.setLocale(langName);
-    window.location.reload();
-  }
 
   toggleSidebar(): boolean {
     this.sidebarService.toggle(true, 'menu-sidebar');

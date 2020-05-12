@@ -19,7 +19,6 @@ export class AdminPagesInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     let clonedReq = req;
-    console.log("test",clonedReq)
     clonedReq = req.clone({
       headers: req.headers
         .append('authorization', 'Bearer ' + localStorage.getItem('access'))
@@ -31,6 +30,7 @@ export class AdminPagesInterceptor implements HttpInterceptor {
       tap(
         (event: HttpEvent<any>) => {
           if (event instanceof HttpResponse) {
+            console.log("admin inter",clonedReq)
           }
         },
         (err: any) => {

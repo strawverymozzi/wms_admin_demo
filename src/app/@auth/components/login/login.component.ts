@@ -3,7 +3,7 @@
  * Licensed under the Single Application / Multi Application License.
  * See LICENSE_SINGLE_APP / LICENSE_MULTI_APP in the 'docs' folder for license information on type of purchased license.
  */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnInit, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import {
@@ -21,6 +21,7 @@ import { EMAIL_PATTERN } from '../constants';
 import { InitUserService } from '../../../@theme/services/init-user.service';
 import { environment } from '../../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
+import { GlobalAdministrator } from '../../../@common/GlobalAdministrator';
 
 @Component({
   selector: 'ngx-login',
@@ -28,7 +29,7 @@ import { HttpClient } from '@angular/common/http';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 
-export class NgxLoginComponent implements OnInit {
+export class NgxLoginComponent extends GlobalAdministrator implements OnInit {
 
   minLength: number = this.getConfigValue('forms.validation.password.minLength');
   maxLength: number = this.getConfigValue('forms.validation.password.maxLength');
@@ -47,10 +48,29 @@ export class NgxLoginComponent implements OnInit {
   loginForm: FormGroup;
   alive: boolean = true;
 
+  languages = [
+    {
+      value: 'ko-KR',
+      name: '한국어',
+    },
+    {
+      value: 'en-EN',
+      name: 'English',
+    },
+
+  ];
+
+  currentLanguage = this.getLocale();
+
+  changeLanguage(langName: string) {
+    this.setLocale(langName);
+    window.location.reload();
+  }
+
   get email() { return this.loginForm.get('email'); }
   get password() { return this.loginForm.get('password'); }
 
-  constructor(protected service: NbAuthService,
+  constructor(protected service: NbAuthService, protected elRef: ElementRef,
     @Inject(NB_AUTH_OPTIONS) protected options = {},
     protected cd: ChangeDetectorRef,
     protected themeService: NbThemeService,
@@ -59,7 +79,8 @@ export class NgxLoginComponent implements OnInit {
     protected initUserService: InitUserService,
     private tokenStorage: NbTokenLocalStorage,
     private authStrategy: NbPasswordAuthStrategy,
-    private http: HttpClient) {
+    protected http: HttpClient) {
+    super(http, elRef, 'GLOBAL_LOGINPAGE');
   }
 
   ngOnInit(): void {
@@ -79,63 +100,65 @@ export class NgxLoginComponent implements OnInit {
       password: this.fb.control('', [...passwordValidators]),
       rememberMe: this.fb.control(false),
     });
-  }
 
+
+  }
+  private _LOGINURL = 'http://www.jflab.co.kr:18000/auth/login';
   login(): void {
     this.user = this.loginForm.value;
     this.errors = [];
     this.messages = [];
     this.submitted = true;
 
-    // this.http.post('http://www.jflab.co.kr:18000/auth/login', { 'tenant': '1000', 'usercd': 'TEST_USER', 'password': '1234' }).subscribe(
-    //   res => {
-    //     const demoTokenInitKey = 'demo_token_initialized'
-    //     const token = res['token'];
-    //     setTimeout(() => {
-    //       return this.router.navigateByUrl('/adminPages');
-    //     }, this.redirectDelay);
-    //     this.tokenStorage.set(this.authStrategy.createToken<NbAuthToken>(token));
-    //     localStorage.setItem(demoTokenInitKey, 'true');
-    //     localStorage.setItem('access', token["access_token"]);
-    //     localStorage.setItem('refresh', token["refresh_token"]);
-    //   }
-
-    // )
-    this.service.authenticate(this.strategy, this.user).subscribe((result: NbAuthResult) => {
-
-      const demoTokenInitKey = 'demo_token_initialized';
-      const demoTokenWasInitialized = localStorage.getItem(demoTokenInitKey);
-      const currentToken = this.tokenStorage.get();
-      if (!demoTokenWasInitialized && !currentToken.isValid()) {
-        // local storage is clear, let's setup demo user token for better demo experience
-        let token;
-        if (this.user.email == 'user@user.com') {
-          token = environment.testUser.token;
-          setTimeout(() => {
-            return this.router.navigateByUrl('/pages');
-          }, this.redirectDelay);
-        } else if (this.user.email == 'admin@admin.com') {
-          token = environment.testAdminUser.token;
-          setTimeout(() => {
-            return this.router.navigateByUrl('/adminPages');
-          }, this.redirectDelay);
-        }
+    this.http.post(this._LOGINURL, { 'tenant': '1000', 'usercd': 'TEST_USER', 'password': '1234' }).subscribe(
+      res => {
+        const demoTokenInitKey = 'demo_token_initialized'
+        const token = res['token'];
+        setTimeout(() => {
+          return this.router.navigateByUrl('/adminPages');
+        }, this.redirectDelay);
         this.tokenStorage.set(this.authStrategy.createToken<NbAuthToken>(token));
         localStorage.setItem(demoTokenInitKey, 'true');
+        localStorage.setItem('access', token["access_token"]);
+        localStorage.setItem('refresh', token["refresh_token"]);
       }
-      // if (result.isSuccess()) {
-      //   this.messages = result.getMessages();
-      //   this.initUserService.initCurrentUser().subscribe();
-      // } else {
-      //   this.errors = result.getErrors();
-      // }
 
-      // const redirect = result.getRedirect();
-      // if (redirect) {
-      //   setTimeout(() => {
-      //     return this.router.navigateByUrl(redirect);
-      //   }, this.redirectDelay);
+    )
+    this.service.authenticate(this.strategy, this.user).subscribe((result: NbAuthResult) => {
+
+      // const demoTokenInitKey = 'demo_token_initialized';
+      // const demoTokenWasInitialized = localStorage.getItem(demoTokenInitKey);
+      // const currentToken = this.tokenStorage.get();
+      // if (!demoTokenWasInitialized && !currentToken.isValid()) {
+      //   // local storage is clear, let's setup demo user token for better demo experience
+      //   let token;
+      //   if (this.user.email == 'user@user.com') {
+      //     token = environment.testUser.token;
+      //     setTimeout(() => {
+      //       return this.router.navigateByUrl('/pages');
+      //     }, this.redirectDelay);
+      //   } else if (this.user.email == 'admin@admin.com') {
+      //     token = environment.testAdminUser.token;
+      //     setTimeout(() => {
+      //       return this.router.navigateByUrl('/adminPages');
+      //     }, this.redirectDelay);
+      //   }
+      //   this.tokenStorage.set(this.authStrategy.createToken<NbAuthToken>(token));
+      //   localStorage.setItem(demoTokenInitKey, 'true');
       // }
+      if (result.isSuccess()) {
+        this.messages = result.getMessages();
+        this.initUserService.initCurrentUser().subscribe();
+      } else {
+        this.errors = result.getErrors();
+      }
+
+      const redirect = result.getRedirect();
+      if (redirect) {
+        setTimeout(() => {
+          return this.router.navigateByUrl(redirect);
+        }, this.redirectDelay);
+      }
 
       this.submitted = false;
       this.cd.detectChanges();

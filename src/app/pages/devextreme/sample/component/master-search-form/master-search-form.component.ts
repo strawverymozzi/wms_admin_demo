@@ -1,6 +1,7 @@
 import { Component, OnInit, Output, EventEmitter, AfterViewInit, ElementRef } from '@angular/core';
 import { MasterSearchFormService } from './master-search-form.service';
 import { GlobalAdministrator } from '../../../../../@common/GlobalAdministrator';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'ngx-master-search-form',
@@ -20,8 +21,9 @@ export class MasterSearchFormComponent extends GlobalAdministrator implements On
 
 
 
-  constructor(private service: MasterSearchFormService, protected elRef: ElementRef) {
-    super(elRef);
+  constructor(private service: MasterSearchFormService, protected elRef: ElementRef,
+    protected http: HttpClient) {
+    super(http, elRef, 'GLOBAL_FORMPARAM');
     this.dataObject = service.getDataObj();
     this.searchPtnBtn = {
       icon: 'search',
@@ -57,5 +59,5 @@ export class MasterSearchFormComponent extends GlobalAdministrator implements On
       this.rcvTypeComboDataSource = res;
     });
   }
- 
+
 }

@@ -1,7 +1,7 @@
 {
   "login": {
     "email": "admin@admin.com",
-    "password": "qweqwe",
+    "password": "1232345",
     "rememberMe": false
   },
   "sign-up": {
@@ -647,23 +647,14 @@
     "transationTime": "2020-05-08T00:25:51.9601466",
     "list": [
       {
-        "uid": 10000,
-        "tenant": "1000",
         "title": "MENU1",
-        "icon": "ICON1",
-        "menuPath": "10000",
-        "url": null,
-        "link": null,
+        "icon": "home-outline",
+        "link": "/adminPages/devextreme",
         "children": [
           {
-            "uid": 10002,
-            "tenant": "1000",
-            "title": "MENU3",
-            "icon": "ICON3",
-            "menuPath": "10000|10002",
-            "url": "/CM/어플리케이션3",
-            "link": "/CM/어플리케이션3",
-            "children": []
+            "title": "SAMPLE",
+            "icon": "home-outline",
+            "link": "/adminPages/devextreme/sample"
           }
         ]
       },
@@ -671,7 +662,7 @@
         "uid": 10001,
         "tenant": "1000",
         "title": "MENU2",
-        "icon": "ICON2",
+        "icon": "home-outline",
         "menuPath": "10001",
         "url": "/CM/APP",
         "link": "/CM/APP",
@@ -690,5 +681,45 @@
         "importPath": "./admin-module2/admin-module2.module"
       }
     ]
+  },
+  "GLOBAL_LOGINPAGE": {
+    "en-EN": {
+      "EMAIL": "Email Address",
+      "PASSWORD": "Password"
+    },
+    "ko-KR": {
+      "EMAIL": "이메일",
+      "PASSWORD": "비밀번호!!"
+    }
+  },
+  "GLOBAL_FORMPARAM": {
+    "en-EN": {
+      "RCVSTA": "RECEIVE STATUS",
+      "RCVTYP": "RECIEVE TYPE",
+      "SHPDAT": "SHIPPING DATE",
+      "SHFNDT": "SALES DATE",
+      "FDATE1": "FROM DATE",
+      "TODAT1": "TO DATE",
+      "FDATE2": "FROM2 DATE",
+      "TODAT2": "TO2 DATE",
+      "PTNRKY": "PARTNER KEY",
+      "PTNRNM": "PARTNER NAME",
+      "SKUKEY": "STOCK KEY",
+      "SKUNAM": "STOCK NAME"
+    },
+    "ko-KR": {
+      "RCVSTA": "입고상태",
+      "RCVTYP": "입고타입",
+      "SHPDAT": "출고일자",
+      "SHFNDT": "출고실적일",
+      "FDATE1": "시작 일자",
+      "TODAT1": "완료 일자",
+      "FDATE2": "시작 일자2",
+      "TODAT2": "완료 일자2",
+      "PTNRKY": "파트너 키",
+      "PTNRNM": "파트너 명",
+      "SKUKEY": "상품 키",
+      "SKUNAM": "상품 명"
+    }
   }
 }
