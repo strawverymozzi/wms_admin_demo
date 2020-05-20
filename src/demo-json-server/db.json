@@ -1,7 +1,7 @@
 {
   "login": {
-    "email": "admin@admin.com",
-    "password": "1232345",
+    "email": "",
+    "password": "",
     "rememberMe": false
   },
   "sign-up": {
