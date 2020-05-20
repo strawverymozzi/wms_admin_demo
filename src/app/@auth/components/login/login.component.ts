@@ -101,8 +101,6 @@ export class NgxLoginComponent implements OnInit {
 
   private _LOGINURL = 'http://www.jflab.co.kr:18000/auth/login';
 
-
-
   login(): void {
     this.user = this.loginForm.value;
     this.errors = [];
