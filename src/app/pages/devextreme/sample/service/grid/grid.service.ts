@@ -5,8 +5,8 @@ import { Observable } from 'rxjs';
 import { tap, map } from 'rxjs/operators';
 
 // const _MASTERGRIDURL: string = "http://www.jflab.co.kr:18000/api/v1/receive/rcv?criteria=tenant=='1000';rcvKey=='99999';fdds=bt=(2020-04-21,2020-08-01)";
-const _MASTERGRIDURL: string = "/grid/HEADGRID";
-// const _MASTERGRIDURL: string ='http://www.jflab.co.kr:18000/api/v1/receive/rcvInfo'
+// const _MASTERGRIDURL: string = "/grid/HEADGRID";
+const _MASTERGRIDURL: string ='http://www.jflab.co.kr:18000/api/v1/receive/rcvInfo'
 
 const _MASTERGRIDSAVEURL: string = '/grid/SAVEHEADGRID';
 

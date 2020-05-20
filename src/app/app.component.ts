@@ -26,7 +26,6 @@ export class AppComponent implements OnInit {
     //this.setLocale("ko-KR");
     // this.setLocale("en-EN");
     this.analytics.trackPageViews();
-
   }
 
   initTestUserToken() {

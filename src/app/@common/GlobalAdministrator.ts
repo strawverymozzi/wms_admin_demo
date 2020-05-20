@@ -1,5 +1,6 @@
 import { ElementRef, AfterViewInit, } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { CommonHttpService } from './common-http.service';
 
 
 // let _DICTIONARY: any = {
@@ -61,17 +62,17 @@ export class GlobalAdministrator implements AfterViewInit {
 
     ngAfterViewInit() {
         if (this.elRef != null && this.elRef != undefined) {
-            // this.http.get(_DICTIONARYURL + this.dictionaryKey).subscribe(res => {
-            //     this.compDictionary = res;
-            //     this.globalize();
-            // })
-            this.http.get('http://www.jflab.co.kr:18000/api/v1/receive/rcvInfo').subscribe(res => {
-                // { "success": true, "code": 0, 
-                // "msg": "성공하였습니다.", "transationTime": "2020-05-10T19:47:53.6675322", 
-                // "data": { "DICTION": { "SHPDAT": "SHIPPING DATE", "RCVSTA": "RECEIVE STATUS" } } }
-                this.compDictionary = { "en-EN": res["data"]["DICTION"] };
+            this.http.get(_DICTIONARYURL + this.dictionaryKey).subscribe(res => {
+                this.compDictionary = res;
                 this.globalize();
             })
+            // this.http.get('http://www.jflab.co.kr:18000/api/v1/receive/rcvInfo').subscribe(res => {
+            //     // { "success": true, "code": 0, 
+            //     // "msg": "성공하였습니다.", "transationTime": "2020-05-10T19:47:53.6675322", 
+            //     // "data": { "DICTION": { "SHPDAT": "SHIPPING DATE", "RCVSTA": "RECEIVE STATUS" } } }
+            //     this.compDictionary = { "en-EN": res["data"]["DICTION"] };
+            //     this.globalize();
+            // })
         }
     }
 }

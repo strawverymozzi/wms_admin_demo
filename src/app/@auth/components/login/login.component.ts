@@ -22,6 +22,7 @@ import { InitUserService } from '../../../@theme/services/init-user.service';
 import { environment } from '../../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { GlobalAdministrator } from '../../../@common/GlobalAdministrator';
+import { CommonHttpService } from '../../../@common/common-http.service';
 
 @Component({
   selector: 'ngx-login',
@@ -29,17 +30,18 @@ import { GlobalAdministrator } from '../../../@common/GlobalAdministrator';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 
-export class NgxLoginComponent extends GlobalAdministrator implements OnInit {
+export class NgxLoginComponent implements OnInit {
 
-  minLength: number = this.getConfigValue('forms.validation.password.minLength');
-  maxLength: number = this.getConfigValue('forms.validation.password.maxLength');
-  redirectDelay: number = this.getConfigValue('forms.login.redirectDelay');
-  showMessages: any = this.getConfigValue('forms.login.showMessages');
-  strategy: string = this.getConfigValue('forms.login.strategy');
-  socialLinks: NbAuthSocialLink[] = this.getConfigValue('forms.login.socialLinks');
-  rememberMe = this.getConfigValue('forms.login.rememberMe');
-  isEmailRequired: boolean = this.getConfigValue('forms.validation.email.required');
-  isPasswordRequired: boolean = this.getConfigValue('forms.validation.password.required');
+  // strategy: string = this.getConfigValue('forms.login.strategy');
+  // isEmailRequired: boolean = this.getConfigValue('forms.validation.email.required');
+  // isPasswordRequired: boolean = this.getConfigValue('forms.validation.password.required');
+  // minLength: number = this.getConfigValue('forms.validation.password.minLength');
+  // maxLength: number = this.getConfigValue('forms.validation.password.maxLength');
+
+  // redirectDelay: number = this.getConfigValue('forms.login.redirectDelay');
+  // showMessages: any = this.getConfigValue('forms.login.showMessages');
+  // rememberMe = this.getConfigValue('forms.login.rememberMe');
+  // socialLinks: NbAuthSocialLink[] = this.getConfigValue('forms.login.socialLinks');
 
   errors: string[] = [];
   messages: string[] = [];
@@ -48,124 +50,142 @@ export class NgxLoginComponent extends GlobalAdministrator implements OnInit {
   loginForm: FormGroup;
   alive: boolean = true;
 
-  languages = [
-    {
-      value: 'ko-KR',
-      name: '한국어',
-    },
-    {
-      value: 'en-EN',
-      name: 'English',
-    },
-
-  ];
-
-  currentLanguage = this.getLocale();
-
-  changeLanguage(langName: string) {
-    this.setLocale(langName);
-    window.location.reload();
-  }
-
-  get email() { return this.loginForm.get('email'); }
+  get tenantID() { return this.loginForm.get('tenantID'); }
+  get userID() { return this.loginForm.get('userID'); }
   get password() { return this.loginForm.get('password'); }
 
-  constructor(protected service: NbAuthService, protected elRef: ElementRef,
-    @Inject(NB_AUTH_OPTIONS) protected options = {},
-    protected cd: ChangeDetectorRef,
-    protected themeService: NbThemeService,
+  constructor(
+    @Inject(NB_AUTH_OPTIONS) protected option = {},
+    protected elRef: ElementRef,
     private fb: FormBuilder,
     protected router: Router,
-    protected initUserService: InitUserService,
-    private tokenStorage: NbTokenLocalStorage,
-    private authStrategy: NbPasswordAuthStrategy,
-    protected http: HttpClient) {
-    super(http, elRef, 'GLOBAL_LOGINPAGE');
+    protected _http: HttpClient,
+
+    // protected cd: ChangeDetectorRef,
+    // protected themeService: NbThemeService,
+    // protected initUserService: InitUserService,
+    // protected service: NbAuthService,
+    // private tokenStorage: NbTokenLocalStorage,
+    // private authStrategy: NbPasswordAuthStrategy,
+
+  ) {
+    //super(_http, elRef, 'GLOBAL_LOGINPAGE');
   }
 
   ngOnInit(): void {
-    const emailValidators = [
-      Validators.pattern(EMAIL_PATTERN),
-    ];
-    this.isEmailRequired && emailValidators.push(Validators.required);
-
-    const passwordValidators = [
-      Validators.minLength(this.minLength),
-      Validators.maxLength(this.maxLength),
-    ];
-    this.isPasswordRequired && passwordValidators.push(Validators.required);
 
     this.loginForm = this.fb.group({
-      email: this.fb.control('', [...emailValidators]),
-      password: this.fb.control('', [...passwordValidators]),
+      tenantID: this.fb.control(''),
+      userID: this.fb.control(''),
+      password: this.fb.control(''),
       rememberMe: this.fb.control(false),
     });
 
+    // const emailValidators = [
+    //   Validators.pattern(EMAIL_PATTERN),
+    // ];
+    // this.isEmailRequired && emailValidators.push(Validators.required);
 
+    // const passwordValidators = [
+    //   Validators.minLength(this.minLength),
+    //   Validators.maxLength(this.maxLength),
+    // ];
+    // this.isPasswordRequired && passwordValidators.push(Validators.required);
+
+    // this.loginForm = this.fb.group({
+    //   email: this.fb.control('', [...emailValidators]),
+    //   password: this.fb.control('', [...passwordValidators]),
+    //   rememberMe: this.fb.control(false),
+    // });
   }
+
   private _LOGINURL = 'http://www.jflab.co.kr:18000/auth/login';
+
+
+
   login(): void {
     this.user = this.loginForm.value;
     this.errors = [];
     this.messages = [];
     this.submitted = true;
 
-    this.http.post(this._LOGINURL, { 'tenant': '1000', 'usercd': 'TEST_USER', 'password': '1234' }).subscribe(
-      res => {
-        const demoTokenInitKey = 'demo_token_initialized'
-        const token = res['token'];
-        setTimeout(() => {
-          return this.router.navigateByUrl('/adminPages');
-        }, this.redirectDelay);
-        this.tokenStorage.set(this.authStrategy.createToken<NbAuthToken>(token));
-        localStorage.setItem(demoTokenInitKey, 'true');
-        localStorage.setItem('access', token["access_token"]);
-        localStorage.setItem('refresh', token["refresh_token"]);
-      }
+    console.log(this.user)
 
-    )
-    this.service.authenticate(this.strategy, this.user).subscribe((result: NbAuthResult) => {
+    // this.http.post(this._LOGINURL, { 'tenant': '1000', 'usercd': 'TEST_USER', 'password': '1234','language': 'ko-KR' }).subscribe(
+    //   res => {
+    //     const demoTokenInitKey = 'demo_token_initialized'
+    //     const token = res['token'];
+    //     setTimeout(() => {
+    //       return this.router.navigateByUrl('/adminPages');
+    //     }, this.redirectDelay);
+    //     this.tokenStorage.set(this.authStrategy.createToken<NbAuthToken>(token));
+    //     localStorage.setItem(demoTokenInitKey, 'true');
+    //     localStorage.setItem('access', token["access_token"]);
+    //     localStorage.setItem('refresh', token["refresh_token"]);
+    //   }
 
-      // const demoTokenInitKey = 'demo_token_initialized';
-      // const demoTokenWasInitialized = localStorage.getItem(demoTokenInitKey);
-      // const currentToken = this.tokenStorage.get();
-      // if (!demoTokenWasInitialized && !currentToken.isValid()) {
-      //   // local storage is clear, let's setup demo user token for better demo experience
-      //   let token;
-      //   if (this.user.email == 'user@user.com') {
-      //     token = environment.testUser.token;
-      //     setTimeout(() => {
-      //       return this.router.navigateByUrl('/pages');
-      //     }, this.redirectDelay);
-      //   } else if (this.user.email == 'admin@admin.com') {
-      //     token = environment.testAdminUser.token;
-      //     setTimeout(() => {
-      //       return this.router.navigateByUrl('/adminPages');
-      //     }, this.redirectDelay);
-      //   }
-      //   this.tokenStorage.set(this.authStrategy.createToken<NbAuthToken>(token));
-      //   localStorage.setItem(demoTokenInitKey, 'true');
-      // }
-      if (result.isSuccess()) {
-        this.messages = result.getMessages();
-        this.initUserService.initCurrentUser().subscribe();
-      } else {
-        this.errors = result.getErrors();
-      }
+    // )
+    // this.service.authenticate(this.strategy, this.user).subscribe((result: NbAuthResult) => {
 
-      const redirect = result.getRedirect();
-      if (redirect) {
-        setTimeout(() => {
-          return this.router.navigateByUrl(redirect);
-        }, this.redirectDelay);
-      }
+    //   const demoTokenInitKey = 'demo_token_initialized';
+    //   const demoTokenWasInitialized = localStorage.getItem(demoTokenInitKey);
+    //   const currentToken = this.tokenStorage.get();
+    //   if (!demoTokenWasInitialized && !currentToken.isValid()) {
+    //     // local storage is clear, let's setup demo user token for better demo experience
+    //     let token;
+    //     if (this.user.email == 'user@user.com') {
+    //       token = environment.testUser.token;
+    //       setTimeout(() => {
+    //         return this.router.navigateByUrl('/pages');
+    //       }, this.redirectDelay);
+    //     } else if (this.user.email == 'admin@admin.com') {
+    //       token = environment.testAdminUser.token;
+    //       setTimeout(() => {
+    //         return this.router.navigateByUrl('/adminPages');
+    //       }, this.redirectDelay);
+    //     }
+    //     this.tokenStorage.set(this.authStrategy.createToken<NbAuthToken>(token));
+    //     localStorage.setItem(demoTokenInitKey, 'true');
+    //   }
+    // if (result.isSuccess()) {
+    //   this.messages = result.getMessages();
+    //   this.initUserService.initCurrentUser().subscribe();
+    // } else {
+    //   this.errors = result.getErrors();
+    // }
 
-      this.submitted = false;
-      this.cd.detectChanges();
-    });
+    // const redirect = result.getRedirect();
+    // if (redirect) {
+    //   setTimeout(() => {
+    //     return this.router.navigateByUrl(redirect);
+    //   }, this.redirectDelay);
+    // }
+
+    // this.submitted = false;
+    // this.cd.detectChanges();
+    // });
   }
 
-  getConfigValue(key: string): any {
-    return getDeepFromObject(this.options, key, null);
-  }
+  // languages = [
+  //   {
+  //     value: 'ko-KR',
+  //     name: '한국어',
+  //   },
+  //   {
+  //     value: 'en-EN',
+  //     name: 'English',
+  //   },
+
+  // ];
+
+  // currentLanguage = this.getLocale();
+
+  // changeLanguage(langName: string) {
+  //   this.setLocale(langName);
+  //   window.location.reload();
+  // }
+
+  // getConfigValue(key: string): any {
+  //   return getDeepFromObject(this.option, key, null);
+  // }
 }

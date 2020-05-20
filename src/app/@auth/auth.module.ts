@@ -67,7 +67,6 @@ const NB_MODULES = [
   NbCheckboxModule,
   NbInputModule,
   NbButtonModule,
-
   NbSelectModule,
 
 ];

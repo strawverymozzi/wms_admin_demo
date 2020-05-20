@@ -39,10 +39,16 @@ const routes: Routes = [{
         .then(m => m.AdminModule2Module),
     },
     {
-      path: 'devextreme',
+      path: 'CM',
       loadChildren: () => import('../pages/devextreme/devextreme.module')
         .then(m => m.DevextremeModule),
     },
+    // {
+    //   path: 'devextreme',
+    //   loadChildren: () => import('../pages/devextreme/devextreme.module')
+    //     .then(m => m.DevextremeModule),
+    // },
+    
     {
       path: '',
       redirectTo: 'dashboard',

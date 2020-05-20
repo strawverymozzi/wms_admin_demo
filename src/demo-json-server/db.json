@@ -1,7 +1,7 @@
 {
   "login": {
-    "email": "admin@admin.com",
-    "password": "1232345",
+    "email": "",
+    "password": "",
     "rememberMe": false
   },
   "sign-up": {
@@ -644,19 +644,36 @@
     "success": true,
     "code": 0,
     "msg": "성공하였습니다.",
-    "transationTime": "2020-05-08T00:25:51.9601466",
+    "transationTime": "2020-05-13T21:35:55.2048043",
     "list": [
       {
+        "uid": 10000,
+        "tenant": "1000",
         "title": "MENU1",
         "icon": "home-outline",
-        "link": "/adminPages/devextreme",
+        "menuPath": "10000",
+        "appUid": null,
+        "url": null,
+        "link": "/adminPages/CM",
         "children": [
           {
-            "title": "SAMPLE",
+            "uid": 10002,
+            "tenant": "1000",
+            "title": "MENU3",
             "icon": "home-outline",
-            "link": "/adminPages/devextreme/sample"
+            "menuPath": "10000|10002",
+            "appUid": 90003,
+            "url": null,
+            "link": "/adminPages/CM/어플리케이션3",
+            "children": [],
+            "insFlg": 1,
+            "updFlg": 1,
+            "delFlg": 0
           }
-        ]
+        ],
+        "insFlg": null,
+        "updFlg": null,
+        "delFlg": null
       },
       {
         "uid": 10001,
@@ -664,9 +681,13 @@
         "title": "MENU2",
         "icon": "home-outline",
         "menuPath": "10001",
+        "appUid": 90001,
         "url": "/CM/APP",
         "link": "/CM/APP",
-        "children": []
+        "children": [],
+        "insFlg": 1,
+        "updFlg": 1,
+        "delFlg": 1
       }
     ]
   },
