@@ -641,56 +641,60 @@
     }
   ],
   "ADMINMENU": {
-    "success": true,
-    "code": 0,
-    "msg": "성공하였습니다.",
-    "transationTime": "2020-05-13T21:35:55.2048043",
-    "list": [
-      {
-        "uid": 10000,
-        "tenant": "1000",
-        "title": "MENU1",
-        "icon": "home-outline",
-        "menuPath": "10000",
-        "appUid": null,
-        "url": null,
-        "link": "/adminPages/CM",
-        "children": [
-          {
-            "uid": 10002,
-            "tenant": "1000",
-            "title": "MENU3",
-            "icon": "home-outline",
-            "menuPath": "10000|10002",
-            "appUid": 90003,
-            "url": null,
-            "link": "/adminPages/CM/어플리케이션3",
-            "children": [],
-            "insFlg": 1,
-            "updFlg": 1,
-            "delFlg": 0
-          }
-        ],
-        "insFlg": null,
-        "updFlg": null,
-        "delFlg": null
-      },
-      {
-        "uid": 10001,
-        "tenant": "1000",
-        "title": "MENU2",
-        "icon": "home-outline",
-        "menuPath": "10001",
-        "appUid": 90001,
-        "url": "/CM/APP",
-        "link": "/CM/APP",
-        "children": [],
-        "insFlg": 1,
-        "updFlg": 1,
-        "delFlg": 1
-      }
+    "success":true,
+    "code":0,
+    "msg":"성공하였습니다.",
+    "transationTime":"2020-05-22T20:35:12.043458",
+    "list":[
+       {
+          "uid":10000,
+          "tenant":"1000",
+          "title":"MENU1",
+          "icon":"ICON1",
+          "menuPath":"10000",
+          "appUid":null,
+          "link":null,
+          "windowName":null,
+          "children":[
+             {
+                "uid":10002,
+                "tenant":"1000",
+                "title":"입고예정",
+                "icon":"ICON3",
+                "menuPath":"10000|10002",
+                "appUid":90003,
+                "link":"/adminPages/CM/어플리케이션3",
+                "windowName":"rcv",
+                "children":[
+ 
+                ],
+                "insFlg":"I3bf0faZOdYKsS5EhYGUStkWhWiBV8gBC5p1FG8xz5U=",
+                "updFlg":"LkhF1x2Eva7i9SYNof0fetkWhWiBV8gBC5p1FG8xz5U=",
+                "delFlg":""
+             }
+          ],
+          "insFlg":null,
+          "updFlg":null,
+          "delFlg":null
+       },
+       {
+          "uid":10001,
+          "tenant":"1000",
+          "title":"MENU2",
+          "icon":"ICON2",
+          "menuPath":"10001",
+          "appUid":90001,
+          "link":"/CM/APP",
+          "windowName":null,
+          "children":[
+ 
+          ],
+          "insFlg":"02W4Lc/aYBMcIVioXkTauRnoFbEk1cqa4/mCe/vGkl8=",
+          "updFlg":"hmxY0gurkbZKWgPc6/F2T2S6MlbNlnG3Vit+rhh3swk=",
+          "delFlg":"POa4BMjxP1K9uqzyh5Sfbw40bL2g90IdSu66IniFxK4="
+       }
     ]
-  },
+ },
   "ADMINMODULE": {
     "modules": [
       {
