@@ -14,21 +14,25 @@ import { ROLES } from './roles';
 export class AdminGuard implements CanActivate {
   constructor(private roleProvider: NbRoleProvider, private router: Router) { }
 
+  private checkToken(): boolean {
+    return !!localStorage.getItem("access") && !!localStorage.getItem("refresh");
+  }
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot,
   ): Observable<boolean> | Promise<boolean> | boolean {
-    return this.roleProvider.getRole()
-      .pipe(map(role => {
-        const roles = role instanceof Array ? role : [role];
+    return this.checkToken();
+    // return this.roleProvider.getRole()
+    //   .pipe(map(role => {
+    //     const roles = role instanceof Array ? role : [role];
 
-        return roles.some(x => {
-          if (!(x && x.toLowerCase() !== ROLES.ADMIN)) {
-            this.router.navigate(['auth/login']);
-            return false;
-          }
-          return true;
-        });
-      }));
+    //     return roles.some(x => {
+    //       if (!(x && x.toLowerCase() !== ROLES.ADMIN)) {
+    //         this.router.navigate(['auth/login']);
+    //         return false;
+    //       }
+    //       return true;
+    //     });
+    //   }));
   }
 }

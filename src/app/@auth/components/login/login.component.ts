@@ -3,45 +3,31 @@
  * Licensed under the Single Application / Multi Application License.
  * See LICENSE_SINGLE_APP / LICENSE_MULTI_APP in the 'docs' folder for license information on type of purchased license.
  */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnInit, ElementRef } from '@angular/core';
+const _INITPAGEURL = '/auth/login';
+
+import { ChangeDetectionStrategy, Component, Inject, OnInit, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import {
   NB_AUTH_OPTIONS,
-  NbAuthSocialLink,
   NbAuthService,
-  NbAuthResult,
   NbTokenLocalStorage,
-  NbPasswordAuthStrategy,
   NbAuthToken,
+  NbPasswordAuthStrategy,
 } from '@nebular/auth';
-import { getDeepFromObject } from '../../helpers';
-import { NbThemeService } from '@nebular/theme';
-import { EMAIL_PATTERN } from '../constants';
-import { InitUserService } from '../../../@theme/services/init-user.service';
+import notify from 'devextreme/ui/notify';
 import { environment } from '../../../../environments/environment';
-import { HttpClient } from '@angular/common/http';
-import { GlobalAdministrator } from '../../../@common/GlobalAdministrator';
-import { CommonHttpService } from '../../../@common/common-http.service';
+import { LoginService } from './login.service';
+import { GlobalAdministrator } from '../../../@global/global.administrator';
 
 @Component({
   selector: 'ngx-login',
   templateUrl: './login.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [LoginService]
 })
 
-export class NgxLoginComponent implements OnInit {
-
-  // strategy: string = this.getConfigValue('forms.login.strategy');
-  // isEmailRequired: boolean = this.getConfigValue('forms.validation.email.required');
-  // isPasswordRequired: boolean = this.getConfigValue('forms.validation.password.required');
-  // minLength: number = this.getConfigValue('forms.validation.password.minLength');
-  // maxLength: number = this.getConfigValue('forms.validation.password.maxLength');
-
-  // redirectDelay: number = this.getConfigValue('forms.login.redirectDelay');
-  // showMessages: any = this.getConfigValue('forms.login.showMessages');
-  // rememberMe = this.getConfigValue('forms.login.rememberMe');
-  // socialLinks: NbAuthSocialLink[] = this.getConfigValue('forms.login.socialLinks');
+export class NgxLoginComponent extends GlobalAdministrator implements OnInit {
 
   errors: string[] = [];
   messages: string[] = [];
@@ -49,141 +35,85 @@ export class NgxLoginComponent implements OnInit {
   submitted: boolean = false;
   loginForm: FormGroup;
   alive: boolean = true;
+  languages: any = {
+    "ko-KR": "한국어",
+    "en-US": "영어",
+    "zn-CN": "중국어",
+    "ja-JP": "일본어",
+    "vi-VN": "베트남어",
+    "id-ID": "인니어"
+  }
+  langKeys = Object.keys(this.languages);
+  currentLanguage: string = "ko-KR";
 
   get tenantID() { return this.loginForm.get('tenantID'); }
   get userID() { return this.loginForm.get('userID'); }
   get password() { return this.loginForm.get('password'); }
+  get rememberMe() { return this.loginForm.get('rememberMe'); }
 
   constructor(
     @Inject(NB_AUTH_OPTIONS) protected option = {},
     protected elRef: ElementRef,
     private fb: FormBuilder,
     protected router: Router,
-    protected _http: HttpClient,
+    private loginService: LoginService,
+    private tokenStorage: NbTokenLocalStorage,
+    private authStrategy: NbPasswordAuthStrategy,
 
-    // protected cd: ChangeDetectorRef,
-    // protected themeService: NbThemeService,
-    // protected initUserService: InitUserService,
-    // protected service: NbAuthService,
-    // private tokenStorage: NbTokenLocalStorage,
-    // private authStrategy: NbPasswordAuthStrategy,
 
   ) {
-    //super(_http, elRef, 'GLOBAL_LOGINPAGE');
+    super(elRef, _INITPAGEURL);
+    const storageLanguage = localStorage.getItem("language");
+    this.currentLanguage = storageLanguage ? storageLanguage : this.initLanguage();
   }
 
   ngOnInit(): void {
-
     this.loginForm = this.fb.group({
       tenantID: this.fb.control(''),
       userID: this.fb.control(''),
       password: this.fb.control(''),
       rememberMe: this.fb.control(false),
     });
-
-    // const emailValidators = [
-    //   Validators.pattern(EMAIL_PATTERN),
-    // ];
-    // this.isEmailRequired && emailValidators.push(Validators.required);
-
-    // const passwordValidators = [
-    //   Validators.minLength(this.minLength),
-    //   Validators.maxLength(this.maxLength),
-    // ];
-    // this.isPasswordRequired && passwordValidators.push(Validators.required);
-
-    // this.loginForm = this.fb.group({
-    //   email: this.fb.control('', [...emailValidators]),
-    //   password: this.fb.control('', [...passwordValidators]),
-    //   rememberMe: this.fb.control(false),
-    // });
   }
 
-  private _LOGINURL = 'http://www.jflab.co.kr:18000/auth/login';
+  initLanguage(): string {
+    localStorage.setItem("language", navigator.language);
+    return navigator.language;
+  }
+
+  changeLanguage(langName: string) {
+    localStorage.setItem("language", langName);
+    window.location.reload();
+  }
 
   login(): void {
-    this.user = this.loginForm.value;
     this.errors = [];
     this.messages = [];
     this.submitted = true;
+    this.user = this.loginForm.value;
+    this.user["language"] = this.currentLanguage;
 
-    console.log(this.user)
+    //delete on serverTest
+    this.user["token"] = {
+      "access_token": 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIxMDAwMCIsInRlbmFudCI6IjEwMDAiLCJ1c2VySWQiOiJURVNUX1VTRVIiLCJmdWxsTmFtZSI6Iu2FjOyKpO2KuOycoOyggCIsInBhZ2VSb2xlIjp7ImluZkZsZyI6IiIsInVwZEZsZyI6IiIsImRlbEZsZyI6IiJ9LCJsYW5ndWFnZSI6ImtvLUtSIiwiaWF0IjoxNTg5NzEzOTUxLCJleHAiOjE1ODk3MTc1NTF9.ab4kxvQbzvBIkvOLqXyRGShO7J8Eplh5gG7VQfl_mtA',
+      "refresh_token": 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIxMDAwMCIsInRlbmFudCI6IjEwMDAiLCJ1c2VySWQiOiJURVNUX1VTRVIiLCJmdWxsTmFtZSI6Iu2FjOyKpO2KuOycoOyggCIsInBhZ2VSb2xlIjp7ImluZkZsZyI6IiIsInVwZEZsZyI6IiIsImRlbEZsZyI6IiJ9LCJsYW5ndWFnZSI6ImtvLUtSIiwiaWF0IjoxNTg5NzEzOTUxLCJleHAiOjE1OTIzMDU5NTF9.fquXGAlZSS4Z3Tm4Nnm7f4ca_KM1IGK8tUt2qL1rLyQ',
+    }
+    this.tokenStorage.set(this.authStrategy.createToken<NbAuthToken>(this.user["token"]));
+    //
+    this.loginService.loginUser(this.user).subscribe(res => {
+      const result = this.loginService.handleLoginResult(res);
+      result ?
+        setTimeout(() => {
+          return this.router.navigateByUrl('/adminPages');
+        }) :
+        notify(
+          {
+            message: "nope",
+            position: "center",
+            closeOnClick: true,
+            closeOnOutsideClick: true
+          }, "error", 1000);
+    });
 
-    // this.http.post(this._LOGINURL, { 'tenant': '1000', 'usercd': 'TEST_USER', 'password': '1234','language': 'ko-KR' }).subscribe(
-    //   res => {
-    //     const demoTokenInitKey = 'demo_token_initialized'
-    //     const token = res['token'];
-    //     setTimeout(() => {
-    //       return this.router.navigateByUrl('/adminPages');
-    //     }, this.redirectDelay);
-    //     this.tokenStorage.set(this.authStrategy.createToken<NbAuthToken>(token));
-    //     localStorage.setItem(demoTokenInitKey, 'true');
-    //     localStorage.setItem('access', token["access_token"]);
-    //     localStorage.setItem('refresh', token["refresh_token"]);
-    //   }
-
-    // )
-    // this.service.authenticate(this.strategy, this.user).subscribe((result: NbAuthResult) => {
-
-    //   const demoTokenInitKey = 'demo_token_initialized';
-    //   const demoTokenWasInitialized = localStorage.getItem(demoTokenInitKey);
-    //   const currentToken = this.tokenStorage.get();
-    //   if (!demoTokenWasInitialized && !currentToken.isValid()) {
-    //     // local storage is clear, let's setup demo user token for better demo experience
-    //     let token;
-    //     if (this.user.email == 'user@user.com') {
-    //       token = environment.testUser.token;
-    //       setTimeout(() => {
-    //         return this.router.navigateByUrl('/pages');
-    //       }, this.redirectDelay);
-    //     } else if (this.user.email == 'admin@admin.com') {
-    //       token = environment.testAdminUser.token;
-    //       setTimeout(() => {
-    //         return this.router.navigateByUrl('/adminPages');
-    //       }, this.redirectDelay);
-    //     }
-    //     this.tokenStorage.set(this.authStrategy.createToken<NbAuthToken>(token));
-    //     localStorage.setItem(demoTokenInitKey, 'true');
-    //   }
-    // if (result.isSuccess()) {
-    //   this.messages = result.getMessages();
-    //   this.initUserService.initCurrentUser().subscribe();
-    // } else {
-    //   this.errors = result.getErrors();
-    // }
-
-    // const redirect = result.getRedirect();
-    // if (redirect) {
-    //   setTimeout(() => {
-    //     return this.router.navigateByUrl(redirect);
-    //   }, this.redirectDelay);
-    // }
-
-    // this.submitted = false;
-    // this.cd.detectChanges();
-    // });
   }
-
-  // languages = [
-  //   {
-  //     value: 'ko-KR',
-  //     name: '한국어',
-  //   },
-  //   {
-  //     value: 'en-EN',
-  //     name: 'English',
-  //   },
-
-  // ];
-
-  // currentLanguage = this.getLocale();
-
-  // changeLanguage(langName: string) {
-  //   this.setLocale(langName);
-  //   window.location.reload();
-  // }
-
-  // getConfigValue(key: string): any {
-  //   return getDeepFromObject(this.option, key, null);
-  // }
 }

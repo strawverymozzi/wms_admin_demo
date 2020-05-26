@@ -17,6 +17,7 @@ export class AuthInterceptor implements HttpInterceptor {
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    console.log("auth interceptor",req.url)
     return next.handle(req)
       .pipe(catchError((error: HttpErrorResponse) => {
         if (error.status === 401) {

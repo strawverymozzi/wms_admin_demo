@@ -1,8 +1,22 @@
 {
   "login": {
-    "email": "",
+    "dictionary": {
+      "TENANTID": "회사코드",
+      "USERID": "아이디",
+      "USERPWD": "비밀번호",
+      "REMBME": "기억여부"
+    }
+  },
+  "loginUser": {
+    "tenantID": "",
+    "userID": "",
     "password": "",
-    "rememberMe": false
+    "rememberMe": false,
+    "language": "ko-KR",
+    "token": {
+      "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIxMDAwMCIsInRlbmFudCI6IjEwMDAiLCJ1c2VySWQiOiJURVNUX1VTRVIiLCJmdWxsTmFtZSI6Iu2FjOyKpO2KuOycoOyggCIsInBhZ2VSb2xlIjp7ImluZkZsZyI6IiIsInVwZEZsZyI6IiIsImRlbEZsZyI6IiJ9LCJsYW5ndWFnZSI6ImtvLUtSIiwiaWF0IjoxNTg5NzEzOTUxLCJleHAiOjE1ODk3MTc1NTF9.ab4kxvQbzvBIkvOLqXyRGShO7J8Eplh5gG7VQfl_mtA",
+      "refresh_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIxMDAwMCIsInRlbmFudCI6IjEwMDAiLCJ1c2VySWQiOiJURVNUX1VTRVIiLCJmdWxsTmFtZSI6Iu2FjOyKpO2KuOycoOyggCIsInBhZ2VSb2xlIjp7ImluZkZsZyI6IiIsInVwZEZsZyI6IiIsImRlbEZsZyI6IiJ9LCJsYW5ndWFnZSI6ImtvLUtSIiwiaWF0IjoxNTg5NzEzOTUxLCJleHAiOjE1OTIzMDU5NTF9.fquXGAlZSS4Z3Tm4Nnm7f4ca_KM1IGK8tUt2qL1rLyQ"
+    }
   },
   "sign-up": {
     "fullName": "testtest",
@@ -641,60 +655,59 @@
     }
   ],
   "ADMINMENU": {
-    "success":true,
-    "code":0,
-    "msg":"성공하였습니다.",
-    "transationTime":"2020-05-22T20:35:12.043458",
-    "list":[
-       {
-          "uid":10000,
-          "tenant":"1000",
-          "title":"MENU1",
-          "icon":"ICON1",
-          "menuPath":"10000",
-          "appUid":null,
-          "link":null,
-          "windowName":null,
-          "children":[
-             {
-                "uid":10002,
-                "tenant":"1000",
-                "title":"입고예정",
-                "icon":"ICON3",
-                "menuPath":"10000|10002",
-                "appUid":90003,
-                "link":"/adminPages/CM/어플리케이션3",
-                "windowName":"rcv",
-                "children":[
- 
-                ],
-                "insFlg":"I3bf0faZOdYKsS5EhYGUStkWhWiBV8gBC5p1FG8xz5U=",
-                "updFlg":"LkhF1x2Eva7i9SYNof0fetkWhWiBV8gBC5p1FG8xz5U=",
-                "delFlg":""
-             }
-          ],
-          "insFlg":null,
-          "updFlg":null,
-          "delFlg":null
-       },
-       {
-          "uid":10001,
-          "tenant":"1000",
-          "title":"MENU2",
-          "icon":"ICON2",
-          "menuPath":"10001",
-          "appUid":90001,
-          "link":"/CM/APP",
-          "windowName":null,
-          "children":[
- 
-          ],
-          "insFlg":"02W4Lc/aYBMcIVioXkTauRnoFbEk1cqa4/mCe/vGkl8=",
-          "updFlg":"hmxY0gurkbZKWgPc6/F2T2S6MlbNlnG3Vit+rhh3swk=",
-          "delFlg":"POa4BMjxP1K9uqzyh5Sfbw40bL2g90IdSu66IniFxK4="
-       }
+    "success": true,
+    "code": 0,
+    "msg": "성공하였습니다.",
+    "transationTime": "2020-05-17T20:12:56.9294169",
+    "list": [
+      {
+        "uid": 10000,
+        "tenant": "1000",
+        "title": "MENU1",
+        "icon": "shopping-cart-outline",
+        "menuPath": "10000",
+        "appUid": null,
+        "url": null,
+        "link": null,
+        "windowName": null,
+        "children": [
+          {
+            "uid": 10002,
+            "tenant": "1000",
+            "title": "입고예정",
+            "icon": "shopping-cart-outline",
+            "menuPath": "10000|10002",
+            "appUid": 90003,
+            "url": "http://www.jflab.co.kr:18000/api/v1/receive",
+            "link": "/adminPages/CM/application3",
+            "windowName": "rcv",
+            "children": [],
+            "insFlg": "I3bf0faZOdYKsS5EhYGUStkWhWiBV8gBC5p1FG8xz5U=",
+            "updFlg": "LkhF1x2Eva7i9SYNof0fetkWhWiBV8gBC5p1FG8xz5U=",
+            "delFlg": ""
+          }
+        ],
+        "insFlg": null,
+        "updFlg": null,
+        "delFlg": null
+      },
+      {
+        "uid": 10001,
+        "tenant": "1000",
+        "title": "MENU2",
+        "icon": "shopping-cart-outline",
+        "menuPath": "10001",
+        "appUid": 90001,
+        "url": "/CM/test1",
+        "link": "/adminPages/AdminModule1Module/test1",
+        "windowName": null,
+        "children": [],
+        "insFlg": "02W4Lc/aYBMcIVioXkTauRnoFbEk1cqa4/mCe/vGkl8=",
+        "updFlg": "hmxY0gurkbZKWgPc6/F2T2S6MlbNlnG3Vit+rhh3swk=",
+        "delFlg": "POa4BMjxP1K9uqzyh5Sfbw40bL2g90IdSu66IniFxK4="
+      }
     ]
- },
+  },
   "ADMINMODULE": {
     "modules": [
       {
@@ -745,6 +758,11 @@
       "PTNRNM": "파트너 명",
       "SKUKEY": "상품 키",
       "SKUNAM": "상품 명"
+    }
+  },
+  "receive": {
+    "dictionary": {
+      "SEARCHOPTION": "이게되나요"
     }
   }
 }

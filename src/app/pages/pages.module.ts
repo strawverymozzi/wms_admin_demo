@@ -15,8 +15,6 @@ import { PagesMenu } from './pages-menu';
 import { ECommerceModule } from './e-commerce/e-commerce.module';
 import { NbMenuModule } from '@nebular/theme';
 import { AuthModule } from '../@auth/auth.module';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { PagesInterceptor } from './pages.interceptor';
 
 const PAGES_COMPONENTS = [
   PagesComponent,
@@ -37,7 +35,6 @@ const PAGES_COMPONENTS = [
   ],
   providers: [
     PagesMenu,
-    { provide: HTTP_INTERCEPTORS, useClass: PagesInterceptor, multi: true }
   ],
 })
 export class PagesModule {

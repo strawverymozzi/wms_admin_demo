@@ -14,15 +14,13 @@ import { NbTokenLocalStorage } from '@nebular/auth';
 @Injectable()
 export class DevextremeInterceptor implements HttpInterceptor {
 
-  constructor(private router: Router, private tokenStorage: NbTokenLocalStorage) {
+  constructor(private router: Router) {
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     let clonedReq = req;
     clonedReq = req.clone({
-      headers: req.headers
-        .append('authorization', 'Bearer ' + localStorage.getItem('access'))
-        .append('refreshtoken', localStorage.getItem('refresh')),
+      headers: req.headers,
       body: { version: 'v1', user: "jbh5310", data: req.body }
     });
 

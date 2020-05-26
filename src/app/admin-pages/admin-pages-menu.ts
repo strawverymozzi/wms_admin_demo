@@ -4,65 +4,58 @@
  * See LICENSE_SINGLE_APP / LICENSE_MULTI_APP in the 'docs' folder for license information on type of purchased license.
  */
 
-const _ADMINMENUPAGESURL: string = 'http://localhost:3001/api/auth/ADMINMENU';
-// const _ADMINMENUPAGESURL: string = "http://www.jflab.co.kr:18000/api/v1/mdm/menu";
+const _ADMINMENUPAGESURL: string = '/menu/ADMINMENU';
+// const _ADMINMENUPAGESURL: string = "/v1/mdm/menu";
 
 import { Injectable } from '@angular/core';
 import { CommonHttpService } from '../@common/common-http.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { Router, NavigationStart } from '@angular/router';
+import { ProgramInitHelper } from '../@common/ProgramInitHelper';
 
 @Injectable()
-export class AdminPagesMenu {
+export class AdminPagesMenu extends CommonHttpService {
 
-  private adminMenu: any[];
-  private options: any;
-  private headers: HttpHeaders = new HttpHeaders();
+  private NBMenuList = [];
 
-  constructor(private _http: HttpClient) {
-    // super(_http);
-    this.adminMenu = [];
-    this.headers = this.headers.append('Accept', '*; charset=utf-8');
-    this.headers = this.headers.append('Access-Control-Allow-Origin', '*');
-    this.headers = this.headers.append('Content-Type', 'application/json');
-    this.headers = this.headers.append('authorization', 'Bearer ' + localStorage.getItem('access'))
-    this.headers = this.headers.append('refreshtoken', localStorage.getItem('refresh')),
-
-      this.options = { headers: this.headers, responseType: 'json' };
+  public getMenu() {
+    return this.NBMenuList;
+  }
+  constructor(
+    private http: HttpClient,
+    private programHelper: ProgramInitHelper
+  ) {
+    super(http);
   }
 
-  // callMenu(): Observable<any> {
-  //   return this.getJson(_ADMINMENUPAGESURL);
-  // }
+  initMenu() {
+    this.getJson(_ADMINMENUPAGESURL).subscribe(res => {
+      this.parseMenu(this.NBMenuList, res["list"]);
+    })
+  }
 
-  setMenu() {
-    return this._http.get(_ADMINMENUPAGESURL, this.options).subscribe(
-      res => {
-        const menuList = res["list"];
-        console.log(menuList)
-        this.interpretToNBMenu(menuList)
-        console.log(menuList)
-
-        this.adminMenu.push(...menuList);
+  parseMenu(returnedList: any[], insertedList: any[]) {
+    for (let menuObj of insertedList) {
+      const setting = {
+        title: menuObj["title"],
+        icon: menuObj["icon"],
+        link: menuObj["link"],
       }
-    )
-    // this.callMenu().subscribe(res => {
-    //   this.adminMenu.push(...res["list"]);
-    // })
-  }
-
-  getMenu(): any[] {
-    return this.adminMenu;
-  }
-
-  interpretToNBMenu(menuList: any[]) {
-    for(let menuObj of menuList){
-      if(!menuObj["children"].length){
-        delete menuObj["children"];
-      }else{
-        this.interpretToNBMenu(menuObj["children"]);
+      if (
+        Array.isArray(menuObj["children"]) && menuObj["children"].length
+      ) {
+        setting["children"] = [];
+        this.parseMenu(setting["children"], menuObj["children"]);
       }
+      returnedList.push(setting);
     }
   }
+
+  parseProgram(returnedObj: any, insertedList: any[]) {
+
+  }
+
 
 }

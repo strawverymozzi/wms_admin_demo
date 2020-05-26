@@ -6,7 +6,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NbTokenLocalStorage, NbAuthToken, NbPasswordAuthStrategy } from '@nebular/auth';
 import { AnalyticsService } from './@core/utils/analytics.service';
-import { GlobalAdministrator } from './@common/GlobalAdministrator';
 
 @Component({
   selector: 'ngx-app',
@@ -25,7 +24,7 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     //this.setLocale("ko-KR");
     // this.setLocale("en-EN");
-    this.analytics.trackPageViews();
+    //this.analytics.trackPageViews();
   }
 
   initTestUserToken() {

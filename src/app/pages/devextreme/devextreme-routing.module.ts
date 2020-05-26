@@ -9,7 +9,7 @@ const routes: Routes = [
     component: DevextremeComponent,
     children: [
       {
-        path: '어플리케이션3',
+        path: 'application3',
         component: SampleComponent,
       },
 

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, } from '@angular/core';
 import notify from 'devextreme/ui/notify';
 import { MasterSearchFormService } from './component/master-search-form/master-search-form.service';
 import { MasterSearchSubFormService } from './component/master-search-sub-form/master-search-sub-form.service';
@@ -10,6 +10,8 @@ import { NbAccessChecker } from '@nebular/security';
 import { exportDataGrid } from 'devextreme/excel_exporter';
 import * as ExcelJS from 'exceljs';
 import * as FileSaver from "file-saver";
+import { ProgramInitHelper } from '../../../@common/ProgramInitHelper';
+import { GlobalAdministrator } from '../../../@global/global.administrator';
 
 @Component({
   selector: 'ngx-sample',
@@ -23,7 +25,7 @@ import * as FileSaver from "file-saver";
     GridService,
   ]
 })
-export class SampleComponent implements OnInit {
+export class SampleComponent extends GlobalAdministrator implements OnInit {
   @ViewChild('masterGrid', { static: false }) masterGridRef: DxDataGridComponent;
   @ViewChild('detailGrid', { static: false }) detailGridRef: DxDataGridComponent;
   @ViewChild('ptnSearchGrid', { static: false }) partnerGridRef: DxDataGridComponent;
@@ -67,13 +69,17 @@ export class SampleComponent implements OnInit {
   public actionSheetCommand: any[];
   public actionSheetTagBox: any[];
   constructor(
+    
     private formService: MasterSearchFormService,
     private formSubService: MasterSearchSubFormService,
     private formPartnerService: PartnerSearchFormService,
     private formSkukeyService: SkukeySearchFormService,
     private gridService: GridService,
-    public accessChecker: NbAccessChecker
+    public accessChecker: NbAccessChecker,
+    protected elRef: ElementRef,
+    private programHelper: ProgramInitHelper
   ) {
+    super(elRef, programHelper.getInitURL("/adminPages/CM/application3"));
 
     this.formMasterDTO = this.formService.getDataObj();
     this.formDetailDTO = this.formSubService.getDataObj();
@@ -314,8 +320,8 @@ export class SampleComponent implements OnInit {
       this.detailGridConfig[1]['editCellTemplate'] = 'cellSearchHelpPTNKEY'
     }
   }
-  ptnCodeChanged(e){
-    
+  ptnCodeChanged(e) {
+
   }
 
   onDetailDropKeyDown(e) {

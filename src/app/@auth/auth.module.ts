@@ -46,6 +46,7 @@ import { AuthRoutingModule } from './auth-routing.module';
 import { ComponentsModule } from '../@components/components.module';
 import { authOptions } from './auth.settings';
 import { authSettings } from './access.settings';
+import { AdminPagesInterceptor } from '../admin-pages/admin-pages.interceptor';
 
 const GUARDS = [AuthGuard, AdminGuard];
 const PIPES = [AuthPipe];
@@ -105,7 +106,7 @@ export class AuthModule {
       ngModule: AuthModule,
       providers: [
         { provide: NB_AUTH_TOKEN_INTERCEPTOR_FILTER, useValue: filterInterceptorRequest },
-        { provide: HTTP_INTERCEPTORS, useClass: NbAuthJWTInterceptor, multi: true },
+        //{ provide: HTTP_INTERCEPTORS, useClass: NbAuthJWTInterceptor, multi: true },
         { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
         ...GUARDS],
     };

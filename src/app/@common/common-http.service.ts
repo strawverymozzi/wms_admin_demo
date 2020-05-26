@@ -15,7 +15,9 @@ export class CommonHttpService {
     this.headers = this.headers.append('Accept', '*; charset=utf-8');
     this.headers = this.headers.append('Access-Control-Allow-Origin', '*');
     this.headers = this.headers.append('Content-Type', 'application/json');
-    this.options = { headers: this.headers, withCredentials: true, responseType: 'json' };
+    this.options = { headers: this.headers, responseType: 'json' };
+
+    // this.options = { headers: this.headers, withCredentials: true, responseType: 'json' };
   }
 
   protected setInitHeaders(headers: Map<string, string>) {

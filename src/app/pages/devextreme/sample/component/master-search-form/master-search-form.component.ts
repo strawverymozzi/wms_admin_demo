@@ -1,6 +1,5 @@
 import { Component, OnInit, Output, EventEmitter, AfterViewInit, ElementRef } from '@angular/core';
 import { MasterSearchFormService } from './master-search-form.service';
-import { GlobalAdministrator } from '../../../../../@common/GlobalAdministrator';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
@@ -9,7 +8,7 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./master-search-form.component.css'],
   providers: [MasterSearchFormService]
 })
-export class MasterSearchFormComponent extends GlobalAdministrator implements OnInit {
+export class MasterSearchFormComponent implements OnInit {
 
   @Output() clickEvent = new EventEmitter();
   public dataObject: any;
@@ -23,7 +22,6 @@ export class MasterSearchFormComponent extends GlobalAdministrator implements On
 
   constructor(private service: MasterSearchFormService, protected elRef: ElementRef,
     protected http: HttpClient) {
-    super(http, elRef, 'GLOBAL_FORMPARAM');
     this.dataObject = service.getDataObj();
     this.searchPtnBtn = {
       icon: 'search',

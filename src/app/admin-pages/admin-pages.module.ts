@@ -8,7 +8,11 @@ import { AuthModule } from '../@auth/auth.module';
 import { AdminPagesMenu } from './admin-pages-menu';
 import { AdminPagesComponent } from './admin-pages.component';
 import { AdminPagesRoutingModule } from './admin-pages-routing.module';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AdminPagesInterceptor } from './admin-pages.interceptor';
+import { AdminGuard } from '../@auth/admin.guard';
 
+const GUARDS = [AdminGuard];
 
 const ADMIN_PAGES_COMPONENTS = [
   AdminPagesComponent,
@@ -22,14 +26,16 @@ const ADMIN_PAGES_COMPONENTS = [
     ECommerceModule,
     NbMenuModule,
     MiscellaneousModule,
-    AuthModule.forRoot(),
   ],
   declarations: [
     ...ADMIN_PAGES_COMPONENTS,
   ],
   providers: [
     AdminPagesMenu,
-  ],
+
+    { provide: HTTP_INTERCEPTORS, useClass: AdminPagesInterceptor, multi: true },
+    ...GUARDS]
+
 })
 export class AdminPagesModule {
   constructor() {

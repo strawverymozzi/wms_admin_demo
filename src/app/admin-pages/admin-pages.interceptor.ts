@@ -6,31 +6,31 @@
 
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpErrorResponse, HttpResponse } from '@angular/common/http';
+import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpErrorResponse, HttpResponse, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
-import { NbTokenLocalStorage } from '@nebular/auth';
 
 @Injectable()
 export class AdminPagesInterceptor implements HttpInterceptor {
+  private options: any;
+  private headers: HttpHeaders = new HttpHeaders();
 
-  constructor(private router: Router, private tokenStorage: NbTokenLocalStorage) {
+  constructor(private router: Router) {
+    this.headers = this.headers.append('authorization', 'Bearer ' + localStorage.getItem('access'));
+    this.headers = this.headers.append('refreshtoken', localStorage.getItem('refresh'));
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    console.log("admin interceptor")
     let clonedReq = req;
     clonedReq = req.clone({
-      headers: req.headers
-        .append('authorization', 'Bearer ' + localStorage.getItem('access'))
-        .append('refreshtoken', localStorage.getItem('refresh')),
-      body: { version: 'v1', user: "jbh5310", data: req.body }
+      headers: this.headers,
     });
 
     return next.handle(clonedReq).pipe(
       tap(
         (event: HttpEvent<any>) => {
           if (event instanceof HttpResponse) {
-            console.log("admin inter",clonedReq)
           }
         },
         (err: any) => {

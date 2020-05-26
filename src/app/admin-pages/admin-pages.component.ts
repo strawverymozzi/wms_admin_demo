@@ -6,9 +6,10 @@
 
 import { Component, OnDestroy } from '@angular/core';
 import { takeWhile } from 'rxjs/operators';
-import { NbTokenService } from '@nebular/auth';
+import { NbTokenService, urlBase64Decode } from '@nebular/auth';
 import { InitUserService } from '../@theme/services/init-user.service';
 import { AdminPagesMenu } from './admin-pages-menu';
+import { Router, NavigationStart } from '@angular/router';
 
 @Component({
   selector: 'ngx-admin-pages',
@@ -27,27 +28,19 @@ export class AdminPagesComponent implements OnDestroy {
   alive: boolean = true;
 
   constructor(
-    private tokenService: NbTokenService,
-    protected initUserService: InitUserService,
-    private menuService: AdminPagesMenu
-
+    private menuService: AdminPagesMenu,
+    private router: Router
   ) {
     this.menu = this.menuService.getMenu();
-    this.tokenService.tokenChange()
-      .pipe(takeWhile(() => this.alive))
-      .subscribe(() => {
-        this.menuService.setMenu();
-        console.log(this.menu)
-      });
+    this.menuService.initMenu();
+    // router.events.subscribe((val) => {
+    //   if(val instanceof NavigationStart){
+    //     console.log(val.url)
+    //   }
+    // });
   }
 
-  // initMenu() {
-  //   this.adminPagesMenu.getMenu()
-  //     .pipe(takeWhile(() => this.alive))
-  //     .subscribe(menu => {
-  //       this.menu = [...menu];
-  //     });
-  // }
+
 
   ngOnDestroy(): void {
     this.alive = false;

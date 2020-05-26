@@ -53,6 +53,6 @@ const components = [
     ...components,
 
   ],
-  providers: [{ provide: HTTP_INTERCEPTORS, useClass: DevextremeInterceptor, multi: true },  ]
+  providers: []
 })
 export class DevextremeModule { }

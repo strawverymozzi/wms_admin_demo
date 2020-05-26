@@ -1,5 +1,7 @@
 {
   "/api/selectBox/*": "/$1",
+  "/api/menu/*": "/$1",
+  "/api/v1/*": "/$1",
   "/api/grid/*": "/$1",
   "/api/auth/*": "/$1",
   "/api/dictionary/*": "/$1",
