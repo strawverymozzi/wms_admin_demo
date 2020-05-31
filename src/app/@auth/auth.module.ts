@@ -46,7 +46,7 @@ import { AuthRoutingModule } from './auth-routing.module';
 import { ComponentsModule } from '../@components/components.module';
 import { authOptions } from './auth.settings';
 import { authSettings } from './access.settings';
-import { AdminPagesInterceptor } from '../admin-pages/admin-pages.interceptor';
+import { PipesModule } from '../@pipes/pipes.module';
 
 const GUARDS = [AuthGuard, AdminGuard];
 const PIPES = [AuthPipe];
@@ -69,7 +69,7 @@ const NB_MODULES = [
   NbInputModule,
   NbButtonModule,
   NbSelectModule,
-
+  PipesModule
 ];
 
 export function filterInterceptorRequest(req: HttpRequest<any>): boolean {
@@ -78,7 +78,6 @@ export function filterInterceptorRequest(req: HttpRequest<any>): boolean {
 }
 
 @NgModule({
-  declarations: [...PIPES, ...COMPONENTS],
   imports: [
     AuthRoutingModule,
     ReactiveFormsModule,
@@ -88,6 +87,7 @@ export function filterInterceptorRequest(req: HttpRequest<any>): boolean {
     NbAuthModule.forRoot(authOptions),
   ],
   exports: [...PIPES],
+  declarations: [...PIPES, ...COMPONENTS],
   providers: [
     NbSecurityModule.forRoot({
       accessControl: authSettings,
@@ -105,10 +105,11 @@ export class AuthModule {
     return {
       ngModule: AuthModule,
       providers: [
-        { provide: NB_AUTH_TOKEN_INTERCEPTOR_FILTER, useValue: filterInterceptorRequest },
+        //{ provide: NB_AUTH_TOKEN_INTERCEPTOR_FILTER, useValue: filterInterceptorRequest },
         //{ provide: HTTP_INTERCEPTORS, useClass: NbAuthJWTInterceptor, multi: true },
         { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
-        ...GUARDS],
+        ...GUARDS
+      ],
     };
   }
 }

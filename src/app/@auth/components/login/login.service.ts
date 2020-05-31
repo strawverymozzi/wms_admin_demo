@@ -5,17 +5,19 @@ import { Injectable, ElementRef } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CommonHttpService } from '../../../@common/common-http.service';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Injectable()
 export class LoginService extends CommonHttpService {
 
   constructor(private http: HttpClient) {
     super(http);
-
   }
+
   public loginUser(user: any): Observable<any> {
     return this.postJson(_LOGINURL, user);
   }
+
   public handleLoginResult(loginResult: any): boolean {
     if (loginResult) {
       const token = loginResult['token'];
@@ -24,8 +26,16 @@ export class LoginService extends CommonHttpService {
     }
     return false;
   }
+
   private setToken(token) {
     localStorage.setItem('access', token["access_token"]);
     localStorage.setItem('refresh', token["refresh_token"]);
+  }
+
+  public test(): Observable<any> {
+    return this.getJson('/auth/login').pipe(map((res) => {
+      console.log("res")
+      return res["dictionary"]["TENANTID"]
+    }));
   }
 }

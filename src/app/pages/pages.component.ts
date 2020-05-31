@@ -4,7 +4,7 @@
  * See LICENSE_SINGLE_APP / LICENSE_MULTI_APP in the 'docs' folder for license information on type of purchased license.
  */
 
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { takeWhile } from 'rxjs/operators';
 import { NbTokenService } from '@nebular/auth';
 import { NbMenuItem } from '@nebular/theme';
@@ -51,4 +51,5 @@ export class PagesComponent implements OnDestroy {
   ngOnDestroy(): void {
     this.alive = false;
   }
+
 }

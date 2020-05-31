@@ -4,7 +4,7 @@
  * See LICENSE_SINGLE_APP / LICENSE_MULTI_APP in the 'docs' folder for license information on type of purchased license.
  */
 
-import { ExtraOptions, RouterModule, Routes } from '@angular/router';
+import { ExtraOptions, RouterModule, Routes, Router, NavigationStart, NavigationEnd } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { AuthGuard } from './@auth/auth.guard';
 import { AdminGuard } from './@auth/admin.guard';
@@ -12,7 +12,7 @@ import { AdminGuard } from './@auth/admin.guard';
 const routes: Routes = [
   {
     path: 'pages',
-    canActivate: [AuthGuard],
+    canActivate: [],
     loadChildren: () => import('../app/pages/pages.module')
       .then(m => m.PagesModule),
   },
@@ -25,7 +25,7 @@ const routes: Routes = [
   {
     path: 'auth',
     loadChildren: () => import('../app/@auth/auth.module')
-      .then(m => m.AuthModule),
+      .then(m => m.AuthModule)
   },
   { path: '', redirectTo: 'pages', pathMatch: 'full' },
   { path: '**', redirectTo: 'pages' },
@@ -40,5 +40,6 @@ const config: ExtraOptions = {
   exports: [RouterModule],
 })
 export class AppRoutingModule {
-  
+
+
 }

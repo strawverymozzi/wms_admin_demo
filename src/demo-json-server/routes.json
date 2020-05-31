@@ -1,4 +1,5 @@
 {
+  "/api/global/*": "/$1",
   "/api/selectBox/*": "/$1",
   "/api/menu/*": "/$1",
   "/api/v1/*": "/$1",

@@ -4,58 +4,34 @@
   ~ See LICENSE_SINGLE_APP / LICENSE_MULTI_APP in the 'docs' folder for license information on type of purchased license.
   -->
 
-<h1 id="title" class="title">Login</h1>
+<h1 id="title" class="title">{{'Login' | translate : 'LOGIN'}}</h1>
 <p class="sub-title">Hello! Log in to your account.</p>
 
-<!-- <nb-alert *ngIf="showMessages.error && errors?.length && !submitted" outline="danger" role="alert">
-    <p class="alert-title"><b>Oh snap!</b></p>
-    <ul class="alert-message-list">
-      <li *ngFor="let error of errors" class="alert-message">{{ error }}</li>
-    </ul>
-  </nb-alert>
-  
-  <nb-alert *ngIf="showMessages.success && messages?.length && !submitted" outline="success" role="alert">
-    <p class="alert-title"><b>Hooray!</b></p>
-    <ul class="alert-message-list">
-      <li *ngFor="let message of messages" class="alert-message">{{ message }}</li>
-    </ul>
-  </nb-alert> -->
-
 <div [formGroup]="loginForm" aria-labelledby="title">
-
   <div class="form-control-group">
-    <label class="label" for="input-tenantID" global="TENANTID">Tenant ID:</label>
+    <label class="label" for="input-tenantID">{{'Tenant ID:' | translate : 'TENANTID'}} </label>
     <input nbInput fullWidth id="input-tenantID" formControlName="tenantID" placeholder="Tenant ID">
   </div>
 
   <div class="form-control-group">
-    <label class="label" for="input-userID" global="USERID">User ID:</label>
+    <label class="label" for="input-userID">{{'User ID:' | translate : 'USERID'}}</label>
     <input nbInput fullWidth id="input-userID" formControlName="userID" placeholder="User ID">
-    <!-- <input nbInput fullWidth id="input-email" formControlName="userID"
-        [status]="email.dirty ? (email.invalid  ? 'danger' : 'success') : ''"
-        [attr.aria-invalid]="email.invalid && email.touched ? true : null" placeholder="Email address"> -->
-    <!-- <ngx-validation-message label="Email address" [showPattern]="email?.hasError('pattern') && email.touched"
-        [showRequired]="email?.errors?.required && email.touched"></ngx-validation-message> -->
+
   </div>
 
   <div class="form-control-group">
     <span class="label-with-link">
-      <label class="label" for="input-password" global="USERPWD">Password:</label>
+      <label class="label" for="input-password">{{'Password:' | translate : 'USERPWD'}}</label>
       <a class="forgot-password caption-2" routerLink="../request-password">Forgot Password?</a>
     </span>
     <input nbInput fullWidth id="input-password" formControlName="password" type="password" placeholder="Password">
-    <!-- <input nbInput fullWidth id="input-password" formControlName="password" type="password"
-        [status]="password.dirty ? (password.invalid  ? 'danger' : 'success') : ''" placeholder="Password"> -->
-    <!-- <ngx-validation-message label="Password" [showMinLength]="password?.hasError('minlength') && password.touched"
-        [showMaxLength]="password?.hasError('maxlength') && password.touched"
-        [showRequired]="password?.errors?.required && password.touched" [minLength]="minLength" [maxLength]="maxLength">
-      </ngx-validation-message> -->
+
   </div>
 
   <div class="form-control-group accept-group">
-    <nb-checkbox formControlName="rememberMe" name="rememberMe" *ngIf="rememberMe">Remember me</nb-checkbox>
+    <nb-checkbox formControlName="rememberMe" name="rememberMe" *ngIf="rememberMe">{{'Remember me' | translate : 'REMBME'}}</nb-checkbox>
     <nb-select [selected]="currentLanguage" (selectedChange)="changeLanguage($event)" status="primary">
-      <nb-option *ngFor="let key of langKeys" [value]="key"> {{languages[key]}}</nb-option>
+      <nb-option *ngFor="let key of langKeys" [value]="key">{{languages[key]}}</nb-option>
     </nb-select>
   </div>
 
@@ -63,8 +39,6 @@
     Log In
   </button>
 </div>
-
-
 
 <section class="another-action" aria-label="Register">
   Don't have an account? <a class="text-link" routerLink="../register">Register</a>

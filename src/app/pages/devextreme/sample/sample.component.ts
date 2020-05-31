@@ -10,8 +10,7 @@ import { NbAccessChecker } from '@nebular/security';
 import { exportDataGrid } from 'devextreme/excel_exporter';
 import * as ExcelJS from 'exceljs';
 import * as FileSaver from "file-saver";
-import { ProgramInitHelper } from '../../../@common/ProgramInitHelper';
-import { GlobalAdministrator } from '../../../@global/global.administrator';
+import { getViewMap } from '../../../@global/dictionary';
 
 @Component({
   selector: 'ngx-sample',
@@ -25,7 +24,7 @@ import { GlobalAdministrator } from '../../../@global/global.administrator';
     GridService,
   ]
 })
-export class SampleComponent extends GlobalAdministrator implements OnInit {
+export class SampleComponent implements OnInit {
   @ViewChild('masterGrid', { static: false }) masterGridRef: DxDataGridComponent;
   @ViewChild('detailGrid', { static: false }) detailGridRef: DxDataGridComponent;
   @ViewChild('ptnSearchGrid', { static: false }) partnerGridRef: DxDataGridComponent;
@@ -69,7 +68,7 @@ export class SampleComponent extends GlobalAdministrator implements OnInit {
   public actionSheetCommand: any[];
   public actionSheetTagBox: any[];
   constructor(
-    
+
     private formService: MasterSearchFormService,
     private formSubService: MasterSearchSubFormService,
     private formPartnerService: PartnerSearchFormService,
@@ -77,9 +76,7 @@ export class SampleComponent extends GlobalAdministrator implements OnInit {
     private gridService: GridService,
     public accessChecker: NbAccessChecker,
     protected elRef: ElementRef,
-    private programHelper: ProgramInitHelper
   ) {
-    super(elRef, programHelper.getInitURL("/adminPages/CM/application3"));
 
     this.formMasterDTO = this.formService.getDataObj();
     this.formDetailDTO = this.formSubService.getDataObj();
@@ -333,5 +330,4 @@ export class SampleComponent extends GlobalAdministrator implements OnInit {
   ngOnInit() {
 
   }
-
 }

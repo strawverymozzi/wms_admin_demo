@@ -48,7 +48,7 @@ const routes: Routes = [{
     //   loadChildren: () => import('../pages/devextreme/devextreme.module')
     //     .then(m => m.DevextremeModule),
     // },
-    
+
     {
       path: '',
       redirectTo: 'dashboard',
@@ -66,14 +66,5 @@ const routes: Routes = [{
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class AdminPagesRoutingModule extends CommonHttpService {
-
-  constructor(
-    private router: Router,
-    private http: HttpClient,
-    private menuService: AdminPagesMenu
-  ) {
-    super(http);
-
-  }
+export class AdminPagesRoutingModule {
 }

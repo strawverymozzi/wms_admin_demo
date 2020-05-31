@@ -3,14 +3,13 @@
  * Licensed under the Single Application / Multi Application License.
  * See LICENSE_SINGLE_APP / LICENSE_MULTI_APP in the 'docs' folder for license information on type of purchased license.
  */
-const _INITPAGEURL = '/auth/login';
+const _INITPAGEURL = '/global/loginPage';
 
 import { ChangeDetectionStrategy, Component, Inject, OnInit, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import {
   NB_AUTH_OPTIONS,
-  NbAuthService,
   NbTokenLocalStorage,
   NbAuthToken,
   NbPasswordAuthStrategy,
@@ -19,15 +18,16 @@ import notify from 'devextreme/ui/notify';
 import { environment } from '../../../../environments/environment';
 import { LoginService } from './login.service';
 import { GlobalAdministrator } from '../../../@global/global.administrator';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'ngx-login',
   templateUrl: './login.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  //changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [LoginService]
 })
 
-export class NgxLoginComponent extends GlobalAdministrator implements OnInit {
+export class NgxLoginComponent implements OnInit {
 
   errors: string[] = [];
   messages: string[] = [];
@@ -51,18 +51,16 @@ export class NgxLoginComponent extends GlobalAdministrator implements OnInit {
   get password() { return this.loginForm.get('password'); }
   get rememberMe() { return this.loginForm.get('rememberMe'); }
 
+
   constructor(
     @Inject(NB_AUTH_OPTIONS) protected option = {},
-    protected elRef: ElementRef,
     private fb: FormBuilder,
     protected router: Router,
-    private loginService: LoginService,
+    public loginService: LoginService,
     private tokenStorage: NbTokenLocalStorage,
     private authStrategy: NbPasswordAuthStrategy,
 
-
   ) {
-    super(elRef, _INITPAGEURL);
     const storageLanguage = localStorage.getItem("language");
     this.currentLanguage = storageLanguage ? storageLanguage : this.initLanguage();
   }

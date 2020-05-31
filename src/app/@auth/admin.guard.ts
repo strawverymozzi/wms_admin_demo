@@ -21,7 +21,12 @@ export class AdminGuard implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot,
   ): Observable<boolean> | Promise<boolean> | boolean {
-    return this.checkToken();
+
+    if (!this.checkToken()) {
+      this.router.navigate(['auth/login']);
+      return false;
+    }
+    return true;
     // return this.roleProvider.getRole()
     //   .pipe(map(role => {
     //     const roles = role instanceof Array ? role : [role];

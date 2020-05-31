@@ -22,7 +22,7 @@ import { MasterSearchFormComponent } from './sample/component/master-search-form
 import { MasterSearchSubFormComponent } from './sample/component/master-search-sub-form/master-search-sub-form.component';
 import { DxCommonFormModule } from '../../@dx_module/dx-common-form/dx-common-form.module';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { DevextremeInterceptor } from './devextreme.interceptor';
+import { PipesModule } from '../../@pipes/pipes.module';
 
 const components = [
   SampleComponent,
@@ -47,12 +47,13 @@ const components = [
     HttpClientModule,
     DxDropDownBoxModule,
     DxListModule,
-    DxDateBoxModule
+    DxDateBoxModule,
+    PipesModule
   ],
   declarations: [
     ...components,
-
   ],
+
   providers: []
 })
 export class DevextremeModule { }

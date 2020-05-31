@@ -23,6 +23,7 @@ import {
   NbToastrModule,
   NbWindowModule,
 } from '@nebular/theme';
+import { Dictionary } from './@global/dictionary';
 
 @NgModule({
   declarations: [AppComponent],
@@ -31,7 +32,6 @@ import {
     BrowserAnimationsModule,
     HttpClientModule,
     AppRoutingModule,
-
     AuthModule.forRoot(),
     NbSidebarModule.forRoot(),
     NbMenuModule.forRoot(),
@@ -39,11 +39,10 @@ import {
     NbDialogModule.forRoot(),
     NbWindowModule.forRoot(),
     NbToastrModule.forRoot(),
-    NbChatModule.forRoot({
-      messageGoogleMapKey: 'AIzaSyA_wNuCzia92MAmdLRzmqitRGvCF7wCZPY',
-    }),
     CoreModule.forRoot(),
     ThemeModule.forRoot(),
+    Dictionary.forRoot(),
+
   ],
   bootstrap: [AppComponent],
   providers: [],

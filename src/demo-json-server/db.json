@@ -1,12 +1,14 @@
 {
-  "login": {
+  "loginPage": {
     "dictionary": {
+      "LOGIN": "로그인",
       "TENANTID": "회사코드",
       "USERID": "아이디",
       "USERPWD": "비밀번호",
       "REMBME": "기억여부"
     }
   },
+  "login": {},
   "loginUser": {
     "tenantID": "",
     "userID": "",

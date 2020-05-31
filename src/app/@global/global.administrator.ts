@@ -1,28 +1,22 @@
-import { ElementRef, AfterViewInit, } from '@angular/core';
 import { ajax } from 'rxjs/ajax';
 import { retry, map, catchError } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 
-export class GlobalAdministrator implements AfterViewInit {
+export class GlobalAdministrator {
 
-    private _childElement: ElementRef;
     private _dictionaryURL: string;
     private baseUrl = environment.apiUrl;
 
-
-    constructor(childElement?: ElementRef, dictionaryURL?: string) {
-        this._childElement = childElement;
+    constructor(dictionaryURL?: string) {
         this._dictionaryURL = dictionaryURL;
+        this.init(this._dictionaryURL).subscribe(res => {
+            if (res.hasOwnProperty("dictionary")) {
+                this.coin(res["dictionary"]);
+            }
+        })
     }
 
-    ngAfterViewInit() {
-        if (this._childElement && this._dictionaryURL) {
-            this.init(this._dictionaryURL).subscribe(res => {
-                if (res.hasOwnProperty("dictionary")) {
-                    this.globalize(res["dictionary"]);
-                }
-            })
-        }
+    private coin(wordData: any) {
     }
 
     private init(url: string) {
@@ -40,13 +34,5 @@ export class GlobalAdministrator implements AfterViewInit {
             }),
             catchError(err => err.code === '404' ? new Error('not Found') : err)
         );
-    }
-
-    private globalize(dictionary: any) {
-        let elements = this._childElement.nativeElement.querySelectorAll('[global]');
-        elements.forEach((v, i, a) => {
-            const attrKey = v.getAttribute('global');
-            v.textContent = dictionary[attrKey];
-        })
     }
 }

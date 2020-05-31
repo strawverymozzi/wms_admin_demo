@@ -2,8 +2,7 @@
   <!-- page toolbar -->
   <ng-container>
     <dx-toolbar>
-      <dxi-item  location="after" widget="dxButton"
-        locateInMenu="auto" [options]="btnConfig.SEARCHMASTERBTN">
+      <dxi-item location="after" widget="dxButton" locateInMenu="auto" [options]="btnConfig.SEARCHMASTERBTN">
       </dxi-item>
       <dxi-item *ngIf="accessChecker.isGranted('create', 'save') | async" location="after" widget="dxButton"
         locateInMenu="auto" [options]="btnConfig.EXCELUPLOADBTN">
@@ -14,11 +13,10 @@
     </dx-toolbar>
   </ng-container>
   <!-- page toolbar end -->
-
   <!-- accordian  -->
   <ng-container>
     <dx-accordion [collapsible]="true" [animationDuration]="300" [selectedIndex]="0" [multiple]="true">
-      <dxi-item title="검색옵션">
+      <dxi-item title="검색옵셥">
         <ngx-master-search-form (clickEvent)="openSearchHelp($event,'FORM')"></ngx-master-search-form>
       </dxi-item>
       <dxi-item title="서브 검색옵션">
@@ -31,7 +29,7 @@
   <!-- tab panel -->
   <dx-tab-panel #masterGridTabPanel height="auto" [selectedIndex]="0" [loop]="true" [animationEnabled]="true"
     [swipeEnabled]="true">
-    <dxi-item title="테테테">
+    <dxi-item title="테스트 그리드">
       <dx-data-grid #masterGrid [dataSource]="masterGridDataSource" id="masterGrid" style="min-height:400px"
         [showBorders]="true" [focusedRowEnabled]="true" keyExpr="uid"
         (onRowDblClick)="masterGridSelectionChange($event)" (onExporting)="onExporting($event)">

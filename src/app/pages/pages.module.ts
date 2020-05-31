@@ -17,7 +17,7 @@ import { NbMenuModule } from '@nebular/theme';
 import { AuthModule } from '../@auth/auth.module';
 
 const PAGES_COMPONENTS = [
-  PagesComponent,
+  PagesComponent
 ];
 
 @NgModule({
