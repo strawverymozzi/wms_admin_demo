@@ -10,6 +10,7 @@ import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpErrorResponse
 import { Observable, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { checkToken } from '../@auth/auth.module';
+import { tokenAppendProgramMeta } from '../@program/program-helper';
 
 // const ['/auth/login', '/auth/sign-up', '/auth/request-pass', '/auth/refresh-token']
 //     .some(url => req.url.includes(url));
@@ -23,6 +24,19 @@ export class AdminPagesInterceptor implements HttpInterceptor {
     console.log("admin interceptor", req.url)
 
     let clonedReq = req;
+    if (checkToken()) {
+
+      const authJWT = tokenAppendProgramMeta(localStorage.getItem('access'));
+      const refreshJWT = tokenAppendProgramMeta(localStorage.getItem('access'));
+      
+      clonedReq = req.clone({
+        headers: req.headers
+          .append('authorization', 'Bearer ' + authJWT)
+          .append('refreshtoken', refreshJWT),
+        withCredentials: true,
+        responseType: 'json'
+      });
+    }
 
     return next.handle(clonedReq).pipe(
       tap(

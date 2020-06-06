@@ -20,11 +20,14 @@ export class AuthInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     console.log("auth interceptor", req.url)
-
     let clonedReq = req;
+
     if (checkToken()) {
       clonedReq = req.clone({
         headers: req.headers
+          .append('Accept', '*; charset=utf-8')
+          .append('Access-Control-Allow-Origin', '*')
+          .append('Content-Type', 'application/json')
           .append('authorization', 'Bearer ' + localStorage.getItem('access'))
           .append('refreshtoken', localStorage.getItem('refresh')),
         withCredentials: true,

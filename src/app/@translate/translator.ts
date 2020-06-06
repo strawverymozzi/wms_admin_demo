@@ -4,7 +4,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot, Router, NavigationEnd } from '@angular/router';
 import { map, catchError, retry } from 'rxjs/operators';
-import { ProgramHelper, getProgramMap } from '../@program/program-helper';
+import { ProgramHelper } from '../@program/program-helper';
 
 
 export const globalDictionary: any = {

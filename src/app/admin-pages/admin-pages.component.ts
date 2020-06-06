@@ -5,12 +5,7 @@
  */
 
 import { Component, OnDestroy } from '@angular/core';
-import { takeWhile } from 'rxjs/operators';
-import { NbTokenService, urlBase64Decode } from '@nebular/auth';
-import { InitUserService } from '../@theme/services/init-user.service';
 import { AdminPagesMenu } from './admin-pages-menu';
-import { Router, NavigationStart } from '@angular/router';
-import { getProgramMap } from '../@program/program-helper';
 
 @Component({
   selector: 'ngx-admin-pages',

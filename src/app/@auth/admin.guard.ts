@@ -31,7 +31,7 @@ export class AdminGuard extends CommonHttpService implements CanActivate {
   ): Observable<boolean> | Promise<boolean> | boolean {
     console.log("ADMIN GUARD TRIED");
     return this.getJson(_ADMINMENUPAGESURL).pipe(map(res => {
-      ProgramHelper.parseProgram(NBMenuList, res["list"]);
+      ProgramHelper.parseProgramList(NBMenuList, res["list"]);
       return true;
     }), catchError((error: HttpErrorResponse) => {
       if (error.status === 401) {
