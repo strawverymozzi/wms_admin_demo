@@ -21,8 +21,9 @@ import { CommonModule } from '@angular/common';
 import { MasterSearchFormComponent } from './sample/component/master-search-form/master-search-form.component';
 import { MasterSearchSubFormComponent } from './sample/component/master-search-sub-form/master-search-sub-form.component';
 import { DxCommonFormModule } from '../../@dx_module/dx-common-form/dx-common-form.module';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { PipesModule } from '../../@pipes/pipes.module';
+import { AuthModule } from '../../@auth/auth.module';
+import { AdminPagesInterceptor } from '../../admin-pages/admin-pages.interceptor';
 
 const components = [
   SampleComponent,
@@ -44,16 +45,14 @@ const components = [
     DxActionSheetModule,
     DxPopupModule,
     DxScrollViewModule,
-    HttpClientModule,
     DxDropDownBoxModule,
     DxListModule,
     DxDateBoxModule,
-    PipesModule
+    PipesModule,
   ],
   declarations: [
     ...components,
   ],
 
-  providers: []
 })
 export class DevextremeModule { }

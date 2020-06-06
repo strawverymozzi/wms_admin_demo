@@ -10,7 +10,6 @@ import { NbAccessChecker } from '@nebular/security';
 import { exportDataGrid } from 'devextreme/excel_exporter';
 import * as ExcelJS from 'exceljs';
 import * as FileSaver from "file-saver";
-import { getViewMap } from '../../../@global/dictionary';
 
 @Component({
   selector: 'ngx-sample',

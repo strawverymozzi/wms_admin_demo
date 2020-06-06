@@ -10,9 +10,6 @@ import { NotFoundComponent } from '../pages/miscellaneous/not-found/not-found.co
 import { ECommerceComponent } from '../pages/e-commerce/e-commerce.component';
 import { DashboardComponent } from '../pages/dashboard/dashboard.component';
 import { AdminPagesComponent } from './admin-pages.component';
-import { HttpClient } from '@angular/common/http';
-import { CommonHttpService } from '../@common/common-http.service';
-import { AdminPagesMenu } from './admin-pages-menu';
 
 const _ADMINMODULEURL: string = '/auth/ADMINMODULE';
 

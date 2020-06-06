@@ -10,6 +10,7 @@ import { NbTokenService, urlBase64Decode } from '@nebular/auth';
 import { InitUserService } from '../@theme/services/init-user.service';
 import { AdminPagesMenu } from './admin-pages-menu';
 import { Router, NavigationStart } from '@angular/router';
+import { getProgramMap } from '../@program/program-helper';
 
 @Component({
   selector: 'ngx-admin-pages',
@@ -29,15 +30,8 @@ export class AdminPagesComponent implements OnDestroy {
 
   constructor(
     private menuService: AdminPagesMenu,
-    private router: Router
   ) {
     this.menu = this.menuService.getMenu();
-    this.menuService.initMenu();
-    // router.events.subscribe((val) => {
-    //   if(val instanceof NavigationStart){
-    //     console.log(val.url)
-    //   }
-    // });
   }
 
 

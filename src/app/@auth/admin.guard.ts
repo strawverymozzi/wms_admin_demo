@@ -6,38 +6,59 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, catchError } from 'rxjs/operators';
 import { NbRoleProvider } from '@nebular/security';
 import { ROLES } from './roles';
+import { CommonHttpService } from '../@common/common-http.service';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { ProgramHelper, NBMenuList } from '../@program/program-helper';
+
+const _ADMINMENUPAGESURL: string = '/menu/ADMINMENU';
 
 @Injectable()
-export class AdminGuard implements CanActivate {
-  constructor(private roleProvider: NbRoleProvider, private router: Router) { }
-
-  private checkToken(): boolean {
-    return !!localStorage.getItem("access") && !!localStorage.getItem("refresh");
+export class AdminGuard extends CommonHttpService implements CanActivate {
+  constructor(
+    private roleProvider: NbRoleProvider,
+    private router: Router,
+    private http: HttpClient
+  ) {
+    super(http);
   }
+
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot,
   ): Observable<boolean> | Promise<boolean> | boolean {
-
-    if (!this.checkToken()) {
+    console.log("ADMIN GUARD TRIED");
+    return this.getJson(_ADMINMENUPAGESURL).pipe(map(res => {
+      ProgramHelper.parseProgram(NBMenuList, res["list"]);
+      return true;
+    }), catchError((error: HttpErrorResponse) => {
+      if (error.status === 401) {
+      }
+      console.log("AdminGuard API CALL resolve ERR: " + error.status)
       this.router.navigate(['auth/login']);
-      return false;
-    }
-    return true;
-    // return this.roleProvider.getRole()
-    //   .pipe(map(role => {
-    //     const roles = role instanceof Array ? role : [role];
 
-    //     return roles.some(x => {
-    //       if (!(x && x.toLowerCase() !== ROLES.ADMIN)) {
-    //         this.router.navigate(['auth/login']);
-    //         return false;
-    //       }
-    //       return true;
-    //     });
-    //   }));
+      return [];
+    }));
   }
+
+  // if (!this.checkToken()) {
+  //   this.router.navigate(['auth/login']);
+  //   return false;
+  // }
+
+  // pipe(map(role => {
+  //   const roles = role instanceof Array ? role : [role];
+
+  //   return roles.some(x => {
+  //     if (!(x && x.toLowerCase() !== ROLES.ADMIN)) {
+  //       this.router.navigate(['auth/login']);
+  //       return false;
+  //     }
+  //     return true;
+  //   });
+  // }));
+
+
 }

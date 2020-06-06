@@ -7,7 +7,7 @@ const _INITPAGEURL = '/global/loginPage';
 
 import { ChangeDetectionStrategy, Component, Inject, OnInit, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import {
   NB_AUTH_OPTIONS,
   NbTokenLocalStorage,
@@ -15,10 +15,7 @@ import {
   NbPasswordAuthStrategy,
 } from '@nebular/auth';
 import notify from 'devextreme/ui/notify';
-import { environment } from '../../../../environments/environment';
 import { LoginService } from './login.service';
-import { GlobalAdministrator } from '../../../@global/global.administrator';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'ngx-login',
@@ -59,7 +56,6 @@ export class NgxLoginComponent implements OnInit {
     public loginService: LoginService,
     private tokenStorage: NbTokenLocalStorage,
     private authStrategy: NbPasswordAuthStrategy,
-
   ) {
     const storageLanguage = localStorage.getItem("language");
     this.currentLanguage = storageLanguage ? storageLanguage : this.initLanguage();

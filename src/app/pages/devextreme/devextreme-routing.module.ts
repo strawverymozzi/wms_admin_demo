@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { DevextremeComponent } from './devextreme.component';
 import { SampleComponent } from './sample/sample.component';
+import { Translator } from '../../@translate/translator';
 
 const routes: Routes = [
   {
@@ -16,6 +17,7 @@ const routes: Routes = [
     ],
   },
 ];
+routes.forEach((v, i, a) => v["resolve"] = { dictionary: Translator });
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

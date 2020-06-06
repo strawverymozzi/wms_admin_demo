@@ -8,6 +8,7 @@ import { ExtraOptions, RouterModule, Routes, Router, NavigationStart, Navigation
 import { NgModule } from '@angular/core';
 import { AuthGuard } from './@auth/auth.guard';
 import { AdminGuard } from './@auth/admin.guard';
+import { Translator } from './@translate/translator';
 
 const routes: Routes = [
   {

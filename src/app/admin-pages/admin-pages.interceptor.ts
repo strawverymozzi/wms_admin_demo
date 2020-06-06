@@ -9,23 +9,20 @@ import { Router } from '@angular/router';
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpErrorResponse, HttpResponse, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
+import { checkToken } from '../@auth/auth.module';
 
+// const ['/auth/login', '/auth/sign-up', '/auth/request-pass', '/auth/refresh-token']
+//     .some(url => req.url.includes(url));
 @Injectable()
 export class AdminPagesInterceptor implements HttpInterceptor {
-  private options: any;
-  private headers: HttpHeaders = new HttpHeaders();
-
   constructor(private router: Router) {
-    this.headers = this.headers.append('authorization', 'Bearer ' + localStorage.getItem('access'));
-    this.headers = this.headers.append('refreshtoken', localStorage.getItem('refresh'));
+
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    console.log("admin interceptor")
+    console.log("admin interceptor", req.url)
+
     let clonedReq = req;
-    clonedReq = req.clone({
-      headers: this.headers,
-    });
 
     return next.handle(clonedReq).pipe(
       tap(

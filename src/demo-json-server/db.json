@@ -8,6 +8,11 @@
       "REMBME": "기억여부"
     }
   },
+  "sampleComp": {
+    "dictionary": {
+      "GRIDTITLE": "씨바라 됬다"
+    }
+  },
   "login": {},
   "loginUser": {
     "tenantID": "",
@@ -680,7 +685,7 @@
             "icon": "shopping-cart-outline",
             "menuPath": "10000|10002",
             "appUid": 90003,
-            "url": "http://www.jflab.co.kr:18000/api/v1/receive",
+            "url": "/global/sampleComp",
             "link": "/adminPages/CM/application3",
             "windowName": "rcv",
             "children": [],

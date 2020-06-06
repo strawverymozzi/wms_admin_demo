@@ -14,6 +14,7 @@ import {
   NgxRequestPasswordComponent,
   NgxResetPasswordComponent,
 } from './components';
+import { Translator } from '../@translate/translator';
 
 const routes: Routes = [{
   path: '',
@@ -45,6 +46,8 @@ const routes: Routes = [{
     },
   ],
 }];
+
+routes.forEach((v, i, a) => v["resolve"] = { dictionary: Translator });
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

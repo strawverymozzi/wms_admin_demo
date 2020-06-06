@@ -6,7 +6,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CoreModule } from './@core/core.module';
 
 import { AppComponent } from './app.component';
@@ -23,14 +23,16 @@ import {
   NbToastrModule,
   NbWindowModule,
 } from '@nebular/theme';
-import { Dictionary } from './@global/dictionary';
+import { AdminPagesModule } from './admin-pages/admin-pages.module';
+import { AuthInterceptor } from './@auth/auth.interceptor';
+import { AdminPagesInterceptor } from './admin-pages/admin-pages.interceptor'
+
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    HttpClientModule,
     AppRoutingModule,
     AuthModule.forRoot(),
     NbSidebarModule.forRoot(),
@@ -41,11 +43,10 @@ import { Dictionary } from './@global/dictionary';
     NbToastrModule.forRoot(),
     CoreModule.forRoot(),
     ThemeModule.forRoot(),
-    Dictionary.forRoot(),
 
   ],
   bootstrap: [AppComponent],
-  providers: [],
+
 })
 export class AppModule {
 }

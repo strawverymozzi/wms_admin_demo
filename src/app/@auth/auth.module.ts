@@ -6,7 +6,7 @@
 
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { HttpRequest } from '@angular/common/http';
+import { HttpRequest, HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import {
@@ -47,6 +47,7 @@ import { ComponentsModule } from '../@components/components.module';
 import { authOptions } from './auth.settings';
 import { authSettings } from './access.settings';
 import { PipesModule } from '../@pipes/pipes.module';
+import { AdminPagesInterceptor } from '../admin-pages/admin-pages.interceptor';
 
 const GUARDS = [AuthGuard, AdminGuard];
 const PIPES = [AuthPipe];
@@ -77,6 +78,10 @@ export function filterInterceptorRequest(req: HttpRequest<any>): boolean {
     .some(url => req.url.includes(url));
 }
 
+export function checkToken(): boolean {
+  return !!localStorage.getItem("access") && !!localStorage.getItem("refresh");
+}
+
 @NgModule({
   imports: [
     AuthRoutingModule,
@@ -84,6 +89,8 @@ export function filterInterceptorRequest(req: HttpRequest<any>): boolean {
     CommonModule,
     ComponentsModule,
     ...NB_MODULES,
+    HttpClientModule,
+
     NbAuthModule.forRoot(authOptions),
   ],
   exports: [...PIPES],
@@ -108,6 +115,7 @@ export class AuthModule {
         //{ provide: NB_AUTH_TOKEN_INTERCEPTOR_FILTER, useValue: filterInterceptorRequest },
         //{ provide: HTTP_INTERCEPTORS, useClass: NbAuthJWTInterceptor, multi: true },
         { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+
         ...GUARDS
       ],
     };
