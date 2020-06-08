@@ -78,9 +78,7 @@ export function filterInterceptorRequest(req: HttpRequest<any>): boolean {
     .some(url => req.url.includes(url));
 }
 
-export function checkToken(): boolean {
-  return !!localStorage.getItem("access") && !!localStorage.getItem("refresh");
-}
+
 
 @NgModule({
   imports: [

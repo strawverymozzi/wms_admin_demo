@@ -4,8 +4,8 @@
     "outDir": "../out-tsc/spec",
     "baseUrl": "./",
     "types": [
-      "jasmine",
-      "node"
+      "node",
+      "jasmine"
     ]
   },
   "files": [

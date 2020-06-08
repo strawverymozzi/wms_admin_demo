@@ -1,18 +1,21 @@
-const PROGRAMMAPPER: any = {
+import * as jsonwebtoken from 'jsonwebtoken';
+import { Injectable } from '@angular/core';
 
+const PROGRAMMAPPER: any = {
     "/auth/login": {
-        url: "/global/loginPage",
+        // url: "/global/loginPage",
+        url: "http://www.jflab.co.kr:18000/auth/login?language=ko-KR",
         windowName: null,
         insFlg: null,
         updFlg: null,
         delFlg: null
     }
 }
+const SECRET = 'cyy4KhQAOWuj94LtM6Yvt$FGOQb8KBN6lIXmFFG7!Yv6K#ewWCnH#Q5IS2MhxKp&';
 
-var jwt = require('jwt-simple');
-const secret = 'cyy4KhQAOWuj94LtM6Yvt$FGOQb8KBN6lIXmFFG7!Yv6K#ewWCnH#Q5IS2MhxKp&';
 
 export const NBMenuList = [];
+
 
 export function setNewProgram(view: string, data) {
     PROGRAMMAPPER[view] = data
@@ -22,22 +25,40 @@ export function getProgramMap(): object {
     return PROGRAMMAPPER;
 }
 
-export function tokenAppendProgramMeta(token: string): string {
-    var payload = jwt.decode(token, secret, false, 'HS256');
-    payload["windowName"] = '';
-    payload["pageRole"] =
-    {
-        infFlg: "",
-        updFlg: "",
-        delFlg: ""
+export function isRegistered(viewName: string, reqUrl): boolean {
+    if (!PROGRAMMAPPER.hasOwnProperty(viewName)) {
+        throw new Error("Unregistered view : " + viewName + ".\nFailed to attach view role to token payload : " + reqUrl)
     }
-    return jwt.encode(payload, secret, 'HS256');
+    return PROGRAMMAPPER.hasOwnProperty(viewName);
 }
+
+@Injectable({
+    providedIn: 'root'
+})
 export class ProgramHelper {
-    constructor() { }
+    constructor() {
+    }
 
     static getDictionaryURL(landingPath: string): string {
         return PROGRAMMAPPER[landingPath] ? PROGRAMMAPPER[landingPath].url : "/";
+    }
+
+    static tokenAppendProgramMeta(token: string, route): string {
+        const decoded = jsonwebtoken.decode(token);
+        const wn = PROGRAMMAPPER[route].windowName;
+        const iFlg = PROGRAMMAPPER[route].insFlg;
+        const uFlg = PROGRAMMAPPER[route].updFlg;
+        const dFlg = PROGRAMMAPPER[route].delFlg;
+
+
+        decoded["windowName"] = wn;
+        decoded["pageRole"] =
+        {
+            infFlg: iFlg,
+            updFlg: uFlg,
+            delFlg: dFlg
+        }
+        return jsonwebtoken.sign(decoded, SECRET);
     }
 
     static parseProgramList(returnedList: any[], insertedList: any[]) {
@@ -76,4 +97,6 @@ export class ProgramHelper {
             returnedList.push(setting);
         }
     }
+
+
 }

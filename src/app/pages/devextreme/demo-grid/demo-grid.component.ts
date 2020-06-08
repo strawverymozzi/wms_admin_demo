@@ -50,7 +50,6 @@ export class DemoGridComponent implements OnInit {
     }
     // ===== or when deferred selection is used =====
     // this.dataGrid.instance.getSelectedRowsData().then((selectedRowsData) => {
-    //   console.log(this.selectedRowsData)
     // });
   }
 

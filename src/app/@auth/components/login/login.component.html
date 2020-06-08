@@ -9,13 +9,14 @@
 
 <div [formGroup]="loginForm" aria-labelledby="title">
   <div class="form-control-group">
-    <label class="label" for="input-tenantID">{{'Tenant ID:' | translate : 'TENANTID'}} </label>
-    <input nbInput fullWidth id="input-tenantID" formControlName="tenantID" placeholder="Tenant ID">
+    <label class="label" for="input-tenant">{{'Tenant ID:' | translate : 'TENANTID'}} </label>
+    <input nbInput fullWidth id="input-tenant" formControlName="tenant" placeholder="Tenant ID">
   </div>
 
+
   <div class="form-control-group">
-    <label class="label" for="input-userID">{{'User ID:' | translate : 'USERID'}}</label>
-    <input nbInput fullWidth id="input-userID" formControlName="userID" placeholder="User ID">
+    <label class="label" for="input-usercd">{{'User ID:' | translate : 'USERID'}}</label>
+    <input nbInput fullWidth id="input-usercd" formControlName="usercd" placeholder="User ID">
 
   </div>
 

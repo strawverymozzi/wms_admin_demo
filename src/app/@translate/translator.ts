@@ -7,13 +7,9 @@ import { map, catchError, retry } from 'rxjs/operators';
 import { ProgramHelper } from '../@program/program-helper';
 
 
-export const globalDictionary: any = {
+export const globalDictionary: any[] = [];
 
-}
-
-export let localDictionary: any = {
-
-};
+export let localDictionary: any;
 
 @Injectable({
     providedIn: 'root'
@@ -29,35 +25,38 @@ export class Translator extends CommonHttpService implements Resolve<any> {
     }
 
     fetchPageDictionary(url: string): Observable<any> {
-        return this.getJson(url).pipe(
+        return this.http.get(url, { observe: 'response' }).pipe(
             retry(3),
             map((res) => {
-                localDictionary = res.dictionary;
+                localDictionary = res.body["dictionary"];
+                if (res.headers.get('authorization')) {
+                    localStorage.setItem("access", res.headers.get('authorization'));
+                    localStorage.setItem("refresh", res.headers.get('refreshtoken'));
+                }
+
                 return true;
             }),
             catchError((error: HttpErrorResponse) => {
                 if (error.status === 404) {
-                     //throw new Error('not Found');
+                    //throw new Error('not Found');
                 }
-                console.log("Translator API CALL resolve ERR: " + error.status)
+                new Error("Translator API CALL resolve ERR: " + error.status)
                 return of([]);
             }));
     }
+    //     return this.getJson(url).pipe(
+    //         retry(3),
+    //         map((res) => {
+    //             localDictionary = res.dictionary;
+    //             return true;
+    //         }),
+    //         catchError((error: HttpErrorResponse) => {
+    //             if (error.status === 404) {
+    //                 //throw new Error('not Found');
+    //             }
+    //             new Error("Translator API CALL resolve ERR: " + error.status)
+    //             return of([]);
+    //         }));
+    // }
 }
 
-// private init(url: string) {
-//     url = this.baseUrl + url;
-//     return ajax(url).pipe(
-//         retry(3), // Retry up to 3 times before failing
-//         map(res => {
-//             if (!res.response) {
-//                 throw new Error('Value expected!');
-//             } else if (res.response.err) {
-//                 alert(`errCode : ${res.response.err}, errMsg: ${res.response.msg}`);
-//                 throw new Error(res.response);
-//             }
-//             return res.response;
-//         }),
-//         catchError(err => err.code === '404' ? new Error('not Found') : err)
-//     );
-// }

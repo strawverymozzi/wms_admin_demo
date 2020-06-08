@@ -9,12 +9,13 @@
 import { Injectable } from '@angular/core';
 import { CommonHttpService } from '../@common/common-http.service';
 import { HttpClient } from '@angular/common/http';
-import { NBMenuList } from '../@program/program-helper';
+import { NBMenuList, getProgramMap } from '../@program/program-helper';
 
 @Injectable()
 export class AdminPagesMenu extends CommonHttpService {
 
   public getMenu() {
+    console.log(getProgramMap())
     return NBMenuList;
   }
   constructor(private http: HttpClient) {

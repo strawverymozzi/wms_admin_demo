@@ -9,6 +9,7 @@ export class TranslatePipe implements PipeTransform {
   private book: any;
   constructor() {
     this.book = localDictionary;
+    console.log("pipe constructor",this.book)
   }
 
   transform(text: string, key: string): any {

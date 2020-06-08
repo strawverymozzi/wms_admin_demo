@@ -6,10 +6,10 @@ import { GridService } from './service/grid/grid.service';
 import { DxDataGridComponent } from 'devextreme-angular';
 import { PartnerSearchFormService } from '../../../@dx_module/dx-common-form/partner-search-form/partner-search-form.service';
 import { SkukeySearchFormService } from '../../../@dx_module/dx-common-form/skukey-search-form/skukey-search-form.service';
-import { NbAccessChecker } from '@nebular/security';
 import { exportDataGrid } from 'devextreme/excel_exporter';
 import * as ExcelJS from 'exceljs';
 import * as FileSaver from "file-saver";
+import { RoleChecker } from '../../../@program/role-checker';
 
 @Component({
   selector: 'ngx-sample',
@@ -21,6 +21,7 @@ import * as FileSaver from "file-saver";
     PartnerSearchFormService,
     SkukeySearchFormService,
     GridService,
+    RoleChecker,
   ]
 })
 export class SampleComponent implements OnInit {
@@ -28,7 +29,6 @@ export class SampleComponent implements OnInit {
   @ViewChild('detailGrid', { static: false }) detailGridRef: DxDataGridComponent;
   @ViewChild('ptnSearchGrid', { static: false }) partnerGridRef: DxDataGridComponent;
   @ViewChild('skuSearchGrid', { static: false }) skukeyGridRef: DxDataGridComponent;
-
   //DTO
   public formMasterDTO: any;
   public formDetailDTO: any;
@@ -73,10 +73,9 @@ export class SampleComponent implements OnInit {
     private formPartnerService: PartnerSearchFormService,
     private formSkukeyService: SkukeySearchFormService,
     private gridService: GridService,
-    public accessChecker: NbAccessChecker,
     protected elRef: ElementRef,
+    public role: RoleChecker
   ) {
-
     this.formMasterDTO = this.formService.getDataObj();
     this.formDetailDTO = this.formSubService.getDataObj();
     this.formPtnSearchDTO = this.formPartnerService.getDataObj();
@@ -168,9 +167,26 @@ export class SampleComponent implements OnInit {
   }
 
   saveAPITest(e, subject) {
-    const data: any[] = this.masterGridRef.instance.getDataSource().items();
-    this.gridService.saveAPITEST(data).subscribe(res => {
-      console.log(res)
+    const data: any = this.masterGridRef.instance.getDataSource();
+    if (!data) {
+      notify({
+        message: "No Item",
+        width: 300,
+        shading: true,
+        closeOnClick: true,
+        closeOnOutsideClick: true,
+      }, "warning", 500);
+      return;
+    }
+    this.gridService.saveAPITEST(data.items()).subscribe(res => {
+      notify({
+        message: "Save Complete",
+        width: 300,
+        shading: true,
+        closeOnClick: true,
+        closeOnOutsideClick: true,
+      }, "success", 1500);
+
     });
 
   }
@@ -274,6 +290,8 @@ export class SampleComponent implements OnInit {
           break;
         case 'DEATILCELL':
           this.detailGridRef.instance.cellValue(this.selectedCellObject.row.rowIndex, 'CODEB', data[0]['CODEB']);
+          this.detailGridRef.instance.cellValue(this.selectedCellObject.row.rowIndex, 'CODEC', data[0]['CODEC']);
+
           break;
       }
     }

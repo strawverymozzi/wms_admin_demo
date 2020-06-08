@@ -8,8 +8,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
-import { checkToken } from './auth.module';
+import { catchError, retry } from 'rxjs/operators';
 
 
 @Injectable()
@@ -19,10 +18,10 @@ export class AuthInterceptor implements HttpInterceptor {
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    console.log("auth interceptor", req.url)
+    
     let clonedReq = req;
-
-    if (checkToken()) {
+    
+    if (!!localStorage.getItem("access") && !!localStorage.getItem("refresh")) {
       clonedReq = req.clone({
         headers: req.headers
           .append('Accept', '*; charset=utf-8')
@@ -30,17 +29,19 @@ export class AuthInterceptor implements HttpInterceptor {
           .append('Content-Type', 'application/json')
           .append('authorization', 'Bearer ' + localStorage.getItem('access'))
           .append('refreshtoken', localStorage.getItem('refresh')),
-        withCredentials: true,
+        //withCredentials: true,
         responseType: 'json'
       });
     }
 
 
     return next.handle(clonedReq)
-      .pipe(catchError((error: HttpErrorResponse) => {
-        if (error.status === 401) {
-          this.router.navigate(['auth/login']);
-        }
+      .pipe(
+        retry(3),
+        catchError((error: HttpErrorResponse) => {
+        // if (error.status !== 200) {
+        //   this.router.navigate(['pages']);
+        // }
         // TODO: handle 403 error ?
         return throwError(error);
       }));

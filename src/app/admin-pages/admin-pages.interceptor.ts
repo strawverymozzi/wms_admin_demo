@@ -3,35 +3,34 @@
  * Licensed under the Single Application / Multi Application License.
  * See LICENSE_SINGLE_APP / LICENSE_MULTI_APP in the 'docs' folder for license information on type of purchased license.
  */
-
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpErrorResponse, HttpResponse, HttpHeaders } from '@angular/common/http';
+import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpErrorResponse, } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
-import { checkToken } from '../@auth/auth.module';
-import { tokenAppendProgramMeta } from '../@program/program-helper';
+import { ProgramHelper, isRegistered } from '../@program/program-helper';
+import { retry, catchError } from 'rxjs/operators';
 
-// const ['/auth/login', '/auth/sign-up', '/auth/request-pass', '/auth/refresh-token']
-//     .some(url => req.url.includes(url));
+
 @Injectable()
 export class AdminPagesInterceptor implements HttpInterceptor {
   constructor(private router: Router) {
-
   }
 
+
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    console.log("admin interceptor", req.url)
-
     let clonedReq = req;
-    if (checkToken()) {
+    const currentView = this.router.routerState.snapshot.url;
 
-      const authJWT = tokenAppendProgramMeta(localStorage.getItem('access'));
-      const refreshJWT = tokenAppendProgramMeta(localStorage.getItem('access'));
-      
+    if (!!localStorage.getItem("access") && !!localStorage.getItem("refresh") && isRegistered(currentView, req.url)) {
+
+      // const accessJWT = ProgramHelper.tokenAppendProgramMeta(localStorage.getItem('access'), currentView);
+      // const refreshJWT = ProgramHelper.tokenAppendProgramMeta(localStorage.getItem('access'), currentView);
+      const accessJWT = localStorage.getItem('access');
+      const refreshJWT = localStorage.getItem('access');
+
       clonedReq = req.clone({
         headers: req.headers
-          .append('authorization', 'Bearer ' + authJWT)
+          .append('authorization', 'Bearer ' + accessJWT)
           .append('refreshtoken', refreshJWT),
         withCredentials: true,
         responseType: 'json'
@@ -39,16 +38,14 @@ export class AdminPagesInterceptor implements HttpInterceptor {
     }
 
     return next.handle(clonedReq).pipe(
-      tap(
-        (event: HttpEvent<any>) => {
-          if (event instanceof HttpResponse) {
-          }
-        },
-        (err: any) => {
-        },
-        () => {
-        })
-    );
+      retry(3),
+      catchError((error: HttpErrorResponse) => {
+        // if (error.status === 401) {
+        //   this.router.navigate(['auth/login']);
+        // }
+        // TODO: handle 403 error ?
+        return throwError(error);
+      }));
 
   }
 }

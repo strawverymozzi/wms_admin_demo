@@ -9,6 +9,7 @@ import { AdminPagesRoutingModule } from './admin-pages-routing.module';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AdminPagesInterceptor } from './admin-pages.interceptor';
 import { AuthModule } from '../@auth/auth.module';
+import { RouterStateSnapshot } from '@angular/router';
 
 
 const ADMIN_PAGES_COMPONENTS = [

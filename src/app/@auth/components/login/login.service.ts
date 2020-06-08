@@ -1,11 +1,10 @@
 
-const _LOGINURL = '/auth/loginUser';
-
-import { Injectable, ElementRef } from '@angular/core';
+const _LOGINURL = '/auth/login'
+// const _LOGINUR = 'http://www.jflab.co.kr:18000/auth/login'
+import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CommonHttpService } from '../../../@common/common-http.service';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 
 @Injectable()
 export class LoginService extends CommonHttpService {
@@ -32,10 +31,4 @@ export class LoginService extends CommonHttpService {
     localStorage.setItem('refresh', token["refresh_token"]);
   }
 
-  public test(): Observable<any> {
-    return this.getJson('/auth/login').pipe(map((res) => {
-      console.log("res")
-      return res["dictionary"]["TENANTID"]
-    }));
-  }
 }
