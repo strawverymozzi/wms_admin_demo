@@ -37,7 +37,7 @@ export class CountryOrdersMapComponent implements OnDestroy {
     minZoom: 2,
     maxZoom: 6,
     zoomControl: false,
-    center: L.latLng({lat: 38.991709, lng: -76.886109}),
+    center: L.latLng({ lat: 38.991709, lng: -76.886109 }),
     maxBounds: new L.LatLngBounds(
       new L.LatLng(-89.98155760646617, -180),
       new L.LatLng(89.99346179538875, 180),
@@ -46,22 +46,22 @@ export class CountryOrdersMapComponent implements OnDestroy {
   };
 
   constructor(private ecMapService: CountryOrdersMapService,
-              private theme: NbThemeService) {
+    private theme: NbThemeService) {
 
     combineLatest([
-      this.ecMapService.getCords(),
-      this.theme.getJsTheme(),
+      //this.ecMapService.getCords(),
+      //this.theme.getJsTheme(),
     ])
-      .pipe(takeWhile(() => this.alive))
-      .subscribe(([cords, config]: [any, any]) => {
-        this.currentTheme = config.variables.countryOrders;
-        this.layers = [this.createGeoJsonLayer(cords)];
-        this.selectFeature(this.findFeatureLayerByCountryId(this.countryId));
-      });
+    // .pipe(takeWhile(() => this.alive))
+    // .subscribe(([cords, config]: [any, any]) => {
+    //   this.currentTheme = config.variables.countryOrders;
+    //   this.layers = [this.createGeoJsonLayer(cords)];
+    //   this.selectFeature(this.findFeatureLayerByCountryId(this.countryId));
+    // });
   }
 
   mapReady(map: L.Map) {
-    map.addControl(L.control.zoom({position: 'bottomright'}));
+    map.addControl(L.control.zoom({ position: 'bottomright' }));
 
     // fix the map fully displaying, existing leaflet bag
     setTimeout(() => {
@@ -130,7 +130,7 @@ export class CountryOrdersMapComponent implements OnDestroy {
       this.resetHighlight(this.selectedCountry);
       this.highlightFeature(featureLayer);
       this.selectedCountry = featureLayer;
-      this.select.emit({ code: featureLayer.feature.id, name: featureLayer.feature.properties.name});
+      this.select.emit({ code: featureLayer.feature.id, name: featureLayer.feature.properties.name });
     }
   }
 

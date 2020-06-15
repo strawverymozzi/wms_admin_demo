@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { CommonHttpService } from '../../../../../@common/common-http.service';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { CommonHttpService } from '../../../../../@common/common.http.service';
 
 const _MALLIDURL: string = '/selectBox/MALLID';
 const _DETAILFORMDTO = {

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { CommonHttpService } from '../../../../../@common/common-http.service';
 import { Observable } from 'rxjs';
+import { CommonHttpService } from '../../../../../@common/common.http.service';
 
 const _RCVSTATUSURL: string = '/selectBox/RCVSTATUS';
 const _RCVTYPEURL: string = '/selectBox/RCVTYPE';

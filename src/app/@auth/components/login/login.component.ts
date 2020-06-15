@@ -3,9 +3,7 @@
  * Licensed under the Single Application / Multi Application License.
  * See LICENSE_SINGLE_APP / LICENSE_MULTI_APP in the 'docs' folder for license information on type of purchased license.
  */
-const _INITPAGEURL = '/global/loginPage';
-
-import { ChangeDetectionStrategy, Component, Inject, OnInit, ElementRef } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import {
@@ -56,10 +54,12 @@ export class NgxLoginComponent implements OnInit {
     public loginService: LoginService,
     private tokenStorage: NbTokenLocalStorage,
     private authStrategy: NbPasswordAuthStrategy,
+    protected activatedroute: ActivatedRoute,
   ) {
     const storageLanguage = localStorage.getItem("language");
     this.currentLanguage = storageLanguage ? storageLanguage : this.initLanguage();
   }
+
 
   ngOnInit(): void {
     this.loginForm = this.fb.group({
@@ -68,6 +68,8 @@ export class NgxLoginComponent implements OnInit {
       password: this.fb.control(''),
       rememberMe: this.fb.control(false),
     });
+
+
   }
 
   initLanguage(): string {
@@ -87,11 +89,7 @@ export class NgxLoginComponent implements OnInit {
     this.user = this.loginForm.value;
     this.user["language"] = this.currentLanguage;
 
-    //delete on serverTest
-    // this.user["token"] = {
-    //   "access_token": 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIxMDAwMCIsInRlbmFudCI6IjEwMDAiLCJ1c2VySWQiOiJURVNUX1VTRVIiLCJmdWxsTmFtZSI6Iu2FjOyKpO2KuOycoOyggCIsInBhZ2VSb2xlIjp7ImluZkZsZyI6IiIsInVwZEZsZyI6IiIsImRlbEZsZyI6IiJ9LCJsYW5ndWFnZSI6ImtvLUtSIiwiaWF0IjoxNTg5NzEzOTUxLCJleHAiOjE1ODk3MTc1NTF9.ab4kxvQbzvBIkvOLqXyRGShO7J8Eplh5gG7VQfl_mtA',
-    //   "refresh_token": 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIxMDAwMCIsInRlbmFudCI6IjEwMDAiLCJ1c2VySWQiOiJURVNUX1VTRVIiLCJmdWxsTmFtZSI6Iu2FjOyKpO2KuOycoOyggCIsInBhZ2VSb2xlIjp7ImluZkZsZyI6IiIsInVwZEZsZyI6IiIsImRlbEZsZyI6IiJ9LCJsYW5ndWFnZSI6ImtvLUtSIiwiaWF0IjoxNTg5NzEzOTUxLCJleHAiOjE1OTIzMDU5NTF9.fquXGAlZSS4Z3Tm4Nnm7f4ca_KM1IGK8tUt2qL1rLyQ',
-    // }
+    //
     // this.tokenStorage.set(this.authStrategy.createToken<NbAuthToken>(this.user["token"]));
     //
     this.loginService.loginUser(this.user).subscribe(res => {

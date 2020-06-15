@@ -39,6 +39,7 @@ export class AuthInterceptor implements HttpInterceptor {
       .pipe(
         retry(3),
         catchError((error: HttpErrorResponse) => {
+          console.log(error)
         // if (error.status !== 200) {
         //   this.router.navigate(['pages']);
         // }

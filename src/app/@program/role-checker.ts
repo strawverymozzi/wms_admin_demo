@@ -1,19 +1,22 @@
 import { Injectable } from '@angular/core'
 import { Router } from '@angular/router'
-import { getProgramMap } from './program-helper';
+import { getProgramMap } from './program.registry';
+import { COMMON_CONFIG } from '../@common/common.config';
+import * as jsonwebtoken from 'jsonwebtoken';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class RoleChecker {
 
+    private payload: any;
     constructor(private router: Router) {
-
+        const token = localStorage.getItem(COMMON_CONFIG.ACCESS_TOKEN);
+        const decoded = jsonwebtoken.decode(token);
+        this.payload = decoded[COMMON_CONFIG.PAGEROLE];
     }
     public isGranted(abilities: any[]) {
-        const currentView = this.router.routerState.snapshot.url;
-        const mapper = getProgramMap()[currentView];
-        if (mapper) {
+        if (this.payload) {
             return abilities.filter((v, i, a) => {
-                return !!mapper[v];
+                return !!this.payload[v];
             }).length == abilities.length;
         }
         return false

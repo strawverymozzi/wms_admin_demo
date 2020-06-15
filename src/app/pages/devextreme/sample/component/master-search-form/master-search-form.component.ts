@@ -49,13 +49,13 @@ export class MasterSearchFormComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.service.getRcvStatusCombo().subscribe(res => {
-      this.rcvStatusComboDataSource = res;
-    });
+    // this.service.getRcvStatusCombo().subscribe(res => {
+    //   this.rcvStatusComboDataSource = res;
+    // });
 
-    this.service.getRcvTypeCombo().subscribe(res => {
-      this.rcvTypeComboDataSource = res;
-    });
+    // this.service.getRcvTypeCombo().subscribe(res => {
+    //   this.rcvTypeComboDataSource = res;
+    // });
   }
 
 }

@@ -8,14 +8,13 @@ import { ExtraOptions, RouterModule, Routes, Router, NavigationStart, Navigation
 import { NgModule } from '@angular/core';
 import { AuthGuard } from './@auth/auth.guard';
 import { AdminGuard } from './@auth/admin.guard';
-import { Translator } from './@translate/translator';
 
 const routes: Routes = [
   {
     path: 'pages',
     canActivate: [],
     loadChildren: () => import('../app/pages/pages.module')
-      .then(m => m.PagesModule),
+      .then(m => m.PagesModule).then(),
   },
   {
     path: 'adminPages',
@@ -41,6 +40,5 @@ const config: ExtraOptions = {
   exports: [RouterModule],
 })
 export class AppRoutingModule {
-
 
 }

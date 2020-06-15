@@ -10,6 +10,7 @@ import { exportDataGrid } from 'devextreme/excel_exporter';
 import * as ExcelJS from 'exceljs';
 import * as FileSaver from "file-saver";
 import { RoleChecker } from '../../../@program/role-checker';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'ngx-sample',
@@ -67,7 +68,7 @@ export class SampleComponent implements OnInit {
   public actionSheetCommand: any[];
   public actionSheetTagBox: any[];
   constructor(
-
+    private route: ActivatedRoute,
     private formService: MasterSearchFormService,
     private formSubService: MasterSearchSubFormService,
     private formPartnerService: PartnerSearchFormService,
@@ -217,15 +218,15 @@ export class SampleComponent implements OnInit {
     }
   }
 
-  onDetailDropGridOpen(event) {
-    this.gridService.getDetailDropGridData().subscribe(res => {
-      if (!(res && res.length)) {
-        notify("데이터 없음");
-        return;
-      }
-      this.detailDropGridDataSource = res;
-    });
-  }
+  // onDetailDropGridOpen(event) {
+  //   this.gridService.getDetailDropGridData().subscribe(res => {
+  //     if (!(res && res.length)) {
+  //       notify("데이터 없음");
+  //       return;
+  //     }
+  //     this.detailDropGridDataSource = res;
+  //   });
+  // }
 
   excelUpload(e, subject) {
     console.log('엑셀업로드');
@@ -345,6 +346,8 @@ export class SampleComponent implements OnInit {
     }
   }
   ngOnInit() {
-
+    this.route.data.subscribe(rs => {
+      console.log(rs)
+    })
   }
 }

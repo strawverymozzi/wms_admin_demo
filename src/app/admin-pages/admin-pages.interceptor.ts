@@ -7,8 +7,8 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpErrorResponse, } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { ProgramHelper, isRegistered } from '../@program/program-helper';
 import { retry, catchError } from 'rxjs/operators';
+import { isRegistered } from '../@program/program.registry';
 
 
 @Injectable()
@@ -31,8 +31,11 @@ export class AdminPagesInterceptor implements HttpInterceptor {
       clonedReq = req.clone({
         headers: req.headers
           .append('authorization', 'Bearer ' + accessJWT)
-          .append('refreshtoken', refreshJWT),
-        withCredentials: true,
+          .append('refreshtoken', refreshJWT)
+          .append('Content-Type', 'application/json')
+          .append('Access-Control-Allow-Headers', '*')
+          .append('Access-Control-Expose-Headers', '*')
+          .append('Access-Control-Allow-Origin', '*'),
         responseType: 'json'
       });
     }

@@ -4,7 +4,7 @@
   ~ See LICENSE_SINGLE_APP / LICENSE_MULTI_APP in the 'docs' folder for license information on type of purchased license.
   -->
 
-<h1 id="title" class="title">{{'Login' | translate : 'LOGIN'}}</h1>
+<h1 id="title" class="title">{{'Login:' | translate : 'LOGIN'}}</h1>
 <p class="sub-title">Hello! Log in to your account.</p>
 
 <div [formGroup]="loginForm" aria-labelledby="title">
@@ -30,7 +30,8 @@
   </div>
 
   <div class="form-control-group accept-group">
-    <nb-checkbox formControlName="rememberMe" name="rememberMe" *ngIf="rememberMe">{{'Remember me' | translate : 'REMBME'}}</nb-checkbox>
+    <nb-checkbox formControlName="rememberMe" name="rememberMe" *ngIf="rememberMe">
+      {{'Remember me' | translate : 'REMBME'}}</nb-checkbox>
     <nb-select [selected]="currentLanguage" (selectedChange)="changeLanguage($event)" status="primary">
       <nb-option *ngFor="let key of langKeys" [value]="key">{{languages[key]}}</nb-option>
     </nb-select>

@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { localDictionary } from '../@translate/translator';
+import { getDictionary } from '../@program/program.dictionary';
 
 @Pipe({
   name: 'translate',
@@ -8,10 +8,8 @@ export class TranslatePipe implements PipeTransform {
 
   private book: any;
   constructor() {
-    this.book = localDictionary;
-    console.log("pipe constructor",this.book)
+    this.book = getDictionary();
   }
-
   transform(text: string, key: string): any {
     return (this.book && this.book[key]) ? this.book[key] : text;
   }

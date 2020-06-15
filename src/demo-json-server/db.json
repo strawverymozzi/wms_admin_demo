@@ -1,5 +1,10 @@
 {
-  "loginPage": {
+  "sampleComp": {
+    "dictionary": {
+      "GRIDTITLE": "번역성공"
+    }
+  },
+  "login": {
     "dictionary": {
       "TENANTID": "회사코드",
       "USERID": "아이디",
@@ -7,22 +12,12 @@
       "REMBME": "기억여부"
     }
   },
-  "sampleComp": {
-    "dictionary": {
-      "GRIDTITLE": "번역성공"
-    }
-  },
-  "login": {},
   "loginUser": {
-    "tenantID": "",
-    "userID": "",
+    "tenant": "",
+    "usercd": "",
     "password": "",
     "rememberMe": false,
-    "language": "ko-KR",
-    "token": {
-      "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIxMDAwMCIsInRlbmFudCI6IjEwMDAiLCJ1c2VySWQiOiJURVNUX1VTRVIiLCJmdWxsTmFtZSI6Iu2FjOyKpO2KuOycoOyggCIsInBhZ2VSb2xlIjp7ImluZkZsZyI6IiIsInVwZEZsZyI6IiIsImRlbEZsZyI6IiJ9LCJsYW5ndWFnZSI6ImtvLUtSIiwiaWF0IjoxNTg5NzEzOTUxLCJleHAiOjE1ODk3MTc1NTF9.ab4kxvQbzvBIkvOLqXyRGShO7J8Eplh5gG7VQfl_mtA",
-      "refresh_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIxMDAwMCIsInRlbmFudCI6IjEwMDAiLCJ1c2VySWQiOiJURVNUX1VTRVIiLCJmdWxsTmFtZSI6Iu2FjOyKpO2KuOycoOyggCIsInBhZ2VSb2xlIjp7ImluZkZsZyI6IiIsInVwZEZsZyI6IiIsImRlbEZsZyI6IiJ9LCJsYW5ndWFnZSI6ImtvLUtSIiwiaWF0IjoxNTg5NzEzOTUxLCJleHAiOjE1OTIzMDU5NTF9.fquXGAlZSS4Z3Tm4Nnm7f4ca_KM1IGK8tUt2qL1rLyQ"
-    }
+    "language": "ko-KR"
   },
   "sign-up": {
     "fullName": "testtest",
@@ -488,7 +483,7 @@
             "icon": "shopping-cart-outline",
             "menuPath": "10000|10002",
             "appUid": 90003,
-            "url": "/global/sampleComp",
+            "url": "http://localhost:3001/api/global/sampleComp",
             "link": "/adminPages/CM/application3",
             "windowName": "rcv",
             "children": [],

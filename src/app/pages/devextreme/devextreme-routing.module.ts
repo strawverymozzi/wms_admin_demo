@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { DevextremeComponent } from './devextreme.component';
 import { SampleComponent } from './sample/sample.component';
-import { Translator } from '../../@translate/translator';
+import { AdminProgramInitResolver } from '../../@program/program.admin-init-resolver';
 
 const routes: Routes = [
   {
@@ -12,12 +12,12 @@ const routes: Routes = [
       {
         path: 'application3',
         component: SampleComponent,
+        resolve: { programInit: AdminProgramInitResolver },
       },
 
     ],
   },
 ];
-routes.forEach((v, i, a) => v["resolve"] = { dictionary: Translator });
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

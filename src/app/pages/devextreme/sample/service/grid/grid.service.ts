@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { CommonHttpService } from '../../../../../@common/common-http.service';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { tap, map } from 'rxjs/operators';
+import { CommonHttpService } from '../../../../../@common/common.http.service';
 
-// const _MASTERGRIDURL: string = "http://www.jflab.co.kr:18000/api/v1/receive/rcv?criteria=tenant=='1000';rcvKey=='99999';fdds=bt=(2020-04-21,2020-08-01)";
+const _MASTERGRIDURL: string = "http://www.jflab.co.kr:18000/api/v1/receive/rcv?criteria=tenant=='1000';rcvKey=='99999';fdds=bt=(2020-04-21,2020-08-01)";
 // const _MASTERGRIDURL: string = "/grid/HEADGRID";
-const _MASTERGRIDURL: string ='http://www.jflab.co.kr:18000/api/v1/receive/rcvInfo'
+// const _MASTERGRIDURL: string = 'http://www.jflab.co.kr:18000/api/v1/receive/rcvInfo'
 
 const _MASTERGRIDSAVEURL: string = '/grid/SAVEHEADGRID';
 
@@ -125,20 +125,20 @@ export class GridService extends CommonHttpService {
   }
   public getMasterGridData(data: any): Observable<any> {
 
-    // return this.http.get(_MASTERGRIDURL).pipe(map(res => {
-    //   const rsList = [];
-    //   if (res && res["success"] && res["list"].length) {
-    //     return res["list"];
-    //   }
-    //   return rsList;
-    // }))
-    return super.getJson(_MASTERGRIDURL).pipe(map(res => {
+    return this.http.get(_MASTERGRIDURL).pipe(map(res => {
       const rsList = [];
-      if (res && res.success && res.list.length) {
-        return res.list;
+      if (res && res["success"] && res["list"].length) {
+        return res["list"];
       }
       return rsList;
     }))
+    // return super.getJson(_MASTERGRIDURL).pipe(map(res => {
+    //   const rsList = [];
+    //   if (res && res.success && res.list.length) {
+    //     return res.list;
+    //   }
+    //   return rsList;
+    // }))
   }
 
   public saveAPITEST(data: any[]): Observable<any> {
@@ -165,15 +165,15 @@ export class GridService extends CommonHttpService {
   public getDetailDropGridColumnConfig(): any {
     return _DETAILDROPGRIDCONFIG;
   }
-  public getDetailDropGridData(): Observable<any> {
-    return super.getJson(_DETAILGRIDDROPSEARCH).pipe(map(res => {
-      const rsList = [];
-      if (res && res.success && res.list.length) {
-        return res.list;
-      }
-      return rsList;
-    }))
-  }
+  // public getDetailDropGridData(): Observable<any> {
+  //   return super.getJson(_DETAILGRIDDROPSEARCH).pipe(map(res => {
+  //     const rsList = [];
+  //     if (res && res.success && res.list.length) {
+  //       return res.list;
+  //     }
+  //     return rsList;
+  //   }))
+  // }
 }
 
 

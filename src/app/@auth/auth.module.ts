@@ -47,7 +47,6 @@ import { ComponentsModule } from '../@components/components.module';
 import { authOptions } from './auth.settings';
 import { authSettings } from './access.settings';
 import { PipesModule } from '../@pipes/pipes.module';
-import { AdminPagesInterceptor } from '../admin-pages/admin-pages.interceptor';
 
 const GUARDS = [AuthGuard, AdminGuard];
 const PIPES = [AuthPipe];

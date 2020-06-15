@@ -5,7 +5,7 @@
  */
 
 import { Component, OnDestroy } from '@angular/core';
-import { AdminPagesMenu } from './admin-pages-menu';
+import { getAdminLeft } from '../@program/program.registry';
 
 @Component({
   selector: 'ngx-admin-pages',
@@ -16,17 +16,14 @@ import { AdminPagesMenu } from './admin-pages-menu';
       <router-outlet></router-outlet>
     </ngx-one-column-layout>
   `,
-  providers: [AdminPagesMenu]
 })
 export class AdminPagesComponent implements OnDestroy {
 
   menu: any[] = [];
   alive: boolean = true;
 
-  constructor(
-    private menuService: AdminPagesMenu,
-  ) {
-    this.menu = this.menuService.getMenu();
+  constructor() {
+    this.menu = getAdminLeft();
   }
 
 

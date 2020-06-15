@@ -18,6 +18,7 @@ export class AppComponent implements OnInit {
   constructor(private analytics: AnalyticsService,
     private authStrategy: NbPasswordAuthStrategy,
     private tokenStorage: NbTokenLocalStorage,
+    private router: Router
   ) {
 
     // TODO: REMOVE BEFORE PROD

@@ -16,9 +16,9 @@ export class MasterSearchSubFormComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.service.getMallIdCombo().subscribe(res => {
-      this.mallIdComboDataSource = res;
-    });
+    // this.service.getMallIdCombo().subscribe(res => {
+    //   this.mallIdComboDataSource = res;
+    // });
   }
 
 }
