@@ -6,9 +6,10 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpErrorResponse, } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
+import { Observable, throwError, EMPTY, of } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
 import { isRegistered } from '../@program/program.registry';
+import notify from 'devextreme/ui/notify';
 
 
 @Injectable()
@@ -17,27 +18,12 @@ export class AdminPagesInterceptor implements HttpInterceptor {
   }
 
 
-  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<any> {
     let clonedReq = req;
     const currentView = this.router.routerState.snapshot.url;
 
     if (!!localStorage.getItem("access") && !!localStorage.getItem("refresh") && isRegistered(currentView, req.url)) {
 
-      // const accessJWT = ProgramHelper.tokenAppendProgramMeta(localStorage.getItem('access'), currentView);
-      // const refreshJWT = ProgramHelper.tokenAppendProgramMeta(localStorage.getItem('access'), currentView);
-      const accessJWT = localStorage.getItem('access');
-      const refreshJWT = localStorage.getItem('access');
-
-      clonedReq = req.clone({
-        headers: req.headers
-          .append('authorization', 'Bearer ' + accessJWT)
-          .append('refreshtoken', refreshJWT)
-          .append('Content-Type', 'application/json')
-          .append('Access-Control-Allow-Headers', '*')
-          .append('Access-Control-Expose-Headers', '*')
-          .append('Access-Control-Allow-Origin', '*'),
-        responseType: 'json'
-      });
     }
 
     return next.handle(clonedReq).pipe(
@@ -47,7 +33,8 @@ export class AdminPagesInterceptor implements HttpInterceptor {
         //   this.router.navigate(['auth/login']);
         // }
         // TODO: handle 403 error ?
-        return throwError(error);
+        notify({ message: error.error ? error.error.message : error.message, width: 500, position: 'top' }, 'error', 2000);
+        return of([]);
       }));
 
   }

@@ -80,11 +80,6 @@ const routes: Routes = [{
         .then(m => m.MiscellaneousModule),
     },
     {
-      path: 'devextreme',
-      loadChildren: () => import('./devextreme/devextreme.module')
-        .then(m => m.DevextremeModule),
-    },
-    {
       path: '',
       redirectTo: 'dashboard',
       pathMatch: 'full',

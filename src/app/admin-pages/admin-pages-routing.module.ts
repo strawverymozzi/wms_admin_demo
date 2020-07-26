@@ -6,12 +6,9 @@
 
 import { RouterModule, Router, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
-import { NotFoundComponent } from '../pages/miscellaneous/not-found/not-found.component';
-import { ECommerceComponent } from '../pages/e-commerce/e-commerce.component';
-import { DashboardComponent } from '../pages/dashboard/dashboard.component';
 import { AdminPagesComponent } from './admin-pages.component';
-
-const _ADMINMODULEURL: string = '/auth/ADMINMODULE';
+import { ECommerceComponent } from '../pages/e-commerce/e-commerce.component';
+import { NotFoundComponent } from '../pages/miscellaneous/not-found/not-found.component';
 
 const routes: Routes = [{
   path: '',
@@ -22,29 +19,10 @@ const routes: Routes = [{
       component: ECommerceComponent,
     },
     {
-      path: 'iot-dashboard',
-      component: DashboardComponent,
-    },
-    {
-      path: 'AdminModule1Module',
-      loadChildren: () => import('./admin-module1/admin-module1.module')
-        .then(m => m.AdminModule1Module),
-    },
-    {
-      path: 'AdminModule2Module',
-      loadChildren: () => import('./admin-module2/admin-module2.module')
-        .then(m => m.AdminModule2Module),
-    },
-    {
       path: 'CM',
-      loadChildren: () => import('../pages/devextreme/devextreme.module')
-        .then(m => m.DevextremeModule),
+      loadChildren: () => import('./wms/wms.module')
+        .then(m => m.WmsModule),
     },
-    // {
-    //   path: 'devextreme',
-    //   loadChildren: () => import('../pages/devextreme/devextreme.module')
-    //     .then(m => m.DevextremeModule),
-    // },
 
     {
       path: '',

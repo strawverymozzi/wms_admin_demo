@@ -8,7 +8,6 @@ import { Component, EventEmitter, Input, OnDestroy, Output } from '@angular/core
 
 import * as L from 'leaflet';
 
-import { CountryOrdersMapService } from './country-orders-map.service';
 import { NbThemeService } from '@nebular/theme';
 import { combineLatest } from 'rxjs';
 import { takeWhile } from 'rxjs/operators';
@@ -45,7 +44,7 @@ export class CountryOrdersMapComponent implements OnDestroy {
     maxBoundsViscosity: 1.0,
   };
 
-  constructor(private ecMapService: CountryOrdersMapService,
+  constructor(
     private theme: NbThemeService) {
 
     combineLatest([

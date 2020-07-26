@@ -7,9 +7,9 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
-import { catchError, retry } from 'rxjs/operators';
-
+import { Observable, throwError, EMPTY } from 'rxjs';
+import { catchError, retry, map } from 'rxjs/operators';
+import notify from 'devextreme/ui/notify';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
@@ -18,9 +18,9 @@ export class AuthInterceptor implements HttpInterceptor {
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    
+
     let clonedReq = req;
-    
+
     if (!!localStorage.getItem("access") && !!localStorage.getItem("refresh")) {
       clonedReq = req.clone({
         headers: req.headers
@@ -28,23 +28,27 @@ export class AuthInterceptor implements HttpInterceptor {
           .append('Access-Control-Allow-Origin', '*')
           .append('Content-Type', 'application/json')
           .append('authorization', 'Bearer ' + localStorage.getItem('access'))
-          .append('refreshtoken', localStorage.getItem('refresh')),
+          .append('refreshtoken', localStorage.getItem('refresh'))
+          .append('Access-Control-Allow-Headers', '*')
+          .append('Access-Control-Expose-Headers', '*'),
         //withCredentials: true,
         responseType: 'json'
       });
     }
 
-
     return next.handle(clonedReq)
       .pipe(
         retry(3),
+        map(res => {
+          return res;
+        }),
         catchError((error: HttpErrorResponse) => {
-          console.log(error)
-        // if (error.status !== 200) {
-        //   this.router.navigate(['pages']);
-        // }
-        // TODO: handle 403 error ?
-        return throwError(error);
-      }));
+          // if (error.status !== 200) {
+          //   this.router.navigate(['pages']);
+          // }
+          // TODO: handle 403 error ?
+          notify({ message: error.error ? error.error.message : error.message, width: 500, position: 'top' }, 'error', 2000);
+          return EMPTY;
+        }));
   }
 }

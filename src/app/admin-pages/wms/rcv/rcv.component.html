@@ -1,0 +1,218 @@
+<div class="wrapper">
+  <!-- page toolbar -->
+  <dx-toolbar>
+    <dxi-item location="after" widget="dxButton" locateInMenu="auto" [options]="masterSearchBtn">
+    </dxi-item>
+  </dx-toolbar>
+  <!-- page toolbar end -->
+
+  <!-- accordian  -->
+  <ng-container>
+    <dx-accordion [collapsible]="true" [animationDuration]="300" [selectedIndex]="0" [multiple]="true">
+      <dxi-item title="SearchInput">
+        <wms-rcv-search-input 
+        [VO]="RCVFORM"
+        [RCVSTA]="RCVSTA_COMBO" 
+        [RCVTYP]="RCVTYP_COMBO"></wms-rcv-search-input>
+      </dxi-item>
+      <dxi-item title="SearchInputSub">
+        <wms-rcv-search-input-sub 
+        [VO]="RCVSUBFORM"
+        [MALLID]="MALLID_COMBO"></wms-rcv-search-input-sub>
+      </dxi-item>
+    </dx-accordion>
+  </ng-container>
+  <!-- accordian end -->
+
+  <!-- tab panel -->
+  <dx-tab-panel height="auto" [selectedIndex]="0" [loop]="true" [animationEnabled]="true"
+    [swipeEnabled]="true">
+    <dxi-item title="테스트 그리드">
+      <!-- master grid -->
+      <dx-data-grid 
+        #masterGrid 
+        [dataSource]="masterGridData" 
+        id="masterGrid"
+        height="400px"
+        [showBorders]="true" 
+        [focusedRowEnabled]="true"
+        [(focusedRowKey)]="masterFocusedKey"
+        keyExpr="uid" 
+        (onRowDblClick)="onMasterGridEvent($event,'RowDblClick')"
+        (onInitNewRow)="onMasterGridEvent($event,'InitNewRow')"
+        (onRowInserting)="onMasterGridEvent($event,'RowInserting')"
+        (onRowInserted)="onMasterGridEvent($event,'RowInserted')"
+        (onRowRemoving)="onMasterGridEvent($event,'RowRemoving')"
+        (onRowRemoved)="onMasterGridEvent($event,'RowRemoved')"
+        (onExporting)="onExporting($event)">
+        <dxo-selection
+          selectAllMode="allPages"
+          showCheckBoxesMode="onClick"
+          mode="multiple">
+        </dxo-selection>
+        <dxo-editing 
+         *ngIf="roleChecker.isGranted(['infFlg'])"
+          mode="row"
+          [allowAdding]="true">
+        </dxo-editing>
+        <dxo-export [enabled]="true" [allowExportSelectedData]="true"></dxo-export>
+        <dxo-column-fixing [enabled]="true"></dxo-column-fixing>
+        <ng-container *ngFor="let col of gridConfig.MASTER; i as index">
+          <dxi-column 
+            [caption]="col.caption" 
+            [dataField]="col.dataField"
+            [allowEditing]="col.allowEditing"
+            [visible]="col.visible"
+            [width]="col.width" 
+            [fixed]="col.fixed"
+            alignment="center">
+          </dxi-column>
+        </ng-container>
+      </dx-data-grid>
+      <!-- master grid -->
+      <!-- master btm toolbar -->
+       <dx-toolbar>
+        <dxi-item 
+        *ngIf="roleChecker.isGranted(['delFlg'])"
+         location="after" 
+         widget="dxButton" 
+         locateInMenu="auto" 
+         [options]="masterDeleteBtn">
+        </dxi-item>
+      </dx-toolbar>
+      <!-- master btm toolbar -->
+    </dxi-item>
+  </dx-tab-panel>
+  <!-- tab panel end-->
+
+  <!-- action -->
+  <dx-action-sheet 
+      #actionSheet
+      *ngIf="actionVisible"
+      [(visible)]="actionVisible"
+      id="actionSheet"
+      title="actionSheetTitle"
+      height="80%" 
+      [showTitle]="true" 
+      [showCancelButton]="true"
+      (onCancelClick)="onActionSheetClose($event)">
+    <ng-container *dxTemplate="let data of 'content'">
+      <dx-scroll-view [scrollByContent]="true" [scrollByThumb]="true" height="95%" style="padding-bottom:10px">
+        <!-- save master -->
+        <dx-toolbar>
+          <dxi-item 
+            *ngIf="roleChecker.isGranted(['updFlg'])"
+            location="after" 
+            widget="dxButton" 
+            locateInMenu="auto"
+            [options]="masterSaveBtn">
+          </dxi-item>
+        </dx-toolbar>
+        <!-- save master -->        
+        <!-- selected master data -->
+        <dx-tab-panel #detailFormTabPanel height="auto" [selectedIndex]="0" [loop]="true" [animationEnabled]="true"
+          [swipeEnabled]="true">
+          <dxi-item title="Header Editor">
+            <wms-rcv-detail-search-input [VO]="RCVDETAILFORM"></wms-rcv-detail-search-input>
+          </dxi-item>
+        </dx-tab-panel>
+        <!-- selected master data-->
+        <!-- detailgrid -->
+        <dx-data-grid 
+          #detailGrid 
+          id="detailGrid" 
+          keyExpr="uid" 
+          height="400px"
+          [dataSource]="detailGridData" 
+          [showBorders]="true"
+          [focusedRowEnabled]="true" 
+          [(focusedRowKey)]="detailFocusedKey"
+          [(focusedRowIndex)]="detailFocusedIndex"     
+          (onEditingStart)="onDetailGridEvent($event,'EditingStart')"
+          (onInitNewRow)="onDetailGridEvent($event,'InitNewRow')"
+          (onRowInserting)="onDetailGridEvent($event,'RowInserting')"
+          (onRowInserted)="onDetailGridEvent($event,'RowInserted')"
+          (onRowUpdating)="onDetailGridEvent($event,'RowUpdating')"
+          (onRowUpdated)="onDetailGridEvent($event,'RowUpdated')"
+          (onRowRemoving)="onDetailGridEvent($event,'RowRemoving')"
+          (onRowRemoved)="onDetailGridEvent($event,'RowRemoved')">
+          <!-- (onKeyDown)="onDetailDropKeyDown($event)" -->
+          <dxo-group-panel 
+            [visible]="false"> <!-- or "auto" -->
+          </dxo-group-panel>
+          <dxo-editing 
+            mode="batch"
+            [allowUpdating]="true"
+            [allowAdding]="true"></dxo-editing>
+          <!-- <dxo-MobileInboundService.classselection mode="single"></dxo-selection> -->
+          <dxo-selection
+            selectAllMode="allPages"
+            showCheckBoxesMode="onClick"
+            mode="multiple">
+          </dxo-selection>
+          <dxo-keyboard-navigation></dxo-keyboard-navigation>
+          <dxo-column-fixing [enabled]="true"></dxo-column-fixing>          
+          <dxi-column 
+            *ngFor="let col of gridConfig.DETAIL; i as index"
+            [visible]="col.visible"
+            [caption]="col.caption"
+            [allowEditing]="col.allowEditing"
+            [editCellTemplate]="col.editCellTemplate" 
+            [dataField]="col.dataField"
+            [width]="col.width"
+            [fixed]="col.fixed"
+            alignment="center"></dxi-column>
+          <div *dxTemplate="let cellInfo of 'SH_PTNRKEY'">
+            <dx-text-box 
+              [lookUp]="lookUp_PTNKEY"
+              [value]="cellInfo.value"
+              (onValueChanged)="onInlineCellValChange($event,cellInfo)">
+              <dxi-button name="inline" [options]="inlineCellBtn">
+              </dxi-button>
+            </dx-text-box>
+          </div>
+        </dx-data-grid>
+        <!-- detailgrid -->
+        <!-- detail btm toolbar -->
+        <dx-toolbar>
+          <dxi-item 
+          *ngIf="detailChangeBuffer.length && roleChecker.isGranted(['infFlg','updFlg'])"
+          location="after" 
+          widget="dxButton" 
+          locateInMenu="auto" 
+          [options]="saveDetailBtn">
+          </dxi-item>
+          <dxi-item 
+          *ngIf="roleChecker.isGranted(['delFlg'])"
+          location="after" 
+          widget="dxButton" 
+          locateInMenu="auto" 
+          [options]="deleteDetailBtn">
+          </dxi-item>
+          <dxi-item 
+          *ngIf="roleChecker.isGranted(['infFlg','updFlg'])"
+          location="after" 
+          widget="dxButton" 
+          locateInMenu="auto" 
+          [options]="saveAllBtn">
+          </dxi-item>
+        </dx-toolbar>
+      <!-- detail btm toolbar -->
+      </dx-scroll-view>
+    </ng-container>
+  </dx-action-sheet>
+
+  <dx-load-panel
+    *ngIf="loadingVisible"
+    #loadPanel
+    shadingColor="rgba(0,0,0,0.4)"
+    [position]="{ of: loadingTarget }"
+    visible="true"
+    [showIndicator]="true"
+    [showPane]="true"
+    [shading]="true"
+    [closeOnOutsideClick]="false"
+    (onShown)="onShownLoader()"
+    (onHidden)="onHiddenLoader()">
+  </dx-load-panel>
+</div>

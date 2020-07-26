@@ -1,0 +1,67 @@
+<!-- popup -->
+<ng-container *ngIf="config">
+  <dx-popup 
+  [title]="config.title"
+  width="80%" 
+  height="80%" 
+  [showTitle]="true" 
+  [dragEnabled]="false"
+  [closeOnOutsideClick]="true"
+  [(visible)]="visibility"
+  (onHidden)="close()">
+    <dx-scroll-view [scrollByContent]="true" [scrollByThumb]="true">
+
+      <!-- toolbar -->
+      <dx-toolbar>
+        <dxi-item location="before" widget="dxButton" locateInMenu="auto" [options]="POPSEARCHBTN">
+        </dxi-item>
+        <dxi-item location="after" widget="dxButton" locateInMenu="auto" [options]="POPDONE">
+        </dxi-item>
+        <dxi-item location="after" widget="dxButton" locateInMenu="auto" [options]="POPCANCEL">
+        </dxi-item>
+      </dx-toolbar>
+      <!-- toolbar -->
+
+      <!-- switch searchInput -->
+        <ng-container [ngSwitch]="config.id">
+          <ng-container *ngSwitchCase="'PTNKEY'">
+            <wms-search-input-ptnkey [VO]="config.param"></wms-search-input-ptnkey>
+          </ng-container>
+          <ng-container *ngSwitchCase="'SKUKEY'">
+            <wms-search-input-skukey [VO]="config.param"></wms-search-input-skukey>
+          </ng-container>
+        </ng-container>
+      <!-- switch searchInput -->
+
+      <!-- common grid -->
+        <div style="clear:both">
+          <dx-data-grid 
+          #popGrid 
+          [keyExpr]="config.pkCol"  
+          height="400px"
+          [dataSource]="dataSource" 
+          [showBorders]="true"
+          [focusedRowEnabled]="true" 
+          (onRowDblClick)="onRowDblClick($event,'dbclick')"
+          >
+            <dxo-selection mode="single"></dxo-selection>
+
+            <dxo-keyboard-navigation></dxo-keyboard-navigation>
+            
+            <dxi-column *ngFor="let col of config.gridConfig; i as index" 
+            [caption]="col.caption" 
+            [dataField]="col.dataField" 
+            [width]="col.width" 
+            [fixed]="col.fixed"
+            alignment="center"
+            >
+            </dxi-column>
+
+          </dx-data-grid>
+        </div>
+      <!-- common grid -->
+
+    </dx-scroll-view>
+  </dx-popup>
+</ng-container>
+<!-- popup end-->

@@ -18,6 +18,9 @@ export function registerInitUri(view: string, data: any) {
 }
 
 export function getInitUri(route: string) {
+    if (ADMININITURI[route] == 'http://www.jflab.co.kr:18001/api/v1/rec/receive') {
+        ADMININITURI[route] = 'http://localhost:8001/api/v1/rec/receive';
+    }
     return ADMININITURI[route];
 }
 
@@ -67,27 +70,4 @@ export function parseProgramList(returnedList: any[], insertedList: any[]): void
         }
         returnedList.push(setting);
     }
-
-    // static getDictionaryURL(landingPath: string): string {
-    //     return PROGRAMMAPPER[landingPath] ? PROGRAMMAPPER[landingPath].url : "/";
-    // }
-
-    // static tokenAppendProgramMeta(token: string, route): string {
-    //     const decoded = jsonwebtoken.decode(token);
-    //     const wn = PROGRAMMAPPER[route].windowName;
-    //     const iFlg = PROGRAMMAPPER[route].insFlg;
-    //     const uFlg = PROGRAMMAPPER[route].updFlg;
-    //     const dFlg = PROGRAMMAPPER[route].delFlg;
-
-
-    //     decoded["windowName"] = wn;
-    //     decoded["pageRole"] =
-    //     {
-    //         infFlg: iFlg,
-    //         updFlg: uFlg,
-    //         delFlg: dFlg
-    //     }
-    //     return jsonwebtoken.sign(decoded, SECRET);
-    // }
-
 }

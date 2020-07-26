@@ -3,14 +3,11 @@
  * Licensed under the Single Application / Multi Application License.
  * See LICENSE_SINGLE_APP / LICENSE_MULTI_APP in the 'docs' folder for license information on type of purchased license.
  */
-import { ChangeDetectionStrategy, Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, Inject, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import {
   NB_AUTH_OPTIONS,
-  NbTokenLocalStorage,
-  NbAuthToken,
-  NbPasswordAuthStrategy,
 } from '@nebular/auth';
 import notify from 'devextreme/ui/notify';
 import { LoginService } from './login.service';
@@ -52,24 +49,10 @@ export class NgxLoginComponent implements OnInit {
     private fb: FormBuilder,
     protected router: Router,
     public loginService: LoginService,
-    private tokenStorage: NbTokenLocalStorage,
-    private authStrategy: NbPasswordAuthStrategy,
     protected activatedroute: ActivatedRoute,
   ) {
     const storageLanguage = localStorage.getItem("language");
     this.currentLanguage = storageLanguage ? storageLanguage : this.initLanguage();
-  }
-
-
-  ngOnInit(): void {
-    this.loginForm = this.fb.group({
-      tenant: this.fb.control(''),
-      usercd: this.fb.control(''),
-      password: this.fb.control(''),
-      rememberMe: this.fb.control(false),
-    });
-
-
   }
 
   initLanguage(): string {
@@ -88,10 +71,6 @@ export class NgxLoginComponent implements OnInit {
     this.submitted = true;
     this.user = this.loginForm.value;
     this.user["language"] = this.currentLanguage;
-
-    //
-    // this.tokenStorage.set(this.authStrategy.createToken<NbAuthToken>(this.user["token"]));
-    //
     this.loginService.loginUser(this.user).subscribe(res => {
       const result = this.loginService.handleLoginResult(res);
       result ?
@@ -106,6 +85,14 @@ export class NgxLoginComponent implements OnInit {
             closeOnOutsideClick: true
           }, "error", 1000);
     });
+  }
 
+  ngOnInit(): void {
+    this.loginForm = this.fb.group({
+      tenant: this.fb.control('1000'),
+      usercd: this.fb.control('TEST_USER'),
+      password: this.fb.control('1234'),
+      rememberMe: this.fb.control(false),
+    });
   }
 }

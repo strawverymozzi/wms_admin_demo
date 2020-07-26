@@ -1,0 +1,70 @@
+<div class="wrapper" >
+    <div class="col_1">
+      <div class="field">
+        <div class="label">입고번호</div>
+        <div class="value">
+          <dx-text-box [(value)]="dataObject.RCVNUM" placeholder=""> </dx-text-box>
+        </div>
+      </div>
+      <div class="field">
+        <div class="label">P/O번호</div>
+        <div class="value">
+          <dx-text-box [(value)]="dataObject.PCODNM" placeholder=""> </dx-text-box>
+        </div>
+      </div>
+      <div class="field">
+        <div class="label">MALLID</div>
+        <div class="value">
+          <dx-select-box [(value)]="dataObject.MALLID" placeholder="Choose Product" [items]="MALLID" [showClearButton]="true">
+          </dx-select-box>
+        </div>
+      </div>
+      <div class="field">
+        <div class="label">온라인 P/O번호</div>
+        <div class="value">
+          <dx-text-box [(value)]="dataObject.OORDID" placeholder=""> </dx-text-box>
+        </div>
+      </div>
+    </div>
+    <div class="col_2">
+      <div class="field">
+        <div class="label">입고접수번호</div>
+        <div class="value">
+          <dx-text-box [(value)]="dataObject.RCODNM" placeholder=""> </dx-text-box>
+        </div>
+      </div>
+      <div class="field">
+        <div class="label">B/L번호</div>
+        <div class="value">
+          <dx-text-box [(value)]="dataObject.BOLNUM" placeholder=""> </dx-text-box>
+        </div>
+      </div>
+      <div class="field">
+        <div class="label">주문자ID</div>
+        <div class="value">
+          <dx-text-box [(value)]="dataObject.USERID" placeholder=""> </dx-text-box>
+        </div>
+      </div>
+    </div>
+    <div class="col_3">
+      <div class="field">
+        <div class="label">ERP전표번호</div>
+        <div class="value">
+          <dx-text-box [(value)]="dataObject.ERPNUM" placeholder=""> </dx-text-box>
+        </div>
+      </div>
+      <div class="field">
+        <div class="label">INVOICE번호</div>
+        <div class="value">
+          <dx-text-box [(value)]="dataObject.INVNUM" placeholder=""> </dx-text-box>
+        </div>
+      </div>
+      <div class="field">
+        <div class="label">주문자</div>
+        <div class="value">
+          <dx-text-box [(value)]="dataObject.USNAME" placeholder=""> </dx-text-box>
+        </div>
+      </div>
+    </div>
+  </div>
+  

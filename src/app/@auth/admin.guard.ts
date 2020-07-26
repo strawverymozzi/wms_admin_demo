@@ -25,7 +25,6 @@ export class AdminGuard extends CommonHttpService implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot,
   ): Observable<boolean> | Promise<boolean> | boolean {
-    console.log("admin g")
     if (!!localStorage.getItem("access") && !!localStorage.getItem("refresh")) {
       return this.http.get(getURI(REGISTRY.ADMINMENU.INIT)).pipe(
         map(res => {

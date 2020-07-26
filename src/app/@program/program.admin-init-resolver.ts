@@ -15,9 +15,6 @@ import { settDictionary } from './program.dictionary';
  * 사용가능하며 returnedObj는 해당 컴포넌트에서 사용가능
  */
 
-
-
-
 @Injectable({
     providedIn: 'root'
 })
@@ -37,17 +34,20 @@ export class AdminProgramInitResolver implements Resolve<any>{
         }).pipe(
             retry(3),
             map((res) => {
-                console.log(res)
                 settDictionary(res.body[COMMON_CONFIG.DICTIONARY]);
-                if (res.headers.get(COMMON_CONFIG.ACCESS_TOKEN_HEADER)) {
-                    localStorage.setItem(
-                        COMMON_CONFIG.ACCESS_TOKEN,
-                        res.headers.get(COMMON_CONFIG.ACCESS_TOKEN_HEADER));
-                    localStorage.setItem(
-                        COMMON_CONFIG.REFRESH_TOKEN,
-                        res.headers.get(COMMON_CONFIG.REFRESH_TOKEN_HEADER));
-                    console.warn("TOKEN UPDATED")
-                }
+                console.log("----------res.headers:", res.headers)
+                // if (res.headers.get(COMMON_CONFIG.ACCESS_TOKEN_HEADER)) {
+                //     localStorage.setItem(
+                //         COMMON_CONFIG.ACCESS_TOKEN,
+                //         res.headers.get(COMMON_CONFIG.ACCESS_TOKEN_HEADER));
+                //     console.warn("ACCESS TOKEN UPDATED")
+                // }
+                // if (res.headers.get(COMMON_CONFIG.REFRESH_TOKEN_HEADER)) {
+                //     localStorage.setItem(
+                //         COMMON_CONFIG.REFRESH_TOKEN,
+                //         res.headers.get(COMMON_CONFIG.REFRESH_TOKEN_HEADER));
+                //     console.warn("REFRESH TOKEN UPDATED")
+                // }
                 return res.body;
             }),
             catchError((error: HttpErrorResponse) => {
@@ -55,7 +55,7 @@ export class AdminProgramInitResolver implements Resolve<any>{
                     //throw new Error('not Found');
                 }
                 new Error("ProgramInitResolver ERROR : " + error.status)
-                return of([]);
+                return null;
             }));
     }
 

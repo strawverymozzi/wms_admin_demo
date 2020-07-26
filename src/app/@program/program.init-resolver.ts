@@ -27,11 +27,11 @@ export class ProgramInitResolver implements Resolve<any>{
     }
 
     fetchProgramScopeData(url: string): Observable<any> {
-        return this.http.get(url, { observe: 'response' }).pipe(
+        return this.http.get(url).pipe(
             retry(3),
             map((res) => {
-                settDictionary(res.body[COMMON_CONFIG.DICTIONARY]);
-                return res.body;
+                settDictionary(res[COMMON_CONFIG.DICTIONARY]);
+                return res;
             }),
             catchError((error: HttpErrorResponse) => {
                 if (error.status === 404) {

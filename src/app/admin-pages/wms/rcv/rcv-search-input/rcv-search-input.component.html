@@ -1,0 +1,73 @@
+<div class="wrapper">
+  <div class="col_1">
+    <div class="field">
+      <div class="label">입고테스트</div>
+      <div class="value">
+        <dx-select-box [(value)]="dataObject.RCVSTA" [items]="RCVSTA" placeholder="" [showClearButton]="true">
+        </dx-select-box>
+      </div>
+    </div>
+    <div class="field">
+      <div class="label">입고타입</div>
+      <div class="value">
+        <dx-select-box [(value)]="dataObject.RCVTYP" [items]="RCVTYP" placeholder="" [showClearButton]="true">
+        </dx-select-box>
+      </div>
+    </div>
+  </div>
+  <div class="col_2">
+    <div class="field">
+      <div class="label">출고예정일</div>
+      <div class="value half">
+        <dx-date-box [(value)]="dataObject.FDATE1" dateSerializationFormat="yyyy-MM-dd" id="FDATE1" placeholder="~부터"
+          type="date">
+        </dx-date-box>
+      </div>
+      <div class="value half">
+        <dx-date-box [(value)]="dataObject.TODAT1" dateSerializationFormat="yyyy-MM-dd" id="TODAT1" placeholder="~까지"
+          type="date">
+        </dx-date-box>
+      </div>
+    </div>
+    <div class="field">
+      <div class="label">거래처 코드</div>
+      <div class="value half">
+        <dx-text-box [lookUp]="lookUp_PTNKEY" [(value)]="dataObject.PTNKEY" placeholder="코드">
+          <dxi-button name="ptnBtn" [options]="searchPtnBtn">
+          </dxi-button>
+        </dx-text-box>
+      </div>
+      <div class="value half">
+        <dx-text-box [(value)]="dataObject.PTNRNM" id="loadPanel" placeholder="거래처명"> </dx-text-box>
+      </div>
+    </div>
+  </div>
+  <div class="col_3">
+    <div class="field">
+      <div class="label">출고실적일</div>
+      <div class="value half">
+        <dx-date-box [(value)]="dataObject.FDATE2" dateSerializationFormat="yyyy-MM-dd" id="" placeholder="~부터"
+          type="date">
+        </dx-date-box>
+      </div>
+      <div class="value half">
+        <dx-date-box [(value)]="dataObject.TDATE2" dateSerializationFormat="yyyy-MM-dd" id="" placeholder="~까지"
+          type="date">
+        </dx-date-box>
+      </div>
+    </div>
+    <div class="field">
+      <div class="label">상품 코드</div>
+      <div class="value half">
+        <dx-text-box [lookUp]="lookUp_SKUKEY" [(value)]="dataObject.SKUKEY" placeholder="코드">
+          <dxi-button name="skuBtn" [options]="searchSkuBtn">
+          </dxi-button>
+        </dx-text-box>
+      </div>
+
+      <div class="value half">
+        <dx-text-box [(value)]="dataObject.SKUNAM" placeholder="상품명"></dx-text-box>
+      </div>
+    </div>
+  </div>
+</div>
