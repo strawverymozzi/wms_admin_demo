@@ -10,7 +10,7 @@
 
 export const environment = {
   production: false,
-  // apiUrl: 'http://www.jflab.co.kr:18000/api/v1',
+  // apiUrl: 'http://www.jflab.co.kr',
   apiUrl: 'http://localhost',
   defaultLang: window.navigator.language,
 };
@@ -24,23 +24,23 @@ export const REGISTRY: any = {
     INIT: ':8000/api/v1/mdm/menu',
   },
   RCVGRID: {
-    POST: ':8001/api/v1/rec/receive/save',
+    POST: ':18001/api/v1/rec/receive/save',
   },
   PTNKEYGRID: {
-    GET: ':8001/api/v1/searchHelp/SHPTNGRID?',
+    GET: ':18001/api/v1/searchHelp/SHPTNGRID?',
   },
   SKUKEYGRID: {
-    GET: ':8001/api/v1/searchHelp/SHSKUGRID?',
+    GET: ':18001/api/v1/searchHelp/SHSKUGRID?',
   },
   RCVMASTERGRID: {
-    GET: ':8001/api/v1/rec/receive/listRcv?criteria=',
-    POST: ':8001/api/v1/rec/receive/saveRcv',
-    DELETE: ':8001/api/v1/rec/receive/deleteRcv',
+    GET: ':18001/api/v1/rec/receive/listRcv?criteria=',
+    POST: ':18001/api/v1/rec/receive/saveRcv',
+    DELETE: ':18001/api/v1/rec/receive/deleteRcv',
   },
   RCVDETAILGRID: {
-    GET: ':8001/api/v1/rec/receive/listRcvDetail?criteria=',
-    POST: ':8001/api/v1/rec/receive/saveRcvDetail',
-    DELETE: ':8001/api/v1/rec/receive/deleteRcvDetail',
+    GET: ':18001/api/v1/rec/receive/listRcvDetail?criteria=',
+    POST: ':18001/api/v1/rec/receive/saveRcvDetail',
+    DELETE: ':18001/api/v1/rec/receive/deleteRcvDetail',
   },
 }
 

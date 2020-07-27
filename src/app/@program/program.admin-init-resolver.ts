@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRoute, ActivatedRouteSnapshot, RouterStateSnapshot, Resolve } from '@angular/router';
-import { Observable, of } from 'rxjs';
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { ActivatedRouteSnapshot, RouterStateSnapshot, Resolve, Router } from '@angular/router';
+import { Observable, EMPTY } from 'rxjs';
+import { HttpClient, HttpErrorResponse, HttpHeaders, HttpEvent } from '@angular/common/http';
 import { retry, map, catchError } from 'rxjs/operators';
 import { COMMON_CONFIG } from '../@common/common.config';
 import { getInitUri } from './program.registry';
 import { settDictionary } from './program.dictionary';
+import notify from 'devextreme/ui/notify';
 
 /**
  * 프로그램 / 컴포넌트 로딩 전 호출되어 로직 수행 후 
@@ -19,8 +20,7 @@ import { settDictionary } from './program.dictionary';
     providedIn: 'root'
 })
 export class AdminProgramInitResolver implements Resolve<any>{
-    constructor(private http: HttpClient) {
-    }
+    constructor(private http: HttpClient) { }
 
     resolve(snapshot: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
         const url = getInitUri(state.url);
@@ -28,34 +28,35 @@ export class AdminProgramInitResolver implements Resolve<any>{
     }
 
     fetchProgramScopeData(url: string): Observable<any> {
-
         return this.http.get(url, {
             observe: 'response',
         }).pipe(
-            retry(3),
+            retry(2),
             map((res) => {
-                settDictionary(res.body[COMMON_CONFIG.DICTIONARY]);
+                try {
+                    const dictionary = res.body["data"][COMMON_CONFIG.DICTIONARY];
+                    settDictionary(dictionary);
+                } catch (error) {
+                    console.warn("Dictionary Setting FAILED");
+                }
                 console.log("----------res.headers:", res.headers)
-                // if (res.headers.get(COMMON_CONFIG.ACCESS_TOKEN_HEADER)) {
-                //     localStorage.setItem(
-                //         COMMON_CONFIG.ACCESS_TOKEN,
-                //         res.headers.get(COMMON_CONFIG.ACCESS_TOKEN_HEADER));
-                //     console.warn("ACCESS TOKEN UPDATED")
-                // }
-                // if (res.headers.get(COMMON_CONFIG.REFRESH_TOKEN_HEADER)) {
-                //     localStorage.setItem(
-                //         COMMON_CONFIG.REFRESH_TOKEN,
-                //         res.headers.get(COMMON_CONFIG.REFRESH_TOKEN_HEADER));
-                //     console.warn("REFRESH TOKEN UPDATED")
-                // }
+                if (res.headers.get(COMMON_CONFIG.ACCESS_TOKEN_HEADER)) {
+                    localStorage.setItem(
+                        COMMON_CONFIG.ACCESS_TOKEN,
+                        res.headers.get(COMMON_CONFIG.ACCESS_TOKEN_HEADER));
+                    console.warn("ACCESS TOKEN UPDATED")
+                }
+                if (res.headers.get(COMMON_CONFIG.REFRESH_TOKEN_HEADER)) {
+                    localStorage.setItem(
+                        COMMON_CONFIG.REFRESH_TOKEN,
+                        res.headers.get(COMMON_CONFIG.REFRESH_TOKEN_HEADER));
+                    console.warn("REFRESH TOKEN UPDATED")
+                }
                 return res.body;
             }),
-            catchError((error: HttpErrorResponse) => {
-                if (error.status === 404) {
-                    //throw new Error('not Found');
-                }
-                new Error("ProgramInitResolver ERROR : " + error.status)
-                return null;
+            catchError((error: HttpErrorResponse, caught: Observable<HttpEvent<any>>) => {
+                notify({ message: error.message, width: 500, position: 'top' }, 'error', 3000);
+                return EMPTY;
             }));
     }
 

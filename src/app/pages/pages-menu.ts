@@ -40,7 +40,7 @@ export class PagesMenu {
         children: [
           {
             title: 'Sample',
-            link: '/pages/devextreme/sample',
+            link: '/adminPages/CM/application3',
           }
         ],
       },

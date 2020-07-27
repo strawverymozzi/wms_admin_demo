@@ -2,6 +2,8 @@
  * Route 별 프로그램 init URL 매핑 상수 설정 파일
  *  */
 
+import { COMMON_CONFIG } from '../@common/common.config';
+
 const ADMININITURI = {};
 let adminLeft = [];
 
@@ -37,36 +39,36 @@ export function isRegistered(viewName: string, reqUrl): boolean {
 
 export function parseProgramList(returnedList: any[], insertedList: any[]): void {
     for (let menuObj of insertedList) {
-        if (menuObj["link"]) {
-            registerInitUri(menuObj["link"],
+        if (menuObj[COMMON_CONFIG.LINK]) {
+            registerInitUri(menuObj[COMMON_CONFIG.LINK],
                 {
-                    url: menuObj["url"],
-                    windowName: menuObj["windowName"],
-                    insFlg: menuObj["insFlg"],
-                    updFlg: menuObj["updFlg"],
-                    delFlg: menuObj["delFlg"]
+                    url: menuObj[COMMON_CONFIG.URL],
+                    windowName: menuObj[COMMON_CONFIG.WINDOWNAME],
+                    insFlg: menuObj[COMMON_CONFIG.INSFLG],
+                    updFlg: menuObj[COMMON_CONFIG.UPDFLG],
+                    delFlg: menuObj[COMMON_CONFIG.DELFLG]
                 })
         }
 
         const setting = {
-            title: menuObj["title"],
-            icon: menuObj["icon"],
-            link: menuObj["link"],
+            title: menuObj[COMMON_CONFIG.TITLE],
+            icon: menuObj[COMMON_CONFIG.ICON],
+            link: menuObj[COMMON_CONFIG.LINK],
         }
 
-        if (Array.isArray(menuObj["children"]) && menuObj["children"].length) {
-            if (menuObj["children"]["link"]) {
-                registerInitUri(menuObj["children"]["link"],
+        if (Array.isArray(menuObj[COMMON_CONFIG.CHILDREN]) && menuObj[COMMON_CONFIG.CHILDREN].length) {
+            if (menuObj[COMMON_CONFIG.CHILDREN][COMMON_CONFIG.LINK]) {
+                registerInitUri(menuObj[COMMON_CONFIG.CHILDREN][COMMON_CONFIG.LINK],
                     {
-                        url: menuObj["children"]["url"],
-                        windowName: menuObj["children"]["windowName"],
-                        insFlg: menuObj["children"]["insFlg"],
-                        updFlg: menuObj["children"]["updFlg"],
-                        delFlg: menuObj["children"]["delFlg"]
+                        url: menuObj[COMMON_CONFIG.CHILDREN][COMMON_CONFIG.URL],
+                        windowName: menuObj[COMMON_CONFIG.CHILDREN][COMMON_CONFIG.WINDOWNAME],
+                        insFlg: menuObj[COMMON_CONFIG.CHILDREN][COMMON_CONFIG.INSFLG],
+                        updFlg: menuObj[COMMON_CONFIG.CHILDREN][COMMON_CONFIG.UPDFLG],
+                        delFlg: menuObj[COMMON_CONFIG.CHILDREN][COMMON_CONFIG.DELFLG]
                     })
             }
-            setting["children"] = [];
-            parseProgramList(setting["children"], menuObj["children"]);
+            setting[COMMON_CONFIG.CHILDREN] = [];
+            parseProgramList(setting[COMMON_CONFIG.CHILDREN], menuObj[COMMON_CONFIG.CHILDREN]);
         }
         returnedList.push(setting);
     }

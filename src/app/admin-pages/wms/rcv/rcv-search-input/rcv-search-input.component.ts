@@ -9,8 +9,8 @@ import { SearchHelperService } from '../../common-wms/search-helper/search-helpe
 export class RcvSearchInputComponent implements OnInit {
 
   @Input('VO') dataObject: any;
-  @Input('RCVSTA') RCVSTA: any[];
-  @Input('RCVTYP') RCVTYP: any[];
+  @Input('RCVSTA') RCVSTA: any;
+  @Input('RCVTYP') RCVTYP: any;
   @Output() clickEvent = new EventEmitter<any>();
 
   constructor() { }
@@ -73,7 +73,6 @@ export class RcvSearchInputComponent implements OnInit {
         });
     }
   }
-
 
   ngOnInit(): void {
   }

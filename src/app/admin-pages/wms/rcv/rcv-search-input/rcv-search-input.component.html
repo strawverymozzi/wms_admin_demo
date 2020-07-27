@@ -1,16 +1,18 @@
 <div class="wrapper">
   <div class="col_1">
     <div class="field">
-      <div class="label">입고테스트</div>
+      <div class="label">{{'입고명 번역테스트:' | translate : 'RCVSTA'}}</div>
       <div class="value">
-        <dx-select-box [(value)]="dataObject.RCVSTA" [items]="RCVSTA" placeholder="" [showClearButton]="true">
+        <dx-select-box [(value)]="dataObject.RCVSTA" [dataSource]="RCVSTA" displayExpr="name" valueExpr="id"
+          placeholder="상태" [showClearButton]="true">
         </dx-select-box>
       </div>
     </div>
     <div class="field">
       <div class="label">입고타입</div>
       <div class="value">
-        <dx-select-box [(value)]="dataObject.RCVTYP" [items]="RCVTYP" placeholder="" [showClearButton]="true">
+        <dx-select-box [(value)]="dataObject.RCVTYP" [dataSource]="RCVTYP" displayExpr="name" valueExpr="id"
+          placeholder="타입" [showClearButton]="true">
         </dx-select-box>
       </div>
     </div>

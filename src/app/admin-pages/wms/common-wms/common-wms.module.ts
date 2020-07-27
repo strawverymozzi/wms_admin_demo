@@ -4,11 +4,11 @@ import { SearchInputSkukeyComponent } from './search-input-skukey/search-input-s
 import { SearchHelperComponent } from './search-helper/search-helper.component';
 import { LookUpDirective } from './_directive/look-up.directive';
 import { DevextremeModule } from '../../../@devextreme/devextreme.module';
+import { PipesModule } from '../../../@pipes/pipes.module';
 
 const MODULE = [
   DevextremeModule,
 ];
-
 const COMPONENT = [
   SearchInputPtnkeyComponent,
   SearchInputSkukeyComponent,
@@ -23,7 +23,8 @@ const COMPONENT = [
   ],
   exports: [
     ...MODULE,
-    ...COMPONENT
+    ...COMPONENT,
+    PipesModule
   ]
 })
 export class CommonWmsModule {

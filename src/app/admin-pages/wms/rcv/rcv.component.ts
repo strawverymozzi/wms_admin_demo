@@ -11,6 +11,8 @@ import { SearchHelperService } from '../common-wms/search-helper/search-helper.s
 import { RcvGridConfig } from './rcv.grid-config';
 import { comparison, eq } from 'rsql-builder';
 import { RoleChecker } from '../../../@program/role-checker';
+import { ActivatedRoute } from '@angular/router';
+import { COMMON_CONFIG } from '../../../@common/common.config';
 
 function joinRSQLString(...param): string {
   return [...param].filter((sqlString) => {
@@ -22,7 +24,7 @@ function joinRSQLString(...param): string {
   selector: 'app-rcv',
   templateUrl: './rcv.component.html',
   styleUrls: ['./rcv.component.css'],
-  providers:[RoleChecker]
+  providers: [RoleChecker]
 })
 export class RCVComponent implements OnInit {
   @ViewChild('masterGrid', { static: false }) masterGridRef: DxDataGridComponent;
@@ -51,6 +53,7 @@ export class RCVComponent implements OnInit {
   public actionVisible;
 
   constructor(
+    private route: ActivatedRoute,
     private thisService: RcvService,
     public roleChecker: RoleChecker,
   ) { }
@@ -61,14 +64,14 @@ export class RCVComponent implements OnInit {
     const param = this.RCVFORM.toRSQL();
     const paramSub = this.RCVSUBFORM.toRSQL();
     const queryStr = joinRSQLString(tenant, param, paramSub);
-    this.thisService.getListMasterGrid(queryStr).subscribe(gridData => {
-      if (gridData) {
-        this.masterGridData = gridData;
-      }
-      this.loader(false);
-    });
+    this.thisService.getListMasterGrid(queryStr).subscribe(
+      gridData => {
+        if (gridData) {
+          this.masterGridData = gridData;
+        }
+        this.loader(false);
+      });
   }
-
   detailSearch() {
     this.loader(true, null)
     for (let key of Object.keys(this.RCVDETAILFORM)) {
@@ -220,7 +223,9 @@ export class RCVComponent implements OnInit {
     icon: 'trash',
     type: 'danger',
     onClick: (e) => {
-      const selected = this.detailGridRef.instance.getSelectedRowsData();
+      const selected = this.detailGridRef.instance.getSelectedRowsData().map((row, i, a) => {
+        return row["uid"];
+      });
       if (!selected.length) {
         notify({ message: 'No Selected data', width: 500, position: 'top' }, 'error', 2000);
         return;
@@ -341,12 +346,29 @@ export class RCVComponent implements OnInit {
 
   ngOnInit(): void {
     //combo
-    this.RCVSTA_COMBO = [1, 2, 3];
-    this.RCVTYP_COMBO = [3, 4, 5];
+    this.RCVSTA_COMBO = [];
+    this.RCVTYP_COMBO = [];
     this.MALLID_COMBO = [1, 3, 4];
     //grid
     this.masterGridData = [];
     this.detailGridData = [];
+
+    this.route.data.subscribe(initData => {
+      try {
+        const RCVSTATUS = initData[COMMON_CONFIG.PROGRAMINIT]["data"]["RCVSTATUS"];
+        const RCVTYPE = initData[COMMON_CONFIG.PROGRAMINIT]["data"]["RCVTYPE"];
+        Object.keys(RCVSTATUS).forEach((v, i, a) => {
+          this.RCVSTA_COMBO.push({ id: v, name: RCVSTATUS[v] })
+        })
+        Object.keys(RCVTYPE).forEach((v, i, a) => {
+          this.RCVTYP_COMBO.push({ id: v, name: RCVTYPE[v] })
+        })
+      } catch (error) {
+
+      }
+    })
+
+
   }
 
 }

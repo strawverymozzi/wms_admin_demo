@@ -14,13 +14,11 @@ import notify from 'devextreme/ui/notify';
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
   constructor(private router: Router) {
-
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
     let clonedReq = req;
-
     if (!!localStorage.getItem("access") && !!localStorage.getItem("refresh")) {
       clonedReq = req.clone({
         headers: req.headers
@@ -38,17 +36,17 @@ export class AuthInterceptor implements HttpInterceptor {
 
     return next.handle(clonedReq)
       .pipe(
-        retry(3),
+        retry(2),
         map(res => {
           return res;
         }),
-        catchError((error: HttpErrorResponse) => {
-          // if (error.status !== 200) {
-          //   this.router.navigate(['pages']);
-          // }
-          // TODO: handle 403 error ?
-          notify({ message: error.error ? error.error.message : error.message, width: 500, position: 'top' }, 'error', 2000);
+        catchError((error: HttpErrorResponse, caught: Observable<HttpEvent<any>>) => {
+          console.log("Auth INTER")
+          notify({ message: error.message, width: 500, position: 'top' }, 'error', 3000);
+          this.router.navigate(['auth/login'], { skipLocationChange: false });
           return EMPTY;
-        }));
+        })
+      )
+
   }
 }

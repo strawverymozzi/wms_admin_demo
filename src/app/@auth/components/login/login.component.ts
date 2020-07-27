@@ -71,20 +71,21 @@ export class NgxLoginComponent implements OnInit {
     this.submitted = true;
     this.user = this.loginForm.value;
     this.user["language"] = this.currentLanguage;
-    this.loginService.loginUser(this.user).subscribe(res => {
-      const result = this.loginService.handleLoginResult(res);
-      result ?
-        setTimeout(() => {
-          return this.router.navigateByUrl('/adminPages');
-        }) :
+    this.loginService.loginUser(this.user).subscribe(
+      res => {
+        const result = this.loginService.handleLoginResult(res);
+        this.router.navigateByUrl('/adminPages');
+      },
+      error => {
         notify(
           {
-            message: "nope",
-            position: "center",
+            message: error.error,
+            position: "top",
             closeOnClick: true,
             closeOnOutsideClick: true
           }, "error", 1000);
-    });
+      }
+    );
   }
 
   ngOnInit(): void {

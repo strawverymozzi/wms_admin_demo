@@ -1,24 +1,25 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { CommonHttpService } from '../../../@common/common.http.service';
-import { REGISTRY } from '../../../../environments/environment';
+import { REGISTRY, environment } from '../../../../environments/environment';
 
 @Injectable()
-export class RcvService extends CommonHttpService {
+export class RcvService {
 
   constructor(
-    protected http: HttpClient,
+    private _http: HttpClient,
+
   ) {
-    super(http);
   }
 
   //get
   public getListMasterGrid(queryStr?: string): Observable<any> {
+
     return this.getJson(REGISTRY.RCVMASTERGRID.GET + queryStr).pipe(
       map(data => {
-        console.log("get",data)
+
         return (data["list"] && data["list"].length) ? data["list"] : null;
       })
     );
@@ -73,6 +74,55 @@ export class RcvService extends CommonHttpService {
         return data;
       })
     );
+  }
+
+  private headers: HttpHeaders = new HttpHeaders();
+  private options: any;
+  private baseUrl = 'http://www.jflab.co.kr';
+
+  protected setInitHeaders(headers: Map<string, string>) {
+    headers.forEach((element, key) => {
+      this.headers.append(key, element);
+    });
+  }
+
+  protected generateParamFromMap(paramMap: Map<string, any>): string {
+    let paramStr = '';
+    paramMap.forEach((element, key) => {
+      paramStr += key + '=' + JSON.stringify(element) + '&';
+    });
+    return paramStr.substr(0, paramStr.length - 1);
+  }
+
+  protected generateParamFromObject(paramMap: Object): string {
+    let paramStr = '?';
+    Object.keys(paramMap).forEach((key) => {
+      paramStr += key + '=' + paramMap[key] + '&';
+    });
+    return paramStr.substr(0, paramStr.length - 1);
+  }
+
+  protected getJson(url: string): Observable<any> {
+    url = this.baseUrl + url;
+    return this._http.get(url, this.options);
+  }
+
+ 
+
+  protected postJson(url: string, paramObj: Object): Observable<any> {
+    url = this.baseUrl + url;
+    return this._http.post(url, paramObj, this.options);
+  }
+
+  protected postText(url: string, paramObj: Object): Observable<any> {
+    url = this.baseUrl + url;
+    this.options.responseType = 'text';
+    return this._http.post(url, paramObj, this.options);
+  }
+
+  protected delete(url: string, options: any): Observable<any> {
+    url = this.baseUrl + url;
+    return this._http.delete(url, options);
   }
 
 }

@@ -26,8 +26,6 @@ export class AdminPagesComponent implements OnDestroy {
     this.menu = getAdminLeft();
   }
 
-
-
   ngOnDestroy(): void {
     this.alive = false;
   }

@@ -24,7 +24,7 @@ const COMPONENT = [
     ...COMPONENT,
   ],
   imports: [
-    ...MODULE
+    ...MODULE,
   ]
 })
 export class WmsModule { }
