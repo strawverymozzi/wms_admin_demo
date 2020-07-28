@@ -83,7 +83,6 @@ export class RCVComponent implements OnInit {
     this.thisService.getListDetailGrid(queryStr).subscribe(gridData => {
       if (gridData) {
         this.actionVisible = true;
-        this.detailChangeBuffer = [];
         this.detailGridData = gridData;
       } else {
         notify({ message: "No Item Data", width: 500, position: 'top' }, 'error', 2000);
@@ -182,7 +181,9 @@ export class RCVComponent implements OnInit {
     icon: 'trash',
     type: 'danger',
     onClick: (e) => {
-      const selected = this.masterGridRef.instance.getSelectedRowsData();
+      const selected = this.masterGridRef.instance.getSelectedRowsData().map((row, i, a) => {
+        return row["uid"];
+      });
       if (!selected.length) {
         notify({ message: 'No Selected data', width: 500, position: 'top' }, 'error', 2000);
         return;
