@@ -9,14 +9,9 @@ export class CommonHttpService {
   // http header객체
   private headers: HttpHeaders = new HttpHeaders();
   private options: any;
-  private baseUrl = environment.apiUrl;
+  private baseUrl = environment.baseUrl;
 
   constructor(protected _http: HttpClient) {
-    // this.headers = this.headers.append('Accept', '*; charset=utf-8');
-    // this.headers = this.headers.append('Access-Control-Allow-Origin', '*');
-    // this.headers = this.headers.append('Content-Type', 'application/json');
-    // this.options = { headers: this.headers, responseType: 'json' };
-    // this.options = { headers: this.headers, withCredentials: true, responseType: 'json' };
   }
 
   protected setInitHeaders(headers: Map<string, string>) {
@@ -65,6 +60,7 @@ export class CommonHttpService {
 
   protected postJson(url: string, paramObj: Object): Observable<any> {
     url = this.baseUrl + url;
+    console.log(url)
     return this._http.post(url, paramObj, this.options);
   }
 

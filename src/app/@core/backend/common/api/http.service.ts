@@ -15,7 +15,7 @@ import { ServerDataSource } from 'ng2-smart-table';
 export class HttpService {
 
   get apiUrl(): string {
-    return environment.apiUrl;
+    return environment.baseUrl;
   }
 
   constructor(private http: HttpClient) {}

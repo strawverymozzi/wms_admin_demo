@@ -4,9 +4,8 @@
  * See LICENSE_SINGLE_APP / LICENSE_MULTI_APP in the 'docs' folder for license information on type of purchased license.
  */
 
-import { ExtraOptions, RouterModule, Routes, Router, NavigationStart, NavigationEnd } from '@angular/router';
+import { ExtraOptions, RouterModule, Routes, } from '@angular/router';
 import { NgModule } from '@angular/core';
-import { AuthGuard } from './@auth/auth.guard';
 import { AdminGuard } from './@auth/admin.guard';
 
 const routes: Routes = [

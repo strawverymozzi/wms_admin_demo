@@ -31,19 +31,18 @@
       <!-- master grid -->
       <dx-data-grid 
         #masterGrid 
-        [dataSource]="masterGridData" 
+        [dataSource]="masterGridData"
+        [loadPanel]="loader"
         id="masterGrid"
         height="400px"
         [showBorders]="true" 
         [focusedRowEnabled]="true"
         [(focusedRowKey)]="masterFocusedKey"
         keyExpr="uid" 
-        (onRowDblClick)="onMasterGridEvent($event,'RowDblClick')"
         (onInitNewRow)="onMasterGridEvent($event,'InitNewRow')"
+        (onRowDblClick)="onMasterGridEvent($event,'RowDblClick')"
         (onRowInserting)="onMasterGridEvent($event,'RowInserting')"
         (onRowInserted)="onMasterGridEvent($event,'RowInserted')"
-        (onRowRemoving)="onMasterGridEvent($event,'RowRemoving')"
-        (onRowRemoved)="onMasterGridEvent($event,'RowRemoved')"
         (onExporting)="onExporting($event)">
         <dxo-selection
           selectAllMode="allPages"
@@ -51,17 +50,16 @@
           mode="multiple">
         </dxo-selection>
         <dxo-editing 
-         *ngIf="roleChecker.isGranted(['infFlg'])"
           mode="row"
-          [allowAdding]="true">
+          [allowAdding]="roleChecker.isGranted(['infFlg'])">
         </dxo-editing>
         <dxo-export [enabled]="true" [allowExportSelectedData]="true"></dxo-export>
         <dxo-column-fixing [enabled]="true"></dxo-column-fixing>
         <ng-container *ngFor="let col of gridConfig.MASTER; i as index">
-          <dxi-column 
+          <dxi-column
+            [allowEditing]="col.allowEditing"
             [caption]="col.caption" 
             [dataField]="col.dataField"
-            [allowEditing]="col.allowEditing"
             [visible]="col.visible"
             [width]="col.width" 
             [fixed]="col.fixed"
@@ -72,7 +70,7 @@
       <!-- master grid -->
       <!-- master btm toolbar -->
        <dx-toolbar>
-        <dxi-item 
+        <dxi-item
         *ngIf="roleChecker.isGranted(['delFlg'])"
          location="after" 
          widget="dxButton" 
@@ -104,13 +102,19 @@
             *ngIf="roleChecker.isGranted(['updFlg'])"
             location="after" 
             widget="dxButton" 
-            locateInMenu="auto"
-            [options]="masterSaveBtn">
+            locateInMenu="auto" 
+            [options]="masterUpdBtn">
           </dxi-item>
         </dx-toolbar>
         <!-- save master -->        
         <!-- selected master data -->
-        <dx-tab-panel #detailFormTabPanel height="auto" [selectedIndex]="0" [loop]="true" [animationEnabled]="true"
+        <dx-tab-panel 
+          #detailFormTabPanel 
+          *ngIf="roleChecker.isGranted(['updFlg'])"
+          height="auto" 
+          [selectedIndex]="0" 
+          [loop]="true" 
+          [animationEnabled]="true"
           [swipeEnabled]="true">
           <dxi-item title="Header Editor">
             <wms-rcv-detail-search-input [VO]="RCVDETAILFORM"></wms-rcv-detail-search-input>
@@ -119,32 +123,25 @@
         <!-- selected master data-->
         <!-- detailgrid -->
         <dx-data-grid 
-          #detailGrid 
+          #detailGrid
+          [dataSource]="detailGridData" 
+          [loadPanel]="loader"
           id="detailGrid" 
           keyExpr="uid" 
           height="400px"
-          [dataSource]="detailGridData" 
           [showBorders]="true"
           [focusedRowEnabled]="true" 
-          [(focusedRowKey)]="detailFocusedKey"
-          [(focusedRowIndex)]="detailFocusedIndex"     
-          (onEditingStart)="onDetailGridEvent($event,'EditingStart')"
+          [(focusedRowIndex)]="detailFocusedIndex"
+          (onContentReady)="onDetailGridEvent($event,'ContentReady')"
           (onInitNewRow)="onDetailGridEvent($event,'InitNewRow')"
-          (onRowInserting)="onDetailGridEvent($event,'RowInserting')"
-          (onRowInserted)="onDetailGridEvent($event,'RowInserted')"
           (onRowUpdating)="onDetailGridEvent($event,'RowUpdating')"
           (onRowUpdated)="onDetailGridEvent($event,'RowUpdated')"
-          (onRowRemoving)="onDetailGridEvent($event,'RowRemoving')"
-          (onRowRemoved)="onDetailGridEvent($event,'RowRemoved')">
-          <!-- (onKeyDown)="onDetailDropKeyDown($event)" -->
-          <dxo-group-panel 
-            [visible]="false"> <!-- or "auto" -->
-          </dxo-group-panel>
+          (onToolbarPreparing)="onDetailGridEvent($event,'ToolbarPreparing')">
+   
           <dxo-editing 
             mode="batch"
-            [allowUpdating]="true"
-            [allowAdding]="true"></dxo-editing>
-          <!-- <dxo-MobileInboundService.classselection mode="single"></dxo-selection> -->
+            [allowUpdating]="roleChecker.isGranted(['updFlg'])"
+            ></dxo-editing>
           <dxo-selection
             selectAllMode="allPages"
             showCheckBoxesMode="onClick"
@@ -166,7 +163,7 @@
             <dx-text-box 
               [lookUp]="lookUp_PTNKEY"
               [value]="cellInfo.value"
-              (onValueChanged)="onInlineCellValChange($event,cellInfo)">
+              (onValueChanged)="onDetailCellValueChanged($event,cellInfo)">
               <dxi-button name="inline" [options]="inlineCellBtn">
               </dxi-button>
             </dx-text-box>
@@ -176,25 +173,11 @@
         <!-- detail btm toolbar -->
         <dx-toolbar>
           <dxi-item 
-          *ngIf="detailChangeBuffer.length && roleChecker.isGranted(['infFlg','updFlg'])"
-          location="after" 
-          widget="dxButton" 
-          locateInMenu="auto" 
-          [options]="saveDetailBtn">
-          </dxi-item>
-          <dxi-item 
-          *ngIf="roleChecker.isGranted(['delFlg'])"
-          location="after" 
-          widget="dxButton" 
-          locateInMenu="auto" 
-          [options]="deleteDetailBtn">
-          </dxi-item>
-          <dxi-item 
-          *ngIf="roleChecker.isGranted(['infFlg','updFlg'])"
-          location="after" 
-          widget="dxButton" 
-          locateInMenu="auto" 
-          [options]="saveAllBtn">
+            *ngIf="roleChecker.isGranted(['infFlg']) || roleChecker.isGranted(['updFlg'])"
+            location="after" 
+            widget="dxButton" 
+            locateInMenu="auto" 
+            [options]="saveAllBtn">
           </dxi-item>
         </dx-toolbar>
       <!-- detail btm toolbar -->
@@ -202,7 +185,7 @@
     </ng-container>
   </dx-action-sheet>
 
-  <dx-load-panel
+  <!-- <dx-load-panel
     *ngIf="loadingVisible"
     #loadPanel
     shadingColor="rgba(0,0,0,0.4)"
@@ -214,5 +197,5 @@
     [closeOnOutsideClick]="false"
     (onShown)="onShownLoader()"
     (onHidden)="onHiddenLoader()">
-  </dx-load-panel>
+  </dx-load-panel> -->
 </div>

@@ -14,7 +14,7 @@ import {
   NgxResetPasswordComponent,
 } from './components';
 import { ProgramInitResolver } from '../@program/program.init-resolver';
-import { getURI, REGISTRY } from '../../environments/environment';
+import { REGISTRY } from '../../environments/environment';
 
 const routes: Routes = [{
   path: '',
@@ -24,13 +24,13 @@ const routes: Routes = [{
       path: '',
       component: NgxLoginComponent,
       resolve: { programInit: ProgramInitResolver },
-      data: { callUponActive: getURI(REGISTRY.LOGIN.INIT) },
+      data: { callUponActive: REGISTRY.LOGIN.INIT },
     },
     {
       path: 'login',
       component: NgxLoginComponent,
       resolve: { programInit: ProgramInitResolver },
-      data: { callUponActive: getURI(REGISTRY.LOGIN.INIT) },
+      data: { callUponActive: REGISTRY.LOGIN.INIT },
 
     },
     {

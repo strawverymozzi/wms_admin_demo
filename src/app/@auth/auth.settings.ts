@@ -29,7 +29,7 @@ export const authOptions = {
   strategies: [
     NbPasswordAuthStrategy.setup({
       name: 'email',
-      baseEndpoint: environment.apiUrl,
+      baseEndpoint: environment.baseUrl,
       token: {
         class: NbAuthOAuth2JWTToken,
         key: 'token',

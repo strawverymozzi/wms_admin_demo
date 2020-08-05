@@ -10,42 +10,41 @@
 
 export const environment = {
   production: false,
-  // apiUrl: 'http://www.jflab.co.kr',
-  apiUrl: 'http://localhost',
+  baseUrl: '',
+  MD: 'http://www.jflab.co.kr:18000',
+  WM: 'http://www.jflab.co.kr:18001',
+  // MD: 'http://localhost:8000',
+  // WM: 'http://localhost:8001',
   defaultLang: window.navigator.language,
 };
 
 export const REGISTRY: any = {
   LOGIN: {
-    INIT: ':8000/auth/login?language=' + environment.defaultLang,
-    LOGINUSER: ':8000/auth/login'
+    INIT: `${environment.MD}/auth/login?language=${environment.defaultLang}`,
+    LOGINUSER: `${environment.MD}/auth/login`
   },
   ADMINMENU: {
-    INIT: ':8000/api/v1/mdm/menu',
+    INIT: `${environment.MD}/api/v1/mdm/menu`,
   },
   RCVGRID: {
-    POST: ':18001/api/v1/rec/receive/save',
+    POST: `${environment.WM}/api/v1/rec/receive/save`,
   },
   PTNKEYGRID: {
-    GET: ':18001/api/v1/searchHelp/SHPTNGRID?',
+    GET: `${environment.WM}/api/v1/searchHelp/SHPTNGRID?`,
   },
   SKUKEYGRID: {
-    GET: ':18001/api/v1/searchHelp/SHSKUGRID?',
+    GET: `${environment.WM}/api/v1/searchHelp/SHSKUGRID?`,
   },
   RCVMASTERGRID: {
-    GET: ':18001/api/v1/rec/receive/listRcv?criteria=',
-    POST: ':18001/api/v1/rec/receive/saveRcv',
-    DELETE: ':18001/api/v1/rec/receive/deleteRcv',
+    GET: `${environment.WM}/api/v1/rec/receive/listRcv?criteria=`,
+    POST: `${environment.WM}/api/v1/rec/receive/saveRcv`,
+    DELETE: `${environment.WM}/api/v1/rec/receive/deleteRcv`,
   },
   RCVDETAILGRID: {
-    GET: ':18001/api/v1/rec/receive/listRcvDetail?criteria=',
-    POST: ':18001/api/v1/rec/receive/saveRcvDetail',
-    DELETE: ':18001/api/v1/rec/receive/deleteRcvDetail',
+    GET: `${environment.WM}/api/v1/rec/receive/listRcvDetail?criteria=`,
+    POST: `${environment.WM}/api/v1/rec/receive/saveRcvDetail`,
+    DELETE: `${environment.WM}/api/v1/rec/receive/deleteRcvDetail`,
   },
-}
-
-export function getURI(uri: string): string {
-  return environment.apiUrl + uri;
 }
 
 

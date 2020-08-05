@@ -4,7 +4,7 @@
  * See LICENSE_SINGLE_APP / LICENSE_MULTI_APP in the 'docs' folder for license information on type of purchased license.
  */
 
-import { RouterModule, Router, Routes } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { AdminPagesComponent } from './admin-pages.component';
 import { ECommerceComponent } from '../pages/e-commerce/e-commerce.component';

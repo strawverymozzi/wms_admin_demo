@@ -5,41 +5,39 @@
  */
 export const environment = {
   production: false,
-  apiUrl: 'https://aqueous-sierra-56466.herokuapp.com',
+  baseUrl: '',
+  MD: 'http://www.jflab.co.kr:18000',
+  WM: 'http://www.jflab.co.kr:18001',
   defaultLang: window.navigator.language,
 };
 
 export const REGISTRY: any = {
   LOGIN: {
-    INIT: '/auth/login?language=' + environment.defaultLang,
-    LOGINUSER: '/auth/login'
+    INIT: `${environment.MD}/auth/login?language=${environment.defaultLang}`,
+    LOGINUSER: '${environment.MD}/auth/login'
   },
   ADMINMENU: {
-    INIT: '/mdm/menu',
+    INIT: `${environment.MD}/api/v1/mdm/menu`,
   },
   RCVGRID: {
-    POST: '/rec/receive/save',
+    POST: `${environment.WM}/api/v1/rec/receive/save`,
   },
   PTNKEYGRID: {
-    GET: '/searchHelp/SHPTNGRID?',
+    GET: `${environment.WM}/api/v1/searchHelp/SHPTNGRID?`,
   },
   SKUKEYGRID: {
-    GET: '/searchHelp/SHSKUGRID?',
+    GET: `${environment.WM}/api/v1/searchHelp/SHSKUGRID?`,
   },
   RCVMASTERGRID: {
-    GET: '/rec/receive/listRcv?criteria=',
-    POST: '/rec/receive/saveRcv',
-    DELETE: '/rec/receive/deleteRcv',
+    GET: `${environment.WM}/api/v1/rec/receive/listRcv?criteria=`,
+    POST: `${environment.WM}/api/v1/rec/receive/saveRcv`,
+    DELETE: `${environment.WM}/api/v1/rec/receive/deleteRcv`,
   },
   RCVDETAILGRID: {
-    GET: '/rec/receive/listRcvDetail?criteria=',
-    POST: '/rec/receive/saveRcvDetail',
-    DELETE: '/rec/receive/deleteRcvDetail',
+    GET: `${environment.WM}/api/v1/rec/receive/listRcvDetail?criteria=`,
+    POST: `${environment.WM}/api/v1/rec/receive/saveRcvDetail`,
+    DELETE: `${environment.WM}/api/v1/rec/receive/deleteRcvDetail`,
   },
 }
 
-
-export function getURI(uri: string): string {
-  return environment.apiUrl + uri;
-}
 
