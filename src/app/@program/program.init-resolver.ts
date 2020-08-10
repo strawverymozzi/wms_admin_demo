@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRoute, ActivatedRouteSnapshot, RouterStateSnapshot, Resolve } from '@angular/router';
-import { Observable, of } from 'rxjs';
+import { ActivatedRouteSnapshot, RouterStateSnapshot, Resolve } from '@angular/router';
+import { Observable, EMPTY } from 'rxjs';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { retry, map, catchError } from 'rxjs/operators';
 import { COMMON_CONFIG } from '../@common/common.config';
 import { settDictionary } from './program.dictionary';
+import notify from 'devextreme/ui/notify';
 
 /**
  * 프로그램 / 컴포넌트 로딩 전 호출되어 로직 수행 후 
@@ -17,7 +18,6 @@ import { settDictionary } from './program.dictionary';
     providedIn: 'root'
 })
 export class ProgramInitResolver implements Resolve<any>{
-    private data: any;
     constructor(private http: HttpClient) {
     }
 
@@ -28,17 +28,16 @@ export class ProgramInitResolver implements Resolve<any>{
 
     fetchProgramScopeData(url: string): Observable<any> {
         return this.http.get(url).pipe(
-            retry(3),
+            retry(2),
             map((res) => {
-                settDictionary(res[COMMON_CONFIG.DICTIONARY]);
+                const dictionary = res[COMMON_CONFIG.DICTIONARY];
+                settDictionary(dictionary);
                 return res;
             }),
             catchError((error: HttpErrorResponse) => {
-                if (error.status === 404) {
-                    //throw new Error('not Found');
-                }
+                notify({ message: error.message, width: 500, position: 'top' }, 'error', 3000);
                 new Error("ProgramInitResolver ERROR : " + error.status)
-                return of([]);
+                return EMPTY;
             }));
     }
 }

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, RouterStateSnapshot, Resolve, Router } from '@angular/router';
+import { ActivatedRouteSnapshot, RouterStateSnapshot, Resolve, } from '@angular/router';
 import { Observable, EMPTY } from 'rxjs';
-import { HttpClient, HttpErrorResponse, HttpHeaders, HttpEvent } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpEvent } from '@angular/common/http';
 import { retry, map, catchError } from 'rxjs/operators';
 import { COMMON_CONFIG } from '../@common/common.config';
 import { getInitUri } from './program.registry';
@@ -39,7 +39,6 @@ export class AdminProgramInitResolver implements Resolve<any>{
                 } catch (error) {
                     console.warn("Dictionary Setting FAILED");
                 }
-                console.log("----------res.headers:", res.headers)
                 if (res.headers.get(COMMON_CONFIG.ACCESS_TOKEN_HEADER)) {
                     localStorage.setItem(
                         COMMON_CONFIG.ACCESS_TOKEN,
@@ -56,6 +55,7 @@ export class AdminProgramInitResolver implements Resolve<any>{
             }),
             catchError((error: HttpErrorResponse, caught: Observable<HttpEvent<any>>) => {
                 notify({ message: error.message, width: 500, position: 'top' }, 'error', 3000);
+                new Error("AdminProgramInitResolver ERROR : " + error.status)
                 return EMPTY;
             }));
     }
