@@ -19,7 +19,7 @@
 
           <div class="slider-value-container"  [ngClass]="{ 'off': !temperatureDevice.isOn }">
             <div class="value temperature h1">
-              {{ !temperatureDevice.isOn ? '--' : (temperatureData.value | ngxRound) }}
+              <!-- {{ !temperatureDevice.isOn ? '--' : (temperatureData.value | ngxRound) }} -->
             </div>
             <div class="desc">
               Celsius
@@ -57,7 +57,7 @@
 
           <div class="slider-value-container"  [ngClass]="{ 'off': !humidityDevice.isOn }">
             <div class="value humidity h1">
-              {{ !humidityDevice.isOn ? '--' : (humidityData.value | ngxRound) }}
+              <!-- {{ !humidityDevice.isOn ? '--' : (humidityData.value | ngxRound) }} -->
             </div>
           </div>
         </ngx-temperature-dragger>
