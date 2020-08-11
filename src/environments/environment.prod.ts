@@ -6,10 +6,10 @@
 export const environment = {
   production: true,
   baseUrl: '',
-  // MD: 'http://www.jflab.co.kr:18000',
-  // WM: 'http://www.jflab.co.kr:18001',
-  MD: 'https://aqueous-sierra-56466.herokuapp.com',
-  WM: 'https://aqueous-sierra-56466.herokuapp.com',
+  MD: 'http://www.jflab.co.kr:18000',
+  WM: 'http://www.jflab.co.kr:18001',
+  // MD: 'https://aqueous-sierra-56466.herokuapp.com',
+  // WM: 'https://aqueous-sierra-56466.herokuapp.com',
   defaultLang: window.navigator.language,
 };
 
