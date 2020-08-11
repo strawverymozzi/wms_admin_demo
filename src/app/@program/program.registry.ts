@@ -20,9 +20,6 @@ export function registerInitUri(view: string, data: any) {
 }
 
 export function getInitUri(route: string) {
-    if (ADMININITURI[route] == 'http://www.jflab.co.kr:18001/api/v1/rec/receive') {
-        ADMININITURI[route] = 'http://localhost:3001/api/v1/rec/receive';
-    }
     return ADMININITURI[route];
 }
 
