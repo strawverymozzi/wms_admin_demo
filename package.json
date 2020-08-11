@@ -68,7 +68,7 @@
     "stream": "0.0.2",
     "stream-browserify": "^3.0.0",
     "style-loader": "^1.2.1",
-    "tinymce": "5.4.1",
+    "tinymce": "^4.9.4",
     "tslib": "^2.0.1",
     "typeface-exo": "0.0.61",
     "web-animations-js": "^2.3.2",
