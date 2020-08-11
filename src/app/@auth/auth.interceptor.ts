@@ -43,7 +43,6 @@ export class AuthInterceptor implements HttpInterceptor {
         catchError((error: HttpErrorResponse, caught: Observable<HttpEvent<any>>) => {
           console.log("Auth INTER")
           notify({ message: error.message, width: 500, position: 'top' }, 'error', 3000);
-          this.router.navigate(['auth/login'], { skipLocationChange: false });
           return EMPTY;
         })
       )

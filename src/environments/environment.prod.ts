@@ -6,8 +6,10 @@
 export const environment = {
   production: false,
   baseUrl: '',
-  MD: 'http://www.jflab.co.kr:18000',
-  WM: 'http://www.jflab.co.kr:18001',
+  // MD: 'http://www.jflab.co.kr:18000',
+  // WM: 'http://www.jflab.co.kr:18001',
+  MD: 'https://aqueous-sierra-56466.herokuapp.com/',
+  WM: 'https://aqueous-sierra-56466.herokuapp.com/',
   defaultLang: window.navigator.language,
 };
 
