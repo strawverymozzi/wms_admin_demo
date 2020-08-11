@@ -11,8 +11,10 @@
 export const environment = {
   production: false,
   baseUrl: '',
-  MD: 'http://localhost:3001',
-  WM: 'http://localhost:3001',
+  MD: 'http://www.jflab.co.kr:18000',
+  WM: 'http://www.jflab.co.kr:18001',
+  // M`D: 'http://localhost:3001',
+  // WM: 'http://localhost:3001',`
   defaultLang: window.navigator.language,
 };
 
