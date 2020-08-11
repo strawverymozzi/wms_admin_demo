@@ -17,7 +17,7 @@ import { MapsRoutingModule, routedComponents } from './maps-routing.module';
   imports: [
     ThemeModule,
     GoogleMapsModule,
-    LeafletModule.forRoot(),
+    LeafletModule,
     MapsRoutingModule,
     NgxEchartsModule,
     NbCardModule,

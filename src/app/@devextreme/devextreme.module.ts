@@ -57,7 +57,7 @@ const MODULE = [
   ]
 })
 export class DevextremeModule {
-  static forRoot(): ModuleWithProviders {
+  static forRoot(): ModuleWithProviders<DevextremeModule> {
     return {
       ngModule: DevextremeModule,
       providers: []

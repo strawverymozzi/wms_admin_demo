@@ -2,11 +2,17 @@
   "name": "ngx-admin-bundle",
   "version": "1.0.0",
   "license": "LICENCE",
+  "engines": {
+    "node": "12.18.3",
+    "npm": "6.14.6"
+  },
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "build:stats": "ng build --stats-json --configuration=stats",
     "heroku-postbuild": "ng build --prod",
+    "analyze": "webpack-bundle-analyzer dist/ngxAdminDemo/stats.json",
     "test": "ng test",
     "test:coverage": "rimraf coverage && npm run test -- --code-coverage",
     "lint": "ng lint",
@@ -106,6 +112,7 @@
     "ts-node": "3.2.2",
     "tslint": "^5.7.0",
     "tslint-language-service": "^0.9.9",
-    "typescript": "3.7.3"
+    "typescript": "3.7.3",
+    "webpack-bundle-analyzer": "^3.8.0"
   }
 }
