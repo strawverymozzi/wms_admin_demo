@@ -4,7 +4,7 @@
  * See LICENSE_SINGLE_APP / LICENSE_MULTI_APP in the 'docs' folder for license information on type of purchased license.
  */
 export const environment = {
-  production: false,
+  production: true,
   baseUrl: '',
   // MD: 'http://www.jflab.co.kr:18000',
   // WM: 'http://www.jflab.co.kr:18001',
@@ -16,7 +16,7 @@ export const environment = {
 export const REGISTRY: any = {
   LOGIN: {
     INIT: `${environment.MD}/auth/login?language=${environment.defaultLang}`,
-    LOGINUSER: '${environment.MD}/auth/login'
+    LOGINUSER: `${environment.MD}/auth/login`
   },
   ADMINMENU: {
     INIT: `${environment.MD}/api/v1/mdm/menu`,

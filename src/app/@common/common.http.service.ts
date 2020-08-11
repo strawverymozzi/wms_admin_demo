@@ -60,7 +60,6 @@ export class CommonHttpService {
 
   protected postJson(url: string, paramObj: Object): Observable<any> {
     url = this.baseUrl + url;
-    console.log(url)
     return this._http.post(url, paramObj, this.options);
   }
 
