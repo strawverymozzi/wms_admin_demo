@@ -86,7 +86,7 @@
                 }
               ]
             },
-            "stats": {
+            "preview": {
               "budgets": [
                 {
                   "type": "initial",
