@@ -5,13 +5,12 @@
  */
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
-import { Observable, EMPTY } from 'rxjs';
-import { map, catchError, } from 'rxjs/operators';
+import { Observable, } from 'rxjs';
+import { map, } from 'rxjs/operators';
 import { CommonHttpService } from '../@common/common.http.service';
-import { HttpClient, HttpErrorResponse, HttpEvent, } from '@angular/common/http';
+import { HttpClient, } from '@angular/common/http';
 import { parseProgramList, setAdminLeft } from '../@program/program.registry';
 import { REGISTRY } from '../../environments/environment';
-import { error } from 'protractor';
 
 @Injectable()
 export class AdminGuard extends CommonHttpService implements CanActivate {
