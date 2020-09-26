@@ -4,7 +4,7 @@ import { Observable, EMPTY } from 'rxjs';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { retry, map, catchError } from 'rxjs/operators';
 import { COMMON_CONFIG } from '../@common/common.config';
-import { settDictionary } from './program.dictionary';
+import { setDictionary } from './program.dictionary';
 import notify from 'devextreme/ui/notify';
 
 /**
@@ -31,7 +31,7 @@ export class ProgramInitResolver implements Resolve<any>{
             retry(2),
             map((res) => {
                 const dictionary = res[COMMON_CONFIG.DICTIONARY];
-                settDictionary(dictionary);
+                setDictionary(dictionary);
                 return res;
             }),
             catchError((error: HttpErrorResponse) => {

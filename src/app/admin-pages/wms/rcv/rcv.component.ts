@@ -104,7 +104,7 @@ export class RCVComponent implements OnInit {
       case 'detail':
         allRows = this.detailGridRef.instance.getVisibleRows();
         allRows.forEach((row, i, a) => {
-          if (row.data['uid'].indexOf(this.detailNewRowKey) != -1) subjectRows.push(row.data);
+          if (row.data['uid'].toString().indexOf(this.detailNewRowKey) != -1) subjectRows.push(row.data);
         })
         break;
     }
@@ -120,7 +120,7 @@ export class RCVComponent implements OnInit {
       case 'detail':
         allRows = this.detailGridRef.instance.getVisibleRows();
         allRows.forEach((row, i, a) => {
-          if (row.data['uid'].indexOf(this.detailNewRowKey) == -1 && row['modified']) subjectRows.push(row.data);
+          if (row.data['uid'].toString().indexOf(this.detailNewRowKey) == -1 && row['modified']) subjectRows.push(row.data);
         })
         break;
     }
@@ -280,7 +280,7 @@ export class RCVComponent implements OnInit {
           if (ok) {
             const filtered = selected
               .filter((row, i, a) => {
-                if (row['uid'].indexOf(this.detailNewRowKey) != -1) {
+                if (row['uid'].toString().indexOf(this.detailNewRowKey) != -1) {
                   const idx = this.detailGridRef.instance.getRowIndexByKey(row['uid']);
                   this.detailGridRef.instance.deleteRow(idx);
                   return false;

@@ -5,7 +5,7 @@ import { HttpClient, HttpErrorResponse, HttpEvent } from '@angular/common/http';
 import { retry, map, catchError } from 'rxjs/operators';
 import { COMMON_CONFIG } from '../@common/common.config';
 import { getInitUri } from './program.registry';
-import { settDictionary } from './program.dictionary';
+import { setDictionary } from './program.dictionary';
 import notify from 'devextreme/ui/notify';
 
 /**
@@ -35,7 +35,7 @@ export class AdminProgramInitResolver implements Resolve<any>{
             map((res) => {
                 try {
                     const dictionary = res.body["data"][COMMON_CONFIG.DICTIONARY];
-                    settDictionary(dictionary);
+                    setDictionary(dictionary);
                 } catch (error) {
                     console.warn("Dictionary Setting FAILED");
                 }

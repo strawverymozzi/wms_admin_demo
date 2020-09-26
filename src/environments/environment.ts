@@ -9,13 +9,13 @@
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 
 export const environment = {
-  production: false,
+  production: true,
   baseUrl: '',
-  MD: 'http://www.jflab.co.kr:18000',
-  WM: 'http://www.jflab.co.kr:18001',
-  // M`D: 'http://localhost:3001',
-  // WM: 'http://localhost:3001',`
-  defaultLang: window.navigator.language,
+  // MD: 'http://www.jflab.co.kr:18000',
+  // WM: 'http://www.jflab.co.kr:18001',
+  MD: 'http://localhost:3001',
+  WM: 'http://localhost:3001',
+defaultLang: window.navigator.language,
 };
 
 export const REGISTRY: any = {

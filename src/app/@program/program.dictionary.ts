@@ -4,6 +4,6 @@ export function getDictionary() {
     return LOCALDICTIONARY;
 }
 
-export function settDictionary(dictionary: any) {
+export function setDictionary(dictionary: any) {
     return LOCALDICTIONARY = dictionary;
 }
